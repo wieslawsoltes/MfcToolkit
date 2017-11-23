@@ -111,7 +111,7 @@ BOOL CMyListCtrl::OnToolTipText(UINT id, NMHDR *pNMHDR, LRESULT *pResult)
     TOOLTIPTEXTA *pTTTA = (TOOLTIPTEXTA *)pNMHDR;
     TOOLTIPTEXTW *pTTTW = (TOOLTIPTEXTW *)pNMHDR;
     static CString szTipText;
-    UINT nID = pNMHDR->idFrom;
+    UINT_PTR nID = pNMHDR->idFrom;
 
     if (nID == 0 || bUseTooltipsList == false)
         return FALSE;

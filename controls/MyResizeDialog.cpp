@@ -177,7 +177,7 @@ void CMyResizeDialog::ArrangeLayout()
     CRect wndRC;
     GetClientRect(&wndRC);
 
-    HDWP hdwp = BeginDeferWindowPos(m_LayoutList.GetCount());
+    HDWP hdwp = BeginDeferWindowPos((int)m_LayoutList.GetCount());
 
     POSITION pos = m_LayoutList.GetHeadPosition();
     while (pos != NULL)
