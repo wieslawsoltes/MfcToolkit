@@ -116,7 +116,7 @@ BOOL CMyListCtrl::OnToolTipText(UINT id, NMHDR *pNMHDR, LRESULT *pResult)
     if (nID == 0 || bUseTooltipsList == false)
         return FALSE;
 
-    int nRow = nID - 1;
+    int nRow = (int)nID - 1;
     int nCol = 0;
 
     if ((GetWindowLong(m_hWnd, GWL_STYLE) & LVS_TYPEMASK) == LVS_REPORT && bUseTooltipsList == true)
