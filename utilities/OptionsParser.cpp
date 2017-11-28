@@ -11,17 +11,17 @@ COptionsParser::COptionsParser()
 
 COptionsParser::COptionsParser(int nArgc, LPTSTR *pArgv)
 {
-    (void) this->Init(nArgc, pArgv);
+    (void)this->Init(nArgc, pArgv);
 }
 
 COptionsParser::COptionsParser(const CL_OPTIONS *pclOptions)
 {
-    (void) this->Init(pclOptions);
+    (void)this->Init(pclOptions);
 }
 
 COptionsParser::COptionsParser(int nArgc, LPTSTR *pArgv, const CL_OPTIONS *pclOptions)
 {
-    (void) this->Init(nArgc, pArgv, pclOptions);
+    (void)this->Init(nArgc, pArgv, pclOptions);
 }
 
 COptionsParser::~COptionsParser(void)
