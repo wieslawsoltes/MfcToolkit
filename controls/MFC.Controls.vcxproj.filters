@@ -45,10 +45,10 @@
     <ClInclude Include="MyStatusBarCtrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyResizeDialog.h">
+    <ClInclude Include="MyHyperlink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyHyperlink.h">
+    <ClInclude Include="MyDialogEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -80,10 +80,10 @@
     <ClCompile Include="MyStatusBarCtrl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyResizeDialog.cpp">
+    <ClCompile Include="MyHyperlink.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyHyperlink.cpp">
+    <ClCompile Include="MyDialogEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

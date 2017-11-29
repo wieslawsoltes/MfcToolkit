@@ -202,7 +202,7 @@
     <ClCompile Include="MySliderCtrl.cpp" />
     <ClCompile Include="MyStatic.cpp" />
     <ClCompile Include="MyStatusBarCtrl.cpp" />
-    <ClCompile Include="MyResizeDialog.cpp" />
+    <ClCompile Include="MyDialogEx.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -220,7 +220,7 @@
     <ClInclude Include="MySliderCtrl.h" />
     <ClInclude Include="MyStatic.h" />
     <ClInclude Include="MyStatusBarCtrl.h" />
-    <ClInclude Include="MyResizeDialog.h" />
+    <ClInclude Include="MyDialogEx.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
