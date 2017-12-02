@@ -4,7 +4,7 @@
 #pragma once
 
 #include <afxstr.h>
-#include "..\collections\ListT.h"
+#include "..\utilities\ListT.h"
 #include "Language.h"
 
 class CLanguagesList : public CListT<CLanguage>
