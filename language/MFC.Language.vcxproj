@@ -229,8 +229,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\collections\MFC.Collections.vcxproj">
-      <Project>{63699910-884a-47a4-af78-7471b60913ed}</Project>
+    <ProjectReference Include="..\utilities\MFC.Utilities.vcxproj">
+      <Project>{4b291d95-c2ca-49e3-9eb5-b9f855d32aa0}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
