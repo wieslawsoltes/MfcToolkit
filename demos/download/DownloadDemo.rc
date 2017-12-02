@@ -1,4 +1,4 @@
-﻿// Microsoft Visual C++ generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -21,6 +21,7 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_PLK)
 LANGUAGE LANG_POLISH, SUBLANG_DEFAULT
+#pragma code_page(1250)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -82,6 +83,7 @@ IDR_MAINFRAME           ICON                    "res\\DownloadDemo.ico"
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
