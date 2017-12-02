@@ -226,8 +226,13 @@
     <ClInclude Include="CommandLine.h" />
     <ClInclude Include="MyFile.h" />
     <ClInclude Include="OptionsParser.h" />
+    <ClInclude Include="OutputPath.h" />
+    <ClInclude Include="Pipe.h" />
+    <ClInclude Include="Process.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="Synchronize.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Thread.h" />
     <ClInclude Include="TimeCount.h" />
     <ClInclude Include="UnicodeUtf8.h" />
     <ClInclude Include="Utf8String.h" />
