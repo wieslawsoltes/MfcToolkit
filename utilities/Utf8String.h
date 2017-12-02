@@ -3,15 +3,61 @@
 
 #pragma once
 
+#include "UnicodeUtf8.h"
+
 class CUtf8String
 {
 public:
     char *m_Result;
 public:
-    CUtf8String();
-    CUtf8String(CString szText);
-    virtual ~CUtf8String();
+    CUtf8String()
+    {
+        m_Result = NULL;
+    }
+    CUtf8String(CString szText)
+    {
+        Convert(szText);
+    }
+    ~CUtf8String()
+    {
+        Free();
+    }
 public:
-    char *Convert(CString szText);
-    void Free();
+#ifdef _UNICODE
+    char *Convert(CString szText)
+    {
+        if (szText.GetLength() > 0)
+        {
+            m_Result = (char *)MakeUtf8String(szText);
+        }
+        else
+        {
+            m_Result = (char *)malloc(1);
+            m_Result[0] = '\0';
+        }
+        return m_Result;
+    }
+#else
+    char *Convert(CString szText)
+    {
+        if (szText.GetLength() > 0)
+        {
+            Utf8Encode(szText, &m_Result);
+        }
+        else
+        {
+            m_Result = (char *)malloc(1);
+            m_Result[0] = '\0';
+        }
+        return m_Result;
+    }
+#endif
+    void Free()
+    {
+        if (m_Result != NULL)
+        {
+            free(m_Result);
+            m_Result = NULL;
+        }
+    }
 };

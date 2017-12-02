@@ -59,3 +59,5 @@ int FindNoCase(LPCTSTR pszString, LPCTSTR pszSearch);
 void ConvertAnsiToUnicode(const char *szAnsi, wchar_t *szUnicode, ULONG nLength);
 
 void ConvertUnicodeToAnsi(const wchar_t *szUnicode, char *szAnsi, ULONG nLength);
+
+PTCHAR* MyCommandLineToArgv(PTCHAR pszCmdLine, int *pnArgc);

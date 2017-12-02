@@ -214,8 +214,8 @@
     <Image Include="res\DownloadDemo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\download\MFC.Download.vcxproj">
-      <Project>{f9c925a3-deab-4c4e-8c61-f9b91b2df8b5}</Project>
+    <ProjectReference Include="..\..\utilities\MFC.Utilities.vcxproj">
+      <Project>{4b291d95-c2ca-49e3-9eb5-b9f855d32aa0}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

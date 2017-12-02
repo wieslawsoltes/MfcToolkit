@@ -209,9 +209,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CommandLine.cpp" />
-    <ClCompile Include="MyFile.cpp" />
-    <ClCompile Include="OptionsParser.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -219,17 +216,19 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="UnicodeUtf8.cpp" />
-    <ClCompile Include="Utf8String.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CommandLine.h" />
+    <ClInclude Include="Download.h" />
+    <ClInclude Include="ListT.h" />
+    <ClInclude Include="MapT.h" />
     <ClInclude Include="MyFile.h" />
     <ClInclude Include="OptionsParser.h" />
     <ClInclude Include="OutputPath.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="StringsMap.h" />
     <ClInclude Include="Synchronize.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Thread.h" />
