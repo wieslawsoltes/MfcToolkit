@@ -31,6 +31,7 @@ public:
     CEdit m_UrlEdit;
     CEdit m_PathEdit;
     CProgressCtrl m_ProgressCtrl;
+    CEdit m_EdtStatus;
     CButton m_DownloadButton;
 public:
     CDownload m_Download;

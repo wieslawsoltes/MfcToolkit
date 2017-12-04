@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <functional>
 #include <afxstr.h>
 #include <afxcmn.h>
 #include <urlmon.h>
@@ -19,7 +20,7 @@ public:
     }
 public:
     int m_LastPercent;
-    CProgressCtrl *pProgressCtrl;
+    std::function<void(int, CString)> fStatusCallback;
 public:
     HRESULT STDMETHODCALLTYPE OnStartBinding(DWORD dwReserved, __RPC__in_opt IBinding *pib)
     {
@@ -38,56 +39,74 @@ public:
         switch (ulStatusCode)
         {
         case BINDSTATUS_FINDINGRESOURCE:
-            OutputDebugString(_T("Finding resource...\r\n"));
+            if (fStatusCallback != NULL)
+            {
+                fStatusCallback(-1, _T("Finding resource..."));
+            }
             break;
         case BINDSTATUS_CONNECTING:
-            OutputDebugString(_T("Connecting...\r\n"));
+            if (fStatusCallback != NULL)
+            {
+                fStatusCallback(-1, _T("Connecting..."));
+            }
             break;
         case BINDSTATUS_SENDINGREQUEST:
-            OutputDebugString(_T("Sending request...\r\n"));
+            if (fStatusCallback != NULL)
+            {
+                fStatusCallback(-1, _T("Sending request..."));
+            }
             break;
         case BINDSTATUS_MIMETYPEAVAILABLE:
-            OutputDebugString(_T("Mime type available\r\n"));
+            if (fStatusCallback != NULL)
+            {
+                fStatusCallback(-1, _T("Mime type available"));
+            }
             break;
         case BINDSTATUS_CACHEFILENAMEAVAILABLE:
-            OutputDebugString(_T("Cache filename available\r\n"));
+            if (fStatusCallback != NULL)
+            {
+                fStatusCallback(-1, _T("Cache filename available"));
+            }
             break;
         case BINDSTATUS_BEGINDOWNLOADDATA:
-            OutputDebugString(_T("Begin download\r\n"));
-            if (pProgressCtrl != NULL)
+            if (fStatusCallback != NULL)
             {
-                pProgressCtrl->SetPos(0);
+                fStatusCallback(-1, _T("Begin download"));
             }
             break;
         case BINDSTATUS_DOWNLOADINGDATA:
         case BINDSTATUS_ENDDOWNLOADDATA:
-        {
-            int percent = (int)(100.0 * static_cast<double>(ulProgress) / static_cast<double>(ulProgressMax));
-            if (m_LastPercent < percent)
             {
-                if (pProgressCtrl != NULL)
+                int percent = (int)(100.0 * static_cast<double>(ulProgress) / static_cast<double>(ulProgressMax));
+                if (m_LastPercent < percent)
                 {
-                    pProgressCtrl->SetPos(percent);
+                    m_LastPercent = percent;
+                    if (fStatusCallback != NULL)
+                    {
+                        CString szOutput;
+                        szOutput.Format(_T("%d%%"), percent);
+                        fStatusCallback(percent, szOutput);
+                    }
                 }
-                m_LastPercent = percent;
-
-                CString szOutput;
-                szOutput.Format(_T("%d%%\r\n"), percent);
-                OutputDebugString(szOutput);
+                if (ulStatusCode == BINDSTATUS_ENDDOWNLOADDATA)
+                {
+                    if (fStatusCallback != NULL)
+                    {
+                        fStatusCallback(100, _T("End download"));
+                    }
+                }
             }
-
-            if (ulStatusCode == BINDSTATUS_ENDDOWNLOADDATA)
-            {
-                OutputDebugString(_T("End download\r\n"));
-            }
-        }
-        break;
+            break;
         default:
-        {
-            CString szOutput;
-            szOutput.Format(_T("Status code : %d\r\n"), ulStatusCode);
-            OutputDebugString(szOutput);
-        }
+            {    
+                if (fStatusCallback != NULL)
+                {
+                    CString szOutput;
+                    szOutput.Format(_T("Status code : %d"), ulStatusCode);
+                    fStatusCallback(-1, szOutput);
+                }
+            }
+            break;
         }
         return S_OK;
     }
@@ -136,10 +155,10 @@ public:
     {
     }
 public:
-    bool Download(CString szUrl, CString szPath, CProgressCtrl *pProgressCtrl = NULL)
+    bool Download(CString szUrl, CString szPath, std::function<void(int, CString)> fStatusCallback)
     {
         CDownloadCallback m_Callback;
-        m_Callback.pProgressCtrl = pProgressCtrl;
+        m_Callback.fStatusCallback = fStatusCallback;
 
         IBindStatusCallback* pBindStatusCallback = NULL;
         m_Callback.QueryInterface(IID_IBindStatusCallback, reinterpret_cast<void**>(&pBindStatusCallback));

@@ -104,6 +104,7 @@ BEGIN
     EDITTEXT        IDC_EDIT2,54,69,259,14,ES_AUTOHSCROLL
     LTEXT           "Url:",IDC_STATIC,7,49,43,14,SS_CENTERIMAGE
     LTEXT           "Path:",IDC_STATIC,7,69,43,14,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT3,7,109,306,12,ES_AUTOHSCROLL
 END
 
 
@@ -171,6 +172,7 @@ BEGIN
         HORZGUIDE, 83
         HORZGUIDE, 89
         HORZGUIDE, 103
+        HORZGUIDE, 109
         HORZGUIDE, 179
     END
 END
@@ -192,7 +194,8 @@ BEGIN
     0, 50, 100, 0,
     0, 50, 100, 0,
     0, 50, 0, 0,
-    0, 50, 0, 0
+    0, 50, 0, 0,
+    0, 50, 100, 0
 END
 
 #endif    // English (United States) resources

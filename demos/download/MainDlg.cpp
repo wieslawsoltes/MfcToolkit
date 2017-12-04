@@ -23,6 +23,7 @@ void CMainDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_EDIT2, m_PathEdit);
     DDX_Control(pDX, IDC_PROGRESS1, m_ProgressCtrl);
     DDX_Control(pDX, IDC_BUTTON1, m_DownloadButton);
+    DDX_Control(pDX, IDC_EDIT3, m_EdtStatus);
 }
 
 BEGIN_MESSAGE_MAP(CMainDlg, CDialog)
@@ -82,6 +83,8 @@ HCURSOR CMainDlg::OnQueryDragIcon()
 
 void CMainDlg::OnBnClickedButton1()
 {
+    m_ProgressCtrl.SetPos(0);
+    m_EdtStatus.SetWindowText(_T(""));
     m_Worker.Start(
         [](void *param)->int 
         {
@@ -99,5 +102,10 @@ void CMainDlg::Download()
     CString szPath;
     m_UrlEdit.GetWindowText(szUrl);
     m_PathEdit.GetWindowText(szPath);
-    m_Download.Download(szUrl, szPath, &m_ProgressCtrl);
+    m_Download.Download(szUrl, szPath, 
+        [this](int nProgress, CString szStatus)
+        {
+            this->m_ProgressCtrl.SetPos(nProgress);
+            m_EdtStatus.SetWindowText(szStatus);
+        });
 }
