@@ -3,6 +3,9 @@
 
 #pragma once
 
+#include <Windows.h>
+#include <atlstr.h>
+
 // Command-line parser implementation COptionsParser.
 //
 // COptionsParser supports ANSI and UNICODE chars, 

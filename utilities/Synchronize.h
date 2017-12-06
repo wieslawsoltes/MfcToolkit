@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <Windows.h>
+
 class CSynchronize
 {
     HANDLE hMutex;

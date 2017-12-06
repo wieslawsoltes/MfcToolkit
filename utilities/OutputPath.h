@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <atlstr.h>
 #include "Utilities.h"
 
 // Output path:
@@ -138,7 +139,7 @@ public:
                 return szOutputFile;
             }
         }
-        return NULL;
+        return _T("");
     }
     bool CreateOutputPath(CString szOutputFile)
     {

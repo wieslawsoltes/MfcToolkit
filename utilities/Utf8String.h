@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <atlstr.h>
 #include "UnicodeUtf8.h"
 
 class CUtf8String

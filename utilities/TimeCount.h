@@ -3,6 +3,9 @@
 
 #pragma once
 
+#include <Windows.h>
+#include <atlstr.h>
+
 class CTimeCount
 {
 private:

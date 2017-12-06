@@ -72,28 +72,11 @@ HCURSOR CMainDlg::OnQueryDragIcon()
     return static_cast<HCURSOR>(m_hIcon);
 }
 
-//int DownloadThread(void *param)
-//{
-//    CMainDlg* pMainDlg = (CMainDlg*)param;
-//    if (pMainDlg == NULL)
-//        return FALSE;
-//    pMainDlg->Download();
-//    return pMainDlg->m_Worker.Close();
-//}
-
 void CMainDlg::OnBnClickedButton1()
 {
     m_ProgressCtrl.SetPos(0);
     m_EdtStatus.SetWindowText(_T(""));
-    m_Worker.Start(
-        [](void *param)->int 
-        {
-            CMainDlg* pMainDlg = (CMainDlg*)param;
-            pMainDlg->Download();
-            return pMainDlg->m_Worker.Close();
-        },
-        this, false);
-    //m_Worker.Start(DownloadThread, this, false);
+    m_Worker.Start([this]() { this->Download(); }, false);
 }
 
 void CMainDlg::Download()
