@@ -3,18 +3,19 @@
 
 #pragma once
 
-typedef int Entry(void *param);
+#include <Windows.h>
+#include <functional>
 
 typedef struct
 {
-    Entry *pEntry;
+    std::function<int(void *param)> fEntry;
     void *param;
 } Params;
 
 inline DWORD WINAPI ThreadStartRoutine(LPVOID lpParam)
 {
     Params *pParams = (Params *)lpParam;
-    return (DWORD)pParams->pEntry(pParams->param);
+    return (DWORD)pParams->fEntry(pParams->param);
 }
 
 class CThread
@@ -30,9 +31,18 @@ public:
     {
     }
 public:
-    bool Start(Entry *pEntry, void *param = NULL, bool bSuspended = false)
+    bool Start(std::function<void()> fEntry, bool bSuspended = false)
     {
-        params.pEntry = pEntry;
+        return this->Start(
+            [fEntry](void *param)->int 
+            {
+                fEntry();
+                return TRUE;
+            });
+    }
+    bool Start(std::function<int(void *param)> fEntry, void *param = NULL, bool bSuspended = false)
+    {
+        params.fEntry = fEntry;
         params.param = param;
         hThread = ::CreateThread(
             NULL,
