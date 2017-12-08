@@ -121,7 +121,7 @@ void CMyDialogEx::UpdateWindowPos(HWND hWnd, CRect newRC)
     HDWP hDwp = BeginDeferWindowPos(1);
 
     DeferWindowPos(hDwp, hWnd,
-        NULL,
+        nullptr,
         newRC.left, newRC.top,
         newRC.Width(), newRC.Height(),
         SWP_NOZORDER | SWP_NOACTIVATE);
