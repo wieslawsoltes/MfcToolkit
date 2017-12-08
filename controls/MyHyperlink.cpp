@@ -8,7 +8,7 @@ IMPLEMENT_DYNAMIC(CMyHyperlink, CStatic)
 
 CMyHyperlink::CMyHyperlink()
 {
-    m_hCursor = NULL;
+    m_hCursor = nullptr;
     m_bVisited = false;
     m_bCaptured = false;
 }
@@ -28,7 +28,7 @@ END_MESSAGE_MAP()
 
 void CMyHyperlink::OnStnClicked()
 {
-    ::ShellExecute(NULL, _T("open"), m_szURL, NULL, NULL, SW_SHOW);
+    ::ShellExecute(nullptr, _T("open"), m_szURL, nullptr, nullptr, SW_SHOW);
     m_bVisited = true;
 }
 
@@ -78,7 +78,7 @@ void CMyHyperlink::OnDestroy()
 {
     CMyStatic::OnDestroy();
 
-    if (m_hCursor != NULL)
+    if (m_hCursor != nullptr)
         ::DestroyCursor(m_hCursor);
 }
 
@@ -89,9 +89,9 @@ void CMyHyperlink::PreSubclassWindow()
     colorVisited = RGB(128, 0, 128);
 
     SetWindowLong(this->GetSafeHwnd(), GWL_STYLE, GetStyle() | SS_NOTIFY);
-    m_hCursor = ::LoadCursor(NULL, IDC_HAND);
+    m_hCursor = ::LoadCursor(nullptr, IDC_HAND);
 
-    if (m_hCursor == NULL)
+    if (m_hCursor == nullptr)
     {
         TCHAR szPath[MAX_PATH + 1];
         ::GetWindowsDirectory(szPath, sizeof(szPath));
