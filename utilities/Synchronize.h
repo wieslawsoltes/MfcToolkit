@@ -11,7 +11,7 @@ class CSynchronize
 public:
     CSynchronize()
     {
-        hMutex = ::CreateMutex(NULL, FALSE, NULL);
+        hMutex = ::CreateMutex(nullptr, FALSE, nullptr);
     }
     virtual ~CSynchronize()
     {
