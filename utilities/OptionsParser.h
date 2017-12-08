@@ -68,7 +68,7 @@ protected:
 protected:
     bool InitDone(void)
     {
-        if ((this->bInit == true) && (this->pArgv != NULL))
+        if ((this->bInit == true) && (this->pArgv != nullptr))
             return true;
 
         if ((this->bHaveArgv == true) &&
@@ -87,7 +87,7 @@ protected:
 public:
     bool Init(int nArgc, LPTSTR *pArgv)
     {
-        if ((pArgv != NULL) && (nArgc >= 2))
+        if ((pArgv != nullptr) && (nArgc >= 2))
         {
             this->nArgc = nArgc;
             this->pArgv = pArgv;
@@ -98,7 +98,7 @@ public:
     }
     bool Init(const CL_OPTIONS *pclOptions)
     {
-        if (pclOptions != NULL)
+        if (pclOptions != nullptr)
         {
             this->pclOptions = pclOptions;
             this->bHaveOptions = true;
@@ -108,7 +108,7 @@ public:
     }
     bool Init(int nArgc, LPTSTR *pArgv, const CL_OPTIONS *pclOptions)
     {
-        if ((pArgv != NULL) && (nArgc >= 2))
+        if ((pArgv != nullptr) && (nArgc >= 2))
         {
             this->nPosArgv = 0;
             this->nArgc = nArgc;
@@ -116,7 +116,7 @@ public:
             this->bHaveArgv = true;
         }
 
-        if (pclOptions != NULL)
+        if (pclOptions != nullptr)
         {
             this->pclOptions = pclOptions;
             this->bHaveOptions = true;
@@ -133,8 +133,8 @@ public:
         this->nOptionId = -2;
 
         this->nArgc = -1;
-        this->pArgv = NULL;
-        this->pclOptions = NULL;
+        this->pArgv = nullptr;
+        this->pclOptions = nullptr;
 
         bool bHaveArgv = false;
         bool bHaveOptions = false;
@@ -149,7 +149,7 @@ protected:
 protected:
     bool IsOpt(LPTSTR szOption)
     {
-        if (szOption == NULL)
+        if (szOption == nullptr)
             return false;
 
         if (this->IsLongOpt(szOption) == true)
@@ -161,7 +161,7 @@ protected:
     }
     bool IsLongOpt(LPTSTR szOption)
     {
-        if (szOption == NULL)
+        if (szOption == nullptr)
             return false;
 
         // is argument in long option format: --option, --o, --opt, etc...
@@ -177,7 +177,7 @@ protected:
     }
     bool IsShortOpt(LPTSTR szOption)
     {
-        if (szOption == NULL)
+        if (szOption == nullptr)
             return false;
 
         // is argument in short option format: -o, /o, etc...
@@ -214,7 +214,7 @@ public:
         if (this->nPosArgv >= nArgc)
             return(-1); // SUCCESS
 
-        LPTSTR szOption = NULL;
+        LPTSTR szOption = nullptr;
         szOption = this->pArgv[this->nPosArgv];
 
         // get valid option name
@@ -241,19 +241,19 @@ public:
         const TCHAR szTokenSeps[] = TEXT(" ;|,\t");
 #endif // USE_PARSER_TOKENS
 
-        while (pclOptions[i].szOptionName != NULL)
+        while (pclOptions[i].szOptionName != nullptr)
         {
 #ifdef USE_PARSER_TOKENS
-            LPTSTR szOptionName = NULL;
+            LPTSTR szOptionName = nullptr;
             size_t nLen = _tcslen(pclOptions[i].szOptionName);
             szOptionName = (LPTSTR)malloc((nLen + 1) * sizeof(TCHAR));
-            if (szOptionName == NULL)
+            if (szOptionName == nullptr)
                 return(-2); // ERROR
 
             memcpy(szOptionName, pclOptions[i].szOptionName, nLen * sizeof(TCHAR));
             szOptionName[nLen] = '\0';
             LPTSTR szToken = _tcstok(szOptionName, szTokenSeps);
-            while (szToken != NULL)
+            while (szToken != nullptr)
             {
                 // check next token
                 if (lstrcmp(szOption, szToken) == 0)
@@ -343,7 +343,7 @@ public:
 
 #ifdef USE_PARSER_TOKENS
             // get next token
-            szToken = _tcstok(NULL, szTokenSeps);
+            szToken = _tcstok(nullptr, szTokenSeps);
             }
 
         // free memory used for tokens options
