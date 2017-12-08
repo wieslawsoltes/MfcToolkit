@@ -25,14 +25,14 @@ int GetLogicalProcessorInformation(LogicalProcessorInformation* info)
 {
     LPFN_GLPI glpi;
     BOOL done = FALSE;
-    PSYSTEM_LOGICAL_PROCESSOR_INFORMATION buffer = NULL;
-    PSYSTEM_LOGICAL_PROCESSOR_INFORMATION ptr = NULL;
+    PSYSTEM_LOGICAL_PROCESSOR_INFORMATION buffer = nullptr;
+    PSYSTEM_LOGICAL_PROCESSOR_INFORMATION ptr = nullptr;
     DWORD returnLength = 0;
     DWORD byteOffset = 0;
     PCACHE_DESCRIPTOR Cache;
 
     glpi = (LPFN_GLPI)GetProcAddress(GetModuleHandle(TEXT("kernel32")), "GetLogicalProcessorInformation");
-    if (NULL == glpi)
+    if (nullptr == glpi)
     {
 #ifdef _DEBUG
         _tprintf(_T("\nGetLogicalProcessorInformation is not supported.\n"));
@@ -51,7 +51,7 @@ int GetLogicalProcessorInformation(LogicalProcessorInformation* info)
                     free(buffer);
 
                 buffer = (PSYSTEM_LOGICAL_PROCESSOR_INFORMATION)malloc(returnLength);
-                if (NULL == buffer)
+                if (nullptr == buffer)
                 {
 #ifdef _DEBUG
                     _tprintf(_T("\nError: Allocation failure\n"));
@@ -140,13 +140,13 @@ void ShutdownWindows()
     if (::OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &m_hToken))
     {
         LUID m_Luid;
-        if (::LookupPrivilegeValue(NULL, _T("SeShutdownPrivilege"), &m_Luid))
+        if (::LookupPrivilegeValue(nullptr, _T("SeShutdownPrivilege"), &m_Luid))
         {
             TOKEN_PRIVILEGES tp;
             tp.PrivilegeCount = 1;
             tp.Privileges[0].Luid = m_Luid;
             tp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-            ::AdjustTokenPrivileges(m_hToken, FALSE, &tp, 0, NULL, NULL);
+            ::AdjustTokenPrivileges(m_hToken, FALSE, &tp, 0, nullptr, nullptr);
         }
         ::CloseHandle(m_hToken);
     }
@@ -173,14 +173,14 @@ void LaunchAndWait(LPCTSTR file, LPCTSTR params, BOOL bWait)
 void SetComboBoxHeight(HWND hDlg, int nComboBoxID, int nSizeLimit)
 {
     HWND hComboxBox = ::GetDlgItem(hDlg, nComboBoxID);
-    if (hComboxBox != NULL)
+    if (hComboxBox != nullptr)
         ::SendMessage(hComboxBox, CB_SETMINVISIBLE, (WPARAM)nSizeLimit, 0);
 }
 
 UINT GetFileNameInternal(LPCTSTR lpszPathName, LPTSTR lpszTitle, UINT nMax)
 {
     LPTSTR lpszTemp = ::PathFindFileName(lpszPathName);
-    if (lpszTitle == NULL)
+    if (lpszTitle == nullptr)
         return lstrlen(lpszTemp) + 1;
     lstrcpyn(lpszTitle, lpszTemp, nMax);
     return(0);
@@ -263,7 +263,7 @@ __int64 GetFileSizeInt64(FILE *fp)
 CString GetExeFilePath()
 {
     TCHAR szExeFilePath[MAX_PATH + 1] = _T("");
-    DWORD dwRet = ::GetModuleFileName(::GetModuleHandle(NULL), szExeFilePath, MAX_PATH);
+    DWORD dwRet = ::GetModuleFileName(::GetModuleHandle(nullptr), szExeFilePath, MAX_PATH);
     if (dwRet > 0)
     {
         CString szTempBuff1;
@@ -273,16 +273,16 @@ CString GetExeFilePath()
         szTempBuff1.TrimRight(szTempBuff2);
         return szTempBuff1;
     }
-    return NULL;
+    return nullptr;
 }
 
 CString GetSettingsFilePath(CString szFileName, CString szConfigDirectory)
 {
     TCHAR szPath[MAX_PATH];
 
-    if (SUCCEEDED(SHGetFolderPath(NULL,
+    if (SUCCEEDED(SHGetFolderPath(nullptr,
         CSIDL_APPDATA | CSIDL_FLAG_CREATE,
-        NULL,
+        nullptr,
         0,
         szPath)))
     {
@@ -290,13 +290,13 @@ CString GetSettingsFilePath(CString szFileName, CString szConfigDirectory)
         PathAppend(szPath, szFileName);
         return szPath;
     }
-    return NULL;
+    return nullptr;
 }
 
 void GetFullPathName(CString &szFilePath)
 {
     TCHAR szFullPath[MAX_PATH + 2] = _T("");
-    LPTSTR pszFilePos = NULL;
+    LPTSTR pszFilePos = nullptr;
     ::GetFullPathName(szFilePath, MAX_PATH + 1, szFullPath, &pszFilePos);
     szFilePath = szFullPath;
 }
@@ -496,7 +496,7 @@ PTCHAR* MyCommandLineToArgv(PTCHAR pszCmdLine, int *pnArgc)
     }
 
     pszTmpArgv[nJ] = '\0';
-    pszArgv[nArgc] = NULL;
+    pszArgv[nArgc] = nullptr;
     (*pnArgc) = nArgc;
 
     return pszArgv;
@@ -511,11 +511,11 @@ bool Unzip2Folder(BSTR lpZipFile, BSTR lpFolder)
     IDispatch* pItem = 0L;
     FolderItems *pFilesInside = 0L;
     VARIANT Options, OutFolder, InZipFile, Item;
-    CoInitialize(NULL);
+    CoInitialize(nullptr);
 
     __try
     {
-        if (CoCreateInstance(CLSID_Shell, NULL, CLSCTX_INPROC_SERVER, IID_IShellDispatch, (void **)&pISD) != S_OK)
+        if (CoCreateInstance(CLSID_Shell, nullptr, CLSCTX_INPROC_SERVER, IID_IShellDispatch, (void **)&pISD) != S_OK)
             return false;
 
         InZipFile.vt = VT_BSTR;
@@ -579,4 +579,3 @@ bool Unzip2Folder(BSTR lpZipFile, BSTR lpFolder)
         CoUninitialize();
     }
 }
-
