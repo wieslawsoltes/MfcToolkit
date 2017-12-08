@@ -34,7 +34,7 @@ public:
         this->RemoveAll();
         POSITION pos = other.m_Map.GetStartPosition();
         int nKey;
-        while (pos != NULL)
+        while (pos != nullptr)
         {
             CString rValue;
             other.m_Map.GetNextAssoc(pos, nKey, rValue);
@@ -45,7 +45,7 @@ public:
     {
         POSITION pos = this->m_Map.GetStartPosition();
         int nKey;
-        while (pos != NULL)
+        while (pos != nullptr)
         {
             CString rValue;
             this->m_Map.GetNextAssoc(pos, nKey, rValue);
