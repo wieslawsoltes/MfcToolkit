@@ -39,14 +39,14 @@ public:
         DWORD dwCreationFlags = NORMAL_PRIORITY_CLASS;
         if (bNoWindow == true)
             dwCreationFlags |= CREATE_NO_WINDOW;
-        BOOL bResult = ::CreateProcess(NULL,
+        BOOL bResult = ::CreateProcess(nullptr,
             szCommandLine,
-            NULL,
-            NULL,
+            nullptr,
+            nullptr,
             TRUE,
             dwCreationFlags,
-            NULL,
-            NULL,
+            nullptr,
+            nullptr,
             &this->sInfo,
             &this->pInfo);
         return bResult == TRUE;
