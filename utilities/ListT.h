@@ -70,13 +70,13 @@ public:
     void InsertBefore(T& item, int nIndex)
     {
         POSITION pos = m_Items.FindIndex(nIndex);
-        if (pos != NULL)
+        if (pos != nullptr)
             m_Items.InsertBefore(pos, item);
     }
     void InsertAfter(T& item, int nIndex)
     {
         POSITION pos = m_Items.FindIndex(nIndex);
-        if (pos != NULL)
+        if (pos != nullptr)
             m_Items.InsertAfter(pos, item);
     }
     void Remove(int pstn = -1)
