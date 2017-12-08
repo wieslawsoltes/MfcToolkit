@@ -424,7 +424,7 @@ public:
     {
         UINT _nRead = 0;
 
-        if ((nLength == 0) || (Buffer == NULL))
+        if ((nLength == 0) || (Buffer == nullptr))
             return false;
 
         if (this->_bOpen == false)
@@ -445,7 +445,7 @@ public:
     }
     bool FWriteString(TCHAR *Buffer, UINT nLength)
     {
-        if ((nLength == 0) || (Buffer == NULL))
+        if ((nLength == 0) || (Buffer == nullptr))
             return false;
 
         if (this->_bOpen == false)
