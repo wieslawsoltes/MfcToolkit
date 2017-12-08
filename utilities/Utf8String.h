@@ -13,7 +13,7 @@ public:
 public:
     CUtf8String()
     {
-        m_Result = NULL;
+        m_Result = nullptr;
     }
     CUtf8String(CString szText)
     {
@@ -55,10 +55,10 @@ public:
 #endif
     void Free()
     {
-        if (m_Result != NULL)
+        if (m_Result != nullptr)
         {
             free(m_Result);
-            m_Result = NULL;
+            m_Result = nullptr;
         }
     }
 };
