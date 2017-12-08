@@ -21,7 +21,7 @@ inline DWORD WINAPI ThreadStartRoutine(LPVOID lpParam)
 class CThread
 {
     DWORD dwThreadID = 0L;
-    HANDLE hThread = NULL;
+    HANDLE hThread = nullptr;
     Params params;
 public:
     CThread()
@@ -40,18 +40,18 @@ public:
                 return TRUE;
             });
     }
-    bool Start(std::function<int(void *param)> fEntry, void *param = NULL, bool bSuspended = false)
+    bool Start(std::function<int(void *param)> fEntry, void *param = nullptr, bool bSuspended = false)
     {
         params.fEntry = fEntry;
         params.param = param;
         hThread = ::CreateThread(
-            NULL,
+            nullptr,
             0,
             (LPTHREAD_START_ROUTINE)ThreadStartRoutine,
             (LPVOID)&params,
             bSuspended == true ? CREATE_SUSPENDED : 0,
             &dwThreadID);
-        if (hThread == NULL)
+        if (hThread == nullptr)
             return false;
         return true;
     }
