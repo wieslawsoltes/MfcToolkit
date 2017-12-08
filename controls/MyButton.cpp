@@ -7,7 +7,6 @@
 CMyButton::CMyButton()
 {
     this->bIsBold = false;
-
     this->szToolTipText = _T("");
     this->bHaveToolTipText = false;
 }
@@ -24,7 +23,7 @@ void CMyButton::PreSubclassWindow()
     if (!pFont)
     {
         HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-        if (hFont == NULL)
+        if (hFont == nullptr)
             hFont = (HFONT)GetStockObject(ANSI_VAR_FONT);
         if (hFont)
             pFont = CFont::FromHandle(hFont);
