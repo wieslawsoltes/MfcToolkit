@@ -11,8 +11,6 @@ build:
   project: MfcToolkit.sln
   verbosity: minimal
 artifacts:
-  - path: collections\bin\$(configuration)\$(platform)
-    name: MFC.Collections-$(platform)-$(configuration)-build$(appveyor_build_version)
   - path: controls\bin\$(configuration)\$(platform)
     name: MFC.Controls-$(platform)-$(configuration)-build$(appveyor_build_version)
   - path: language\bin\$(configuration)\$(platform)
@@ -23,3 +21,5 @@ artifacts:
     name: TinyXml2-$(platform)-$(configuration)-build$(appveyor_build_version)
   - path: utilities\bin\$(configuration)\$(platform)
     name: MFC.Utilities-$(platform)-$(configuration)-build$(appveyor_build_version)
+  - path: xml\bin\$(configuration)\$(platform)
+    name: MFC.Xml-$(platform)-$(configuration)-build$(appveyor_build_version)
