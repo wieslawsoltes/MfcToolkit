@@ -39,37 +39,37 @@ public:
         switch (ulStatusCode)
         {
         case BINDSTATUS_FINDINGRESOURCE:
-            if (fStatusCallback != NULL)
+            if (fStatusCallback != nullptr)
             {
                 fStatusCallback(-1, _T("Finding resource..."));
             }
             break;
         case BINDSTATUS_CONNECTING:
-            if (fStatusCallback != NULL)
+            if (fStatusCallback != nullptr)
             {
                 fStatusCallback(-1, _T("Connecting..."));
             }
             break;
         case BINDSTATUS_SENDINGREQUEST:
-            if (fStatusCallback != NULL)
+            if (fStatusCallback != nullptr)
             {
                 fStatusCallback(-1, _T("Sending request..."));
             }
             break;
         case BINDSTATUS_MIMETYPEAVAILABLE:
-            if (fStatusCallback != NULL)
+            if (fStatusCallback != nullptr)
             {
                 fStatusCallback(-1, _T("Mime type available"));
             }
             break;
         case BINDSTATUS_CACHEFILENAMEAVAILABLE:
-            if (fStatusCallback != NULL)
+            if (fStatusCallback != nullptr)
             {
                 fStatusCallback(-1, _T("Cache filename available"));
             }
             break;
         case BINDSTATUS_BEGINDOWNLOADDATA:
-            if (fStatusCallback != NULL)
+            if (fStatusCallback != nullptr)
             {
                 fStatusCallback(-1, _T("Begin download"));
             }
@@ -81,7 +81,7 @@ public:
                 if (m_LastPercent < percent)
                 {
                     m_LastPercent = percent;
-                    if (fStatusCallback != NULL)
+                    if (fStatusCallback != nullptr)
                     {
                         CString szOutput;
                         szOutput.Format(_T("%d%%"), percent);
@@ -90,7 +90,7 @@ public:
                 }
                 if (ulStatusCode == BINDSTATUS_ENDDOWNLOADDATA)
                 {
-                    if (fStatusCallback != NULL)
+                    if (fStatusCallback != nullptr)
                     {
                         fStatusCallback(100, _T("End download"));
                     }
@@ -99,7 +99,7 @@ public:
             break;
         default:
             {    
-                if (fStatusCallback != NULL)
+                if (fStatusCallback != nullptr)
                 {
                     CString szOutput;
                     szOutput.Format(_T("Status code : %d"), ulStatusCode);
@@ -160,10 +160,10 @@ public:
         CDownloadCallback m_Callback;
         m_Callback.fStatusCallback = fStatusCallback;
 
-        IBindStatusCallback* pBindStatusCallback = NULL;
+        IBindStatusCallback* pBindStatusCallback = nullptr;
         m_Callback.QueryInterface(IID_IBindStatusCallback, reinterpret_cast<void**>(&pBindStatusCallback));
 
-        HRESULT m_Result = URLDownloadToFile(NULL, CT2W(szUrl), CT2W(szPath), 0, pBindStatusCallback);
+        HRESULT m_Result = URLDownloadToFile(nullptr, CT2W(szUrl), CT2W(szPath), 0, pBindStatusCallback);
         if (SUCCEEDED(m_Result))
         {
             return true;
