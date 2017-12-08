@@ -38,7 +38,7 @@ END_MESSAGE_MAP()
 void CMyListCtrl::OnLvnEndlabeledit(NMHDR *pNMHDR, LRESULT *pResult)
 {
     NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
-    if (pDispInfo->item.pszText != NULL)
+    if (pDispInfo->item.pszText != nullptr)
     {
         CString szText;
         this->GetEditControl()->GetWindowText(szText);
