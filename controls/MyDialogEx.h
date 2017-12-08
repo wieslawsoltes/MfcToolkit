@@ -23,8 +23,8 @@ protected:
     DECLARE_MESSAGE_MAP()
 public:
     CMyDialogEx();
-    CMyDialogEx(UINT nIDTemplate, CWnd *pParentWnd = NULL);
-    CMyDialogEx(LPCTSTR lpszTemplateName, CWnd *pParentWnd = NULL);
+    CMyDialogEx(UINT nIDTemplate, CWnd *pParentWnd = nullptr);
+    CMyDialogEx(LPCTSTR lpszTemplateName, CWnd *pParentWnd = nullptr);
     virtual ~CMyDialogEx();
 public:
     void SetMaximizedRect(const CRect &rc);
