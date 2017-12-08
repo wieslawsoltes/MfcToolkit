@@ -27,7 +27,7 @@ protected:
 #ifdef _UNICODE
     CString ToCString(const char *pszUtf8)
     {
-        if (pszUtf8 == NULL)
+        if (pszUtf8 == nullptr)
             return _T("");
         if (strlen(pszUtf8) == 0)
             return _T("");
@@ -39,7 +39,7 @@ protected:
 #else
     CString ToCString(const char *pszUtf8)
     {
-        if (pszUtf8 == NULL)
+        if (pszUtf8 == nullptr)
             return _T("");
         if (strlen(pszUtf8) == 0)
             return _T("");
