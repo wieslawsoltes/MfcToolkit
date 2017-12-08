@@ -10,7 +10,7 @@
 #define new DEBUG_NEW
 #endif
 
-CMainDlg::CMainDlg(CWnd* pParent /*=NULL*/)
+CMainDlg::CMainDlg(CWnd* pParent /*=nullptr*/)
     : CDialog(IDD_MFCAPPLICATION1_DIALOG, pParent)
 {
     m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
