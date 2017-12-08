@@ -1,4 +1,4 @@
-// Copyright (c) Wies³aw Šoltés. All rights reserved.
+// Copyright (c) WiesÂ³aw Å oltÃ©s. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 #pragma once
@@ -14,7 +14,7 @@ public:
 public:
     bool LookupString(const int nKey, CString& rValue)
     {
-        if (this->pLanguage != NULL)
+        if (this->pLanguage != nullptr)
         {
             if (this->pLanguage->m_Strings.TryGet(nKey, rValue) == TRUE)
                 return true;
