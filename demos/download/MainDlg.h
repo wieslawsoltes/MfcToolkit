@@ -11,7 +11,7 @@
 class CMainDlg : public CDialog
 {
 public:
-    CMainDlg(CWnd* pParent = NULL);
+    CMainDlg(CWnd* pParent = nullptr);
 #ifdef AFX_DESIGN_TIME
     enum { IDD = IDD_MFCAPPLICATION1_DIALOG };
 #endif
