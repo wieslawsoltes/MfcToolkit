@@ -24,7 +24,7 @@ void CMyStatic::PreSubclassWindow()
     if (!pFont)
     {
         HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-        if (hFont == NULL)
+        if (hFont == nullptr)
             hFont = (HFONT)GetStockObject(ANSI_VAR_FONT);
         if (hFont)
             pFont = CFont::FromHandle(hFont);
