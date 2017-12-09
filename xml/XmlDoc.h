@@ -9,6 +9,7 @@
 #include "utilities\UnicodeUtf8.h"
 #include "utilities\Utf8String.h"
 
+typedef tinyxml2::XMLNode XmlNode;
 typedef tinyxml2::XMLElement XmlElement;
 typedef tinyxml2::XMLDocument XmlDocumnent;
 
@@ -78,7 +79,7 @@ protected:
         return rValue;
     }
 protected:
-    void GetAttributeValue(XmlElement *element, const char *name, CString *value)
+    void GetAttributeValue(const XmlElement *element, const char *name, CString *value)
     {
         const char *pszResult = element->Attribute(name);
         if (pszResult != NULL)
@@ -86,7 +87,7 @@ protected:
             (*value) = ToCString(pszResult);
         }
     }
-    void GetAttributeValue(XmlElement *element, const char *name, int *value)
+    void GetAttributeValue(const XmlElement *element, const char *name, int *value)
     {
         const char *pszResult = element->Attribute(name);
         if (pszResult != NULL)
@@ -94,7 +95,7 @@ protected:
             (*value) = ToInt(pszResult);
         }
     }
-    void GetAttributeValue(XmlElement *element, const char *name, bool *value)
+    void GetAttributeValue(const XmlElement *element, const char *name, bool *value)
     {
         const char *pszResult = element->Attribute(name);
         if (pszResult != NULL)
@@ -103,20 +104,20 @@ protected:
         }
     }
 protected:
-    void SetAttributeValue(XmlElement *element, const char *name, CString& value)
+    void SetAttributeValue(XmlElement *element, const char *name, const CString& value)
     {
         element->SetAttribute(name, CUtf8String(value).m_Result);
     }
-    void SetAttributeValue(XmlElement *element, const char *name, int &value)
+    void SetAttributeValue(XmlElement *element, const char *name, const int &value)
     {
         element->SetAttribute(name, CUtf8String(ToCString(value)).m_Result);
     }
-    void SetAttributeValue(XmlElement *element, const char *name, bool &value)
+    void SetAttributeValue(XmlElement *element, const char *name, const bool &value)
     {
         element->SetAttribute(name, CUtf8String(ToCString(value)).m_Result);
     }
 protected:
-    void GetChildValue(XmlElement *parent, const char *name, CString *value)
+    void GetChildValue(const XmlElement *parent, const char *name, CString *value)
     {
         auto element = parent->FirstChildElement(name);
         if (element != NULL)
@@ -124,7 +125,7 @@ protected:
             (*value) = ToCString(element->GetText());
         }
     }
-    void GetChildValue(XmlElement *parent, const char *name, int *value)
+    void GetChildValue(const XmlElement *parent, const char *name, int *value)
     {
         auto element = parent->FirstChildElement(name);
         if (element != NULL)
@@ -132,7 +133,7 @@ protected:
             (*value) = ToInt(element->GetText());
         }
     }
-    void GetChildValue(XmlElement *parent, const char *name, bool *value)
+    void GetChildValue(const XmlElement *parent, const char *name, bool *value)
     {
         auto element = parent->FirstChildElement(name);
         if (element != NULL)
@@ -141,30 +142,43 @@ protected:
         }
     }
 protected:
-    void SetChildValue(XmlElement *parent, const char *name, CString& value)
+    void SetChildValue(XmlElement *parent, const char *name, const CString& value)
     {
         auto element = doc.NewElement(name);
         element->LinkEndChild(doc.NewText(CUtf8String(value).m_Result));
         parent->LinkEndChild(element);
     }
-    void SetChildValue(XmlElement *parent, const char *name, int &value)
+    void SetChildValue(XmlElement *parent, const char *name, const int &value)
     {
         auto element = doc.NewElement(name);
         element->LinkEndChild(doc.NewText(CUtf8String(ToCString(value)).m_Result));
         parent->LinkEndChild(element);
     }
-    void SetChildValue(XmlElement *parent, const char *name, bool &value)
+    void SetChildValue(XmlElement *parent, const char *name, const bool &value)
     {
         auto element = doc.NewElement(name);
         element->LinkEndChild(doc.NewText(CUtf8String(ToCString(value)).m_Result));
         parent->LinkEndChild(element);
     }
 public:
+    XmlElement * NewElement(const char *name)
+    {
+        return doc.NewElement(name);
+    }
+    XmlElement* FirstChildElement(const char *name)
+    {
+        return doc.FirstChildElement(name);
+    }
+    XmlNode* LinkEndChild(XmlNode* node)
+    {
+        return doc.LinkEndChild(node);
+    }
+public:
     void Create()
     {
         doc.LinkEndChild(doc.NewDeclaration(m_Utf8DocumentDeclaration));
     }
-    bool Open(CString szFileName)
+    bool Open(const CString szFileName)
     {
         CStdioFile fp;
         if (fp.Open(szFileName, CFile::modeRead | CFile::typeBinary) == TRUE)
@@ -175,7 +189,7 @@ public:
         }
         return false;
     }
-    bool Save(CString szFileName)
+    bool Save(const CString szFileName)
     {
         CStdioFile fp;
         if (fp.Open(szFileName, CFile::modeCreate | CFile::modeWrite | CFile::typeText) == TRUE)
