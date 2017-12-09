@@ -21,7 +21,7 @@
     <ClInclude Include="StdAfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="XmlBase.h">
+    <ClInclude Include="XmlDoc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
