@@ -12,7 +12,7 @@
 typedef tinyxml2::XMLElement XmlElement;
 typedef tinyxml2::XMLDocument XmlDocumnent;
 
-class XmlBase
+class XmlDoc
 {
     XmlDocumnent doc;
 public:
@@ -21,10 +21,10 @@ public:
     const unsigned char TIXML_UTF_LEAD_2 = 0xbfU;
     const char *m_Utf8DocumentDeclaration = "xml version=\"1.0\" encoding=\"UTF-8\"";
 public:
-    XmlBase()
+    XmlDoc()
     {
     }
-    virtual ~XmlBase()
+    virtual ~XmlDoc()
     {
     }
 private:
