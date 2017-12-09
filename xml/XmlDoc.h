@@ -161,7 +161,7 @@ protected:
         parent->LinkEndChild(element);
     }
 public:
-    XmlElement * NewElement(const char *name)
+    XmlElement* NewElement(const char *name)
     {
         return doc.NewElement(name);
     }
