@@ -15,23 +15,24 @@ typedef tinyxml2::XMLDocument XmlDocumnent;
 
 class XmlDoc
 {
-    XmlDocumnent doc;
+protected:
+    XmlDocumnent & m_Document;
 public:
     const unsigned char TIXML_UTF_LEAD_0 = 0xefU;
     const unsigned char TIXML_UTF_LEAD_1 = 0xbbU;
     const unsigned char TIXML_UTF_LEAD_2 = 0xbfU;
     const char *m_Utf8DocumentDeclaration = "xml version=\"1.0\" encoding=\"UTF-8\"";
 public:
-    XmlDoc()
+    XmlDoc(XmlDocumnent &doc) : m_Document(doc)
     {
     }
     virtual ~XmlDoc()
     {
     }
-private:
+public:
     const LPCTSTR m_True = _T("true");
     const LPCTSTR m_False = _T("false");
-protected:
+public:
 #ifdef _UNICODE
     CString ToCString(const char *pszUtf8)
     {
@@ -78,7 +79,7 @@ protected:
         rValue.Format(_T("%s\0"), bValue ? m_True : m_False);
         return rValue;
     }
-protected:
+public:
     void GetAttributeValue(const XmlElement *element, const char *name, CString *value)
     {
         const char *pszResult = element->Attribute(name);
@@ -103,7 +104,7 @@ protected:
             (*value) = ToBool(pszResult);
         }
     }
-protected:
+public:
     void SetAttributeValue(XmlElement *element, const char *name, const CString& value)
     {
         element->SetAttribute(name, CUtf8String(value).m_Result);
@@ -116,7 +117,7 @@ protected:
     {
         element->SetAttribute(name, CUtf8String(ToCString(value)).m_Result);
     }
-protected:
+public:
     void GetChildValue(const XmlElement *parent, const char *name, CString *value)
     {
         auto element = parent->FirstChildElement(name);
@@ -141,49 +142,49 @@ protected:
             (*value) = ToBool(element->GetText());
         }
     }
-protected:
+public:
     void SetChildValue(XmlElement *parent, const char *name, const CString& value)
     {
-        auto element = doc.NewElement(name);
-        element->LinkEndChild(doc.NewText(CUtf8String(value).m_Result));
+        auto element = m_Document.NewElement(name);
+        element->LinkEndChild(m_Document.NewText(CUtf8String(value).m_Result));
         parent->LinkEndChild(element);
     }
     void SetChildValue(XmlElement *parent, const char *name, const int &value)
     {
-        auto element = doc.NewElement(name);
-        element->LinkEndChild(doc.NewText(CUtf8String(ToCString(value)).m_Result));
+        auto element = m_Document.NewElement(name);
+        element->LinkEndChild(m_Document.NewText(CUtf8String(ToCString(value)).m_Result));
         parent->LinkEndChild(element);
     }
     void SetChildValue(XmlElement *parent, const char *name, const bool &value)
     {
-        auto element = doc.NewElement(name);
-        element->LinkEndChild(doc.NewText(CUtf8String(ToCString(value)).m_Result));
+        auto element = m_Document.NewElement(name);
+        element->LinkEndChild(m_Document.NewText(CUtf8String(ToCString(value)).m_Result));
         parent->LinkEndChild(element);
     }
 public:
-    XmlElement* NewElement(const char *name)
+    XmlElement * NewElement(const char *name)
     {
-        return doc.NewElement(name);
+        return m_Document.NewElement(name);
     }
     XmlElement* FirstChildElement(const char *name)
     {
-        return doc.FirstChildElement(name);
+        return m_Document.FirstChildElement(name);
     }
     XmlNode* LinkEndChild(XmlNode* node)
     {
-        return doc.LinkEndChild(node);
+        return m_Document.LinkEndChild(node);
     }
 public:
     void Create()
     {
-        doc.LinkEndChild(doc.NewDeclaration(m_Utf8DocumentDeclaration));
+        m_Document.LinkEndChild(m_Document.NewDeclaration(m_Utf8DocumentDeclaration));
     }
     bool Open(const CString szFileName)
     {
         CStdioFile fp;
         if (fp.Open(szFileName, CFile::modeRead | CFile::typeBinary) == TRUE)
         {
-            auto result = doc.LoadFile(fp.m_pStream);
+            auto result = m_Document.LoadFile(fp.m_pStream);
             fp.Close();
             return result == tinyxml2::XMLError::XML_SUCCESS;
         }
@@ -198,7 +199,7 @@ public:
             fputc(TIXML_UTF_LEAD_1, fp.m_pStream);
             fputc(TIXML_UTF_LEAD_2, fp.m_pStream);
             tinyxml2::XMLPrinter printer(fp.m_pStream);
-            doc.Print(&printer);
+            m_Document.Print(&printer);
             fp.Close();
             return true;
         }
