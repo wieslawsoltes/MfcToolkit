@@ -33,23 +33,23 @@ public:
     {
         this->RemoveAll();
         POSITION pos = other.m_Map.GetStartPosition();
-        int nKey;
+        K key;
         while (pos != nullptr)
         {
             CString rValue;
-            other.m_Map.GetNextAssoc(pos, nKey, rValue);
-            this->Insert(nKey, rValue);
+            other.m_Map.GetNextAssoc(pos, key, rValue);
+            this->Insert(key, rValue);
         }
     }
     void Copy(CMapT& other)
     {
         POSITION pos = this->m_Map.GetStartPosition();
-        int nKey;
+        K key;
         while (pos != nullptr)
         {
             CString rValue;
-            this->m_Map.GetNextAssoc(pos, nKey, rValue);
-            other.Insert(nKey, rValue);
+            this->m_Map.GetNextAssoc(pos, key, rValue);
+            other.Insert(key, rValue);
         }
     }
     bool IsEmpty()
@@ -62,7 +62,7 @@ public:
     }
     void Set(K key, CString szValue)
     {
-        m_Map[nKey] = szValue;
+        m_Map[key] = szValue;
     }
     CString Get(K key)
     {
