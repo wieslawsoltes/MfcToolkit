@@ -207,6 +207,7 @@
     <ClCompile Include="MyComboBoxEdit.cpp" />
     <ClCompile Include="MyEdit.cpp" />
     <ClCompile Include="MyListCtrl.cpp" />
+    <ClCompile Include="MyProgressCtrl.cpp" />
     <ClCompile Include="MySliderCtrl.cpp" />
     <ClCompile Include="MyStatic.cpp" />
     <ClCompile Include="MyStatusBarCtrl.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="MyComboBoxEdit.h" />
     <ClInclude Include="MyEdit.h" />
     <ClInclude Include="MyListCtrl.h" />
+    <ClInclude Include="MyProgressCtrl.h" />
     <ClInclude Include="MySliderCtrl.h" />
     <ClInclude Include="MyStatic.h" />
     <ClInclude Include="MyStatusBarCtrl.h" />
