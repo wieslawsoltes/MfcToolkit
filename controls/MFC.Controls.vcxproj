@@ -209,6 +209,7 @@
     <ClCompile Include="MyListCtrl.cpp" />
     <ClCompile Include="MyProgressCtrl.cpp" />
     <ClCompile Include="MySliderCtrl.cpp" />
+    <ClCompile Include="MySpinButtonCtrl.cpp" />
     <ClCompile Include="MyStatic.cpp" />
     <ClCompile Include="MyStatusBarCtrl.cpp" />
     <ClCompile Include="MyDialogEx.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="MyListCtrl.h" />
     <ClInclude Include="MyProgressCtrl.h" />
     <ClInclude Include="MySliderCtrl.h" />
+    <ClInclude Include="MySpinButtonCtrl.h" />
     <ClInclude Include="MyStatic.h" />
     <ClInclude Include="MyStatusBarCtrl.h" />
     <ClInclude Include="MyDialogEx.h" />
