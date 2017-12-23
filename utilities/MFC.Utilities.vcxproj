@@ -230,7 +230,6 @@
     <ClInclude Include="Download.h" />
     <ClInclude Include="ListT.h" />
     <ClInclude Include="MapT.h" />
-    <ClInclude Include="MyFile.h" />
     <ClInclude Include="OptionsParser.h" />
     <ClInclude Include="OutputPath.h" />
     <ClInclude Include="Pipe.h" />

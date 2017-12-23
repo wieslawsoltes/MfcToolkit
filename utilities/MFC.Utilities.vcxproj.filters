@@ -75,9 +75,6 @@
     <ClInclude Include="Download.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="MyFile.h">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
     <ClInclude Include="OptionsParser.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
