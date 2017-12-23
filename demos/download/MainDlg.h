@@ -5,6 +5,9 @@
 
 #include "afxcmn.h"
 #include "afxwin.h"
+#include "..\..\controls\MyButton.h"
+#include "..\..\controls\MyEdit.h"
+#include "..\..\controls\MyProgressCtrl.h"
 #include "..\..\utilities\Download.h"
 #include "..\..\utilities\Thread.h"
 
@@ -28,11 +31,11 @@ public:
 public:
     void Download();
 public:
-    CEdit m_UrlEdit;
-    CEdit m_PathEdit;
-    CProgressCtrl m_ProgressCtrl;
-    CEdit m_EdtStatus;
-    CButton m_DownloadButton;
+    CMyEdit m_UrlEdit;
+    CMyEdit m_PathEdit;
+    CMyProgressCtrl m_ProgressCtrl;
+    CMyEdit m_EdtStatus;
+    CMyButton m_DownloadButton;
 public:
     CDownload m_Download;
     CThread m_Worker;

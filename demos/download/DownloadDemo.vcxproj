@@ -214,6 +214,9 @@
     <Image Include="res\DownloadDemo.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\controls\MFC.Controls.vcxproj">
+      <Project>{5936eb01-037a-4148-a512-dad975c24cbd}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\utilities\MFC.Utilities.vcxproj">
       <Project>{4b291d95-c2ca-49e3-9eb5-b9f855d32aa0}</Project>
     </ProjectReference>
