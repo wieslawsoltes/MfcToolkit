@@ -12,6 +12,28 @@ public:
     CLanguagesList m_Languages;
     CLanguage* pLanguage;
 public:
+    CLanguageContext() : pLanguage(nullptr)
+    {
+    }
+    CLanguageContext(const CLanguageContext &other)
+    {
+        Copy(other);
+    }
+    CLanguageContext& operator=(const CLanguageContext &other)
+    {
+        Copy(other);
+        return *this;
+    }
+    virtual ~CLanguageContext()
+    {
+    }
+public:
+    void Copy(const CLanguageContext &other)
+    {
+        this->m_Languages = other.m_Languages;
+        this->pLanguage = nullptr;
+    }
+public:
     bool LookupString(const int nKey, CString& rValue)
     {
         if (this->pLanguage != nullptr)
