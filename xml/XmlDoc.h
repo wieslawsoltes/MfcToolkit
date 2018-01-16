@@ -18,10 +18,10 @@ class XmlDoc
 protected:
     XmlDocumnent & m_Document;
 public:
-    const unsigned char TIXML_UTF_LEAD_0 = 0xefU;
-    const unsigned char TIXML_UTF_LEAD_1 = 0xbbU;
-    const unsigned char TIXML_UTF_LEAD_2 = 0xbfU;
-    const char *m_Utf8DocumentDeclaration = "xml version=\"1.0\" encoding=\"UTF-8\"";
+    static unsigned char TIXML_UTF_LEAD_0 = 0xefU;
+    static unsigned char TIXML_UTF_LEAD_1 = 0xbbU;
+    static unsigned char TIXML_UTF_LEAD_2 = 0xbfU;
+    static char *m_Utf8DocumentDeclaration = "xml version=\"1.0\" encoding=\"UTF-8\"";
 public:
     XmlDoc(XmlDocumnent &doc) : m_Document(doc)
     {
@@ -36,6 +36,37 @@ public:
         if (root != nullptr)
             return root->Name();
         return nullptr;
+    }
+public:
+    static void Create(XmlDocumnent & doc)
+    {
+        doc.LinkEndChild(doc.NewDeclaration(m_Utf8DocumentDeclaration));
+    }
+    static bool Open(const CString szFileName, XmlDocumnent & doc)
+    {
+        CStdioFile fp;
+        if (fp.Open(szFileName, CFile::modeRead | CFile::typeBinary) == TRUE)
+        {
+            auto result = doc.LoadFile(fp.m_pStream);
+            fp.Close();
+            return result == tinyxml2::XMLError::XML_SUCCESS;
+        }
+        return false;
+    }
+    static bool Save(const CString szFileName, XmlDocumnent & doc)
+    {
+        CStdioFile fp;
+        if (fp.Open(szFileName, CFile::modeCreate | CFile::modeWrite | CFile::typeText) == TRUE)
+        {
+            fputc(TIXML_UTF_LEAD_0, fp.m_pStream);
+            fputc(TIXML_UTF_LEAD_1, fp.m_pStream);
+            fputc(TIXML_UTF_LEAD_2, fp.m_pStream);
+            tinyxml2::XMLPrinter printer(fp.m_pStream);
+            doc.Print(&printer);
+            fp.Close();
+            return true;
+        }
+        return false;
     }
 public:
     const LPCTSTR m_True = _T("true");
@@ -185,32 +216,14 @@ public:
 public:
     void Create()
     {
-        m_Document.LinkEndChild(m_Document.NewDeclaration(m_Utf8DocumentDeclaration));
+        XmlDoc::Open(m_Document);
     }
     bool Open(const CString szFileName)
     {
-        CStdioFile fp;
-        if (fp.Open(szFileName, CFile::modeRead | CFile::typeBinary) == TRUE)
-        {
-            auto result = m_Document.LoadFile(fp.m_pStream);
-            fp.Close();
-            return result == tinyxml2::XMLError::XML_SUCCESS;
-        }
-        return false;
+        return XmlDoc::Open(szFileName, m_Document);
     }
     bool Save(const CString szFileName)
     {
-        CStdioFile fp;
-        if (fp.Open(szFileName, CFile::modeCreate | CFile::modeWrite | CFile::typeText) == TRUE)
-        {
-            fputc(TIXML_UTF_LEAD_0, fp.m_pStream);
-            fputc(TIXML_UTF_LEAD_1, fp.m_pStream);
-            fputc(TIXML_UTF_LEAD_2, fp.m_pStream);
-            tinyxml2::XMLPrinter printer(fp.m_pStream);
-            m_Document.Print(&printer);
-            fp.Close();
-            return true;
-        }
-        return false;
+        return XmlDoc::Save(szFileName, m_Document);
     }
 };
