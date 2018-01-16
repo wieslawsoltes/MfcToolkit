@@ -30,6 +30,14 @@ public:
     {
     }
 public:
+    static const char* GetRootName(XmlDocumnent &doc)
+    {
+        auto root = doc.RootElement();
+        if (root != nullptr)
+            return root->Name();
+        return nullptr;
+    }
+public:
     const LPCTSTR m_True = _T("true");
     const LPCTSTR m_False = _T("false");
 public:
