@@ -18,11 +18,6 @@ class XmlDoc
 protected:
     XmlDocumnent & m_Document;
 public:
-    static unsigned char TIXML_UTF_LEAD_0 = 0xefU;
-    static unsigned char TIXML_UTF_LEAD_1 = 0xbbU;
-    static unsigned char TIXML_UTF_LEAD_2 = 0xbfU;
-    static char *m_Utf8DocumentDeclaration = "xml version=\"1.0\" encoding=\"UTF-8\"";
-public:
     XmlDoc(XmlDocumnent &doc) : m_Document(doc)
     {
     }
@@ -40,7 +35,7 @@ public:
 public:
     static void Create(XmlDocumnent & doc)
     {
-        doc.LinkEndChild(doc.NewDeclaration(m_Utf8DocumentDeclaration));
+        doc.LinkEndChild(doc.NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\""));
     }
     static bool Open(const CString szFileName, XmlDocumnent & doc)
     {
@@ -58,9 +53,9 @@ public:
         CStdioFile fp;
         if (fp.Open(szFileName, CFile::modeCreate | CFile::modeWrite | CFile::typeText) == TRUE)
         {
-            fputc(TIXML_UTF_LEAD_0, fp.m_pStream);
-            fputc(TIXML_UTF_LEAD_1, fp.m_pStream);
-            fputc(TIXML_UTF_LEAD_2, fp.m_pStream);
+            fputc(0xefU, fp.m_pStream);
+            fputc(0xbbU, fp.m_pStream);
+            fputc(0xbfU, fp.m_pStream);
             tinyxml2::XMLPrinter printer(fp.m_pStream);
             doc.Print(&printer);
             fp.Close();
@@ -216,7 +211,7 @@ public:
 public:
     void Create()
     {
-        XmlDoc::Open(m_Document);
+        XmlDoc::Create(m_Document);
     }
     bool Open(const CString szFileName)
     {
