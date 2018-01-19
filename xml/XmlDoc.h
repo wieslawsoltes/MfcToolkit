@@ -114,29 +114,35 @@ public:
         return rValue;
     }
 public:
-    void GetAttributeValue(const XmlElement *element, const char *name, CString *value)
+    bool GetAttributeValue(const XmlElement *element, const char *name, CString *value)
     {
         const char *pszResult = element->Attribute(name);
         if (pszResult != nullptr)
         {
             (*value) = ToCString(pszResult);
+            return true;
         }
+        return false;
     }
-    void GetAttributeValue(const XmlElement *element, const char *name, int *value)
+    bool GetAttributeValue(const XmlElement *element, const char *name, int *value)
     {
         const char *pszResult = element->Attribute(name);
         if (pszResult != nullptr)
         {
             (*value) = ToInt(pszResult);
+            return true;
         }
+        return false;
     }
-    void GetAttributeValue(const XmlElement *element, const char *name, bool *value)
+    bool GetAttributeValue(const XmlElement *element, const char *name, bool *value)
     {
         const char *pszResult = element->Attribute(name);
         if (pszResult != nullptr)
         {
             (*value) = ToBool(pszResult);
+            return true;
         }
+        return false;
     }
 public:
     void SetAttributeValue(XmlElement *element, const char *name, const CString& value)
@@ -152,29 +158,35 @@ public:
         element->SetAttribute(name, CUtf8String(ToCString(value)).m_Result);
     }
 public:
-    void GetChildValue(const XmlElement *parent, const char *name, CString *value)
+    bool GetChildValue(const XmlElement *parent, const char *name, CString *value)
     {
         auto element = parent->FirstChildElement(name);
         if (element != nullptr)
         {
             (*value) = ToCString(element->GetText());
+            return true;
         }
+        return false;
     }
-    void GetChildValue(const XmlElement *parent, const char *name, int *value)
+    bool GetChildValue(const XmlElement *parent, const char *name, int *value)
     {
         auto element = parent->FirstChildElement(name);
         if (element != nullptr)
         {
             (*value) = ToInt(element->GetText());
+            return true;
         }
+        return false;
     }
-    void GetChildValue(const XmlElement *parent, const char *name, bool *value)
+    bool GetChildValue(const XmlElement *parent, const char *name, bool *value)
     {
         auto element = parent->FirstChildElement(name);
         if (element != nullptr)
         {
             (*value) = ToBool(element->GetText());
+            return true;
         }
+        return false;
     }
 public:
     void SetChildValue(XmlElement *parent, const char *name, const CString& value)
