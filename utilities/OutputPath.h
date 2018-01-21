@@ -86,7 +86,7 @@ namespace util
                 CString szOutPath;
                 if (this->bIsEmpty)
                 {
-                    CString szInputPath = ::GetFilePath(szInputFile);
+                    CString szInputPath = util::GetFilePath(szInputFile);
                     szOutPath = szInputPath;
                 }
                 else
@@ -110,7 +110,7 @@ namespace util
                     && (this->bHaveName == true) && (this->bHaveExt == true))
                 {
                     CString szOutputFile = CString(szOutput);
-                    CString szInputPath = ::GetFilePath(szInputFile);
+                    CString szInputPath = util::GetFilePath(szInputFile);
                     szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_SOURCE_DIRECTORY, szInputPath);
                     szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_NAME, szName);
                     szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_EXTENSION, CString(szExt).MakeLower());
@@ -120,7 +120,7 @@ namespace util
                     && (this->bHaveName == false) && (this->bHaveExt == false))
                 {
                     CString szOutPath = CString(szOutput);
-                    CString szInputPath = ::GetFilePath(szInputFile);
+                    CString szInputPath = util::GetFilePath(szInputFile);
                     szOutPath = ReplaceNoCase(szOutPath, VAR_OUTPUT_SOURCE_DIRECTORY, szInputPath);
 
                     CString szOutputFile = szName + _T(".") + CString(szExt).MakeLower();
@@ -145,12 +145,12 @@ namespace util
         }
         bool CreateOutputPath(CString szOutputFile)
         {
-            CString szOutputPath = ::GetFilePath(szOutputFile);
+            CString szOutputPath = util::GetFilePath(szOutputFile);
             if (szOutputPath.GetLength() > 0)
             {
-                if (!::DirectoryExists(szOutputPath))
+                if (!util::DirectoryExists(szOutputPath))
                 {
-                    if (::MakeFullPath(szOutputPath) == false)
+                    if (util::MakeFullPath(szOutputPath) == false)
                         return false;
                 }
             }
