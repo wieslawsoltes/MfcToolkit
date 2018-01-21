@@ -15,7 +15,7 @@ namespace lang
         CString szId;
         CString szOriginalName;
         CString szTranslatedName;
-        CStringsMap m_Strings;
+        util::CStringsMap m_Strings;
     public:
         CLanguage()
         {

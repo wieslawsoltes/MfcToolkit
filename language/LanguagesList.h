@@ -9,7 +9,7 @@
 
 namespace lang
 {
-    class CLanguagesList : public CListT<CLanguage>
+    class CLanguagesList : public util::CListT<CLanguage>
     {
     public:
         int GetLanguageById(CString szLanguageId)
