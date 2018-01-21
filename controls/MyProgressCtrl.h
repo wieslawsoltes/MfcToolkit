@@ -3,12 +3,15 @@
 
 #pragma once
 
-class CMyProgressCtrl : public CProgressCtrl
+namespace controls
 {
-    DECLARE_DYNAMIC(CMyProgressCtrl)
-public:
-    CMyProgressCtrl();
-    virtual ~CMyProgressCtrl();
-protected:
-    DECLARE_MESSAGE_MAP()
-};
+    class CMyProgressCtrl : public CProgressCtrl
+    {
+        DECLARE_DYNAMIC(CMyProgressCtrl)
+    public:
+        CMyProgressCtrl();
+        virtual ~CMyProgressCtrl();
+    protected:
+        DECLARE_MESSAGE_MAP()
+    };
+}

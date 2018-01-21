@@ -3,12 +3,15 @@
 
 #pragma once
 
-class CMyStatusBarCtrl : public CStatusBarCtrl
+namespace controls
 {
-    DECLARE_DYNAMIC(CMyStatusBarCtrl)
-public:
-    CMyStatusBarCtrl();
-    virtual ~CMyStatusBarCtrl();
-protected:
-    DECLARE_MESSAGE_MAP()
-};
+    class CMyStatusBarCtrl : public CStatusBarCtrl
+    {
+        DECLARE_DYNAMIC(CMyStatusBarCtrl)
+    public:
+        CMyStatusBarCtrl();
+        virtual ~CMyStatusBarCtrl();
+    protected:
+        DECLARE_MESSAGE_MAP()
+    };
+}

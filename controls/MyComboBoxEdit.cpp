@@ -4,128 +4,131 @@
 #include "StdAfx.h"
 #include "MyComboBoxEdit.h"
 
-IMPLEMENT_DYNAMIC(CMyComboBoxEdit, CEdit)
-
-CMyComboBoxEdit::CMyComboBoxEdit()
+namespace controls
 {
-    this->szToolTipText = _T("");
-    this->bHaveToolTipText = false;
-}
+    IMPLEMENT_DYNAMIC(CMyComboBoxEdit, CEdit)
 
-CMyComboBoxEdit::~CMyComboBoxEdit()
-{
+        CMyComboBoxEdit::CMyComboBoxEdit()
+    {
+        this->szToolTipText = _T("");
+        this->bHaveToolTipText = false;
+    }
 
-}
+    CMyComboBoxEdit::~CMyComboBoxEdit()
+    {
 
-void CMyComboBoxEdit::PreSubclassWindow()
-{
-    CEdit::PreSubclassWindow();
+    }
 
-    EnableToolTips(TRUE);
-}
+    void CMyComboBoxEdit::PreSubclassWindow()
+    {
+        CEdit::PreSubclassWindow();
 
-BEGIN_MESSAGE_MAP(CMyComboBoxEdit, CEdit)
-    ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipText)
-    ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipText)
-    ON_CONTROL_REFLECT(EN_CHANGE, &CMyComboBoxEdit::OnEnChange)
-END_MESSAGE_MAP()
+        EnableToolTips(TRUE);
+    }
 
-void CMyComboBoxEdit::SetTooltipText(CString szText)
-{
-    this->szToolTipText = szText;
-    this->bHaveToolTipText = true;
-}
+    BEGIN_MESSAGE_MAP(CMyComboBoxEdit, CEdit)
+        ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipText)
+        ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipText)
+        ON_CONTROL_REFLECT(EN_CHANGE, &CMyComboBoxEdit::OnEnChange)
+    END_MESSAGE_MAP()
 
-CString CMyComboBoxEdit::GetTooltipText()
-{
-    return this->szToolTipText;
-}
+    void CMyComboBoxEdit::SetTooltipText(CString szText)
+    {
+        this->szToolTipText = szText;
+        this->bHaveToolTipText = true;
+    }
 
-void CMyComboBoxEdit::DelTooltipText()
-{
-    this->bHaveToolTipText = false;
-    this->szToolTipText = _T("");
-}
+    CString CMyComboBoxEdit::GetTooltipText()
+    {
+        return this->szToolTipText;
+    }
 
-bool CMyComboBoxEdit::HaveTooltipText()
-{
-    return this->bHaveToolTipText;
-}
+    void CMyComboBoxEdit::DelTooltipText()
+    {
+        this->bHaveToolTipText = false;
+        this->szToolTipText = _T("");
+    }
 
-INT_PTR CMyComboBoxEdit::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
-{
-    CRect rcTemp;
-    GetClientRect(rcTemp);
-    if (!rcTemp.PtInRect(point))
-        return -1;
+    bool CMyComboBoxEdit::HaveTooltipText()
+    {
+        return this->bHaveToolTipText;
+    }
 
-    pTI->hwnd = m_hWnd;
-    pTI->uId = 1;
-    pTI->lpszText = LPSTR_TEXTCALLBACK;
-    pTI->rect = rcTemp;
+    INT_PTR CMyComboBoxEdit::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
+    {
+        CRect rcTemp;
+        GetClientRect(rcTemp);
+        if (!rcTemp.PtInRect(point))
+            return -1;
 
-    return pTI->uId;
-    // return CEdit::OnToolHitTest(point, pTI);
-}
+        pTI->hwnd = m_hWnd;
+        pTI->uId = 1;
+        pTI->lpszText = LPSTR_TEXTCALLBACK;
+        pTI->rect = rcTemp;
 
-BOOL CMyComboBoxEdit::OnToolTipText(UINT id, NMHDR *pNMHDR, LRESULT *pResult)
-{
-    TOOLTIPTEXTA *pTTTA = (TOOLTIPTEXTA *)pNMHDR;
-    TOOLTIPTEXTW *pTTTW = (TOOLTIPTEXTW *)pNMHDR;
-    static CString szTipText;
-    UINT_PTR nID = pNMHDR->idFrom;
+        return pTI->uId;
+        // return CEdit::OnToolHitTest(point, pTI);
+    }
 
-    if (nID == 0)
-        return FALSE;
+    BOOL CMyComboBoxEdit::OnToolTipText(UINT id, NMHDR *pNMHDR, LRESULT *pResult)
+    {
+        TOOLTIPTEXTA *pTTTA = (TOOLTIPTEXTA *)pNMHDR;
+        TOOLTIPTEXTW *pTTTW = (TOOLTIPTEXTW *)pNMHDR;
+        static CString szTipText;
+        UINT_PTR nID = pNMHDR->idFrom;
 
-    if (this->HaveTooltipText())
-        szTipText = this->GetTooltipText();
-    else
-        GetWindowText(szTipText);
+        if (nID == 0)
+            return FALSE;
 
-    // length of tooltips buffer
-    static const int nMyTooltipsWidth = 4096;
+        if (this->HaveTooltipText())
+            szTipText = this->GetTooltipText();
+        else
+            GetWindowText(szTipText);
 
-    // check the tooltip text length
-    if (szTipText.GetLength() > nMyTooltipsWidth)
-        return FALSE;
+        // length of tooltips buffer
+        static const int nMyTooltipsWidth = 4096;
 
-    ::SendMessage(pNMHDR->hwndFrom, TTM_SETMAXTIPWIDTH, 0, (LPARAM)nMyTooltipsWidth);
+        // check the tooltip text length
+        if (szTipText.GetLength() > nMyTooltipsWidth)
+            return FALSE;
 
-    TCHAR szBuff[nMyTooltipsWidth] = _T("");
-    _stprintf_s(szBuff, _T("%s"), (LPCTSTR)szTipText);
+        ::SendMessage(pNMHDR->hwndFrom, TTM_SETMAXTIPWIDTH, 0, (LPARAM)nMyTooltipsWidth);
+
+        TCHAR szBuff[nMyTooltipsWidth] = _T("");
+        _stprintf_s(szBuff, _T("%s"), (LPCTSTR)szTipText);
 
 #ifndef _UNICODE
-    if (pNMHDR->code == TTN_NEEDTEXTA)
-    {
-        pTTTA->lpszText = szBuff;
-    }
-    else
-    {
-        wchar_t szTmpBuff[nMyTooltipsWidth];
-        _mbstowcsz(szTmpBuff, szBuff, szTipText.GetLength() + 1);
-        pTTTW->lpszText = szTmpBuff;
-    }
+        if (pNMHDR->code == TTN_NEEDTEXTA)
+        {
+            pTTTA->lpszText = szBuff;
+        }
+        else
+        {
+            wchar_t szTmpBuff[nMyTooltipsWidth];
+            _mbstowcsz(szTmpBuff, szBuff, szTipText.GetLength() + 1);
+            pTTTW->lpszText = szTmpBuff;
+        }
 #else
-    if (pNMHDR->code == TTN_NEEDTEXTA)
-    {
-        char szTmpBuff[nMyTooltipsWidth];
-        _wcstombsz(szTmpBuff, szBuff, szTipText.GetLength() + 1);
-        pTTTA->lpszText = szTmpBuff;
-    }
-    else
-    {
-        pTTTW->lpszText = szBuff;
-    }
+        if (pNMHDR->code == TTN_NEEDTEXTA)
+        {
+            char szTmpBuff[nMyTooltipsWidth];
+            _wcstombsz(szTmpBuff, szBuff, szTipText.GetLength() + 1);
+            pTTTA->lpszText = szTmpBuff;
+        }
+        else
+        {
+            pTTTW->lpszText = szBuff;
+        }
 #endif
 
-    *pResult = 0;
-    return TRUE;
-}
+        *pResult = 0;
+        return TRUE;
+    }
 
-void CMyComboBoxEdit::OnEnChange()
-{
-    CString szText;
-    this->GetWindowText(szText);
-    this->GetParent()->GetParent()->SendMessage(WM_MY_EN_CHANGE, (WPARAM)&szText, 0);
+    void CMyComboBoxEdit::OnEnChange()
+    {
+        CString szText;
+        this->GetWindowText(szText);
+        this->GetParent()->GetParent()->SendMessage(WM_MY_EN_CHANGE, (WPARAM)&szText, 0);
+    }
 }

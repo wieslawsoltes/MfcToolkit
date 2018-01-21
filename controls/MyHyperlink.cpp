@@ -4,107 +4,110 @@
 #include "StdAfx.h"
 #include "MyHyperlink.h"
 
-IMPLEMENT_DYNAMIC(CMyHyperlink, CStatic)
-
-CMyHyperlink::CMyHyperlink()
+namespace controls
 {
-    m_hCursor = nullptr;
-    m_bVisited = false;
-    m_bCaptured = false;
-}
+    IMPLEMENT_DYNAMIC(CMyHyperlink, CStatic)
 
-CMyHyperlink::~CMyHyperlink()
-{
-
-}
-
-BEGIN_MESSAGE_MAP(CMyHyperlink, CMyStatic)
-    ON_CONTROL_REFLECT(STN_CLICKED, OnStnClicked)
-    ON_WM_CTLCOLOR_REFLECT()
-    ON_WM_MOUSEMOVE()
-    ON_WM_SETCURSOR()
-    ON_WM_DESTROY()
-END_MESSAGE_MAP()
-
-void CMyHyperlink::OnStnClicked()
-{
-    ::ShellExecute(nullptr, _T("open"), m_szURL, nullptr, nullptr, SW_SHOW);
-    m_bVisited = true;
-}
-
-HBRUSH CMyHyperlink::CtlColor(CDC* pDC, UINT nCtlColor)
-{
-    SetTextColor(pDC->GetSafeHdc(), m_bVisited ? colorVisited : m_bCaptured ? colorHover : colorLink);
-    SetBkMode(pDC->GetSafeHdc(), TRANSPARENT);
-
-    return (HBRUSH) ::GetStockObject(NULL_BRUSH);
-}
-
-void CMyHyperlink::OnMouseMove(UINT nFlags, CPoint point)
-{
-    if (m_bCaptured)
+        CMyHyperlink::CMyHyperlink()
     {
-        RECT rc;
-        GetClientRect(&rc);
-        if (PtInRect(&rc, point) == FALSE)
+        m_hCursor = nullptr;
+        m_bVisited = false;
+        m_bCaptured = false;
+    }
+
+    CMyHyperlink::~CMyHyperlink()
+    {
+
+    }
+
+    BEGIN_MESSAGE_MAP(CMyHyperlink, CMyStatic)
+        ON_CONTROL_REFLECT(STN_CLICKED, OnStnClicked)
+        ON_WM_CTLCOLOR_REFLECT()
+        ON_WM_MOUSEMOVE()
+        ON_WM_SETCURSOR()
+        ON_WM_DESTROY()
+    END_MESSAGE_MAP()
+
+    void CMyHyperlink::OnStnClicked()
+    {
+        ::ShellExecute(nullptr, _T("open"), m_szURL, nullptr, nullptr, SW_SHOW);
+        m_bVisited = true;
+    }
+
+    HBRUSH CMyHyperlink::CtlColor(CDC* pDC, UINT nCtlColor)
+    {
+        SetTextColor(pDC->GetSafeHdc(), m_bVisited ? colorVisited : m_bCaptured ? colorHover : colorLink);
+        SetBkMode(pDC->GetSafeHdc(), TRANSPARENT);
+
+        return (HBRUSH) ::GetStockObject(NULL_BRUSH);
+    }
+
+    void CMyHyperlink::OnMouseMove(UINT nFlags, CPoint point)
+    {
+        if (m_bCaptured)
         {
-            m_bCaptured = false;
-            ReleaseCapture();
+            RECT rc;
+            GetClientRect(&rc);
+            if (PtInRect(&rc, point) == FALSE)
+            {
+                m_bCaptured = false;
+                ReleaseCapture();
+                RedrawWindow();
+            }
+        }
+        else
+        {
+            SetCapture();
+            m_bCaptured = true;
             RedrawWindow();
         }
-    }
-    else
-    {
-        SetCapture();
-        m_bCaptured = true;
-        RedrawWindow();
+
+        CMyStatic::OnMouseMove(nFlags, point);
     }
 
-    CMyStatic::OnMouseMove(nFlags, point);
-}
-
-BOOL CMyHyperlink::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
-{
-    if (m_hCursor)
+    BOOL CMyHyperlink::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
     {
-        ::SetCursor(m_hCursor);
-        return TRUE;
-    }
-
-    return CMyStatic::OnSetCursor(pWnd, nHitTest, message);
-}
-
-void CMyHyperlink::OnDestroy()
-{
-    CMyStatic::OnDestroy();
-
-    if (m_hCursor != nullptr)
-        ::DestroyCursor(m_hCursor);
-}
-
-void CMyHyperlink::PreSubclassWindow()
-{
-    colorHover = ::GetSysColor(COLOR_HIGHLIGHT);
-    colorLink = RGB(0, 0, 255);
-    colorVisited = RGB(128, 0, 128);
-
-    SetWindowLong(this->GetSafeHwnd(), GWL_STYLE, GetStyle() | SS_NOTIFY);
-    m_hCursor = ::LoadCursor(nullptr, IDC_HAND);
-
-    if (m_hCursor == nullptr)
-    {
-        TCHAR szPath[MAX_PATH + 1];
-        ::GetWindowsDirectory(szPath, sizeof(szPath));
-        lstrcat(szPath, _T("\\winhlp32.exe"));
-        HMODULE hModule = ::LoadLibrary(szPath);
-        if (hModule)
+        if (m_hCursor)
         {
-            HCURSOR hm_hCursor = ::LoadCursor(hModule, MAKEINTRESOURCE(106));
-            if (hm_hCursor)
-                m_hCursor = CopyCursor(hm_hCursor);
+            ::SetCursor(m_hCursor);
+            return TRUE;
         }
-        ::FreeLibrary(hModule);
+
+        return CMyStatic::OnSetCursor(pWnd, nHitTest, message);
     }
 
-    CMyStatic::PreSubclassWindow();
+    void CMyHyperlink::OnDestroy()
+    {
+        CMyStatic::OnDestroy();
+
+        if (m_hCursor != nullptr)
+            ::DestroyCursor(m_hCursor);
+    }
+
+    void CMyHyperlink::PreSubclassWindow()
+    {
+        colorHover = ::GetSysColor(COLOR_HIGHLIGHT);
+        colorLink = RGB(0, 0, 255);
+        colorVisited = RGB(128, 0, 128);
+
+        SetWindowLong(this->GetSafeHwnd(), GWL_STYLE, GetStyle() | SS_NOTIFY);
+        m_hCursor = ::LoadCursor(nullptr, IDC_HAND);
+
+        if (m_hCursor == nullptr)
+        {
+            TCHAR szPath[MAX_PATH + 1];
+            ::GetWindowsDirectory(szPath, sizeof(szPath));
+            lstrcat(szPath, _T("\\winhlp32.exe"));
+            HMODULE hModule = ::LoadLibrary(szPath);
+            if (hModule)
+            {
+                HCURSOR hm_hCursor = ::LoadCursor(hModule, MAKEINTRESOURCE(106));
+                if (hm_hCursor)
+                    m_hCursor = CopyCursor(hm_hCursor);
+            }
+            ::FreeLibrary(hModule);
+        }
+
+        CMyStatic::PreSubclassWindow();
+    }
 }

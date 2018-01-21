@@ -7,35 +7,38 @@
 #include <afxtempl.h>
 #include "..\utilities\StringsMap.h"
 
-class CLanguage
+namespace lang
 {
-public:
-    CString szId;
-    CString szOriginalName;
-    CString szTranslatedName;
-    CStringsMap m_Strings;
-public:
-    CLanguage()
+    class CLanguage
     {
-    }
-    CLanguage(const CLanguage &other)
-    {
-        Copy(other);
-    }
-    CLanguage& operator=(const CLanguage &other)
-    {
-        Copy(other);
-        return *this;
-    }
-    virtual ~CLanguage()
-    {
-    }
-public:
-    void Copy(const CLanguage &other)
-    {
-        this->szId = other.szId;
-        this->szOriginalName = other.szOriginalName;
-        this->szTranslatedName = other.szTranslatedName;
-        this->m_Strings = other.m_Strings;
-    }
-};
+    public:
+        CString szId;
+        CString szOriginalName;
+        CString szTranslatedName;
+        CStringsMap m_Strings;
+    public:
+        CLanguage()
+        {
+        }
+        CLanguage(const CLanguage &other)
+        {
+            Copy(other);
+        }
+        CLanguage& operator=(const CLanguage &other)
+        {
+            Copy(other);
+            return *this;
+        }
+        virtual ~CLanguage()
+        {
+        }
+    public:
+        void Copy(const CLanguage &other)
+        {
+            this->szId = other.szId;
+            this->szOriginalName = other.szOriginalName;
+            this->szTranslatedName = other.szTranslatedName;
+            this->m_Strings = other.m_Strings;
+        }
+    };
+}

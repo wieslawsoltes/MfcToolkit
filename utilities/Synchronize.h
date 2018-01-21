@@ -5,35 +5,38 @@
 
 #include <Windows.h>
 
-class CSynchronize
+namespace util
 {
-    HANDLE hMutex;
-public:
-    CSynchronize()
+    class CSynchronize
     {
-        hMutex = ::CreateMutex(nullptr, FALSE, nullptr);
-    }
-    virtual ~CSynchronize()
-    {
-        ::CloseHandle(hMutex);
-    }
-public:
-    bool Wait()
-    {
-        DWORD dwWaitResult = ::WaitForSingleObject(hMutex, INFINITE);
-        switch (dwWaitResult)
+        HANDLE hMutex;
+    public:
+        CSynchronize()
         {
-        case WAIT_OBJECT_0:
-            return true;
-        case WAIT_ABANDONED:
+            hMutex = ::CreateMutex(nullptr, FALSE, nullptr);
+        }
+        virtual ~CSynchronize()
+        {
+            ::CloseHandle(hMutex);
+        }
+    public:
+        bool Wait()
+        {
+            DWORD dwWaitResult = ::WaitForSingleObject(hMutex, INFINITE);
+            switch (dwWaitResult)
+            {
+            case WAIT_OBJECT_0:
+                return true;
+            case WAIT_ABANDONED:
+                return false;
+            }
             return false;
         }
-        return false;
-    }
-    bool Release()
-    {
-        if (!::ReleaseMutex(hMutex))
-            return false;
-        return true;
-    }
-};
+        bool Release()
+        {
+            if (!::ReleaseMutex(hMutex))
+                return false;
+            return true;
+        }
+    };
+}

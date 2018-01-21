@@ -20,106 +20,79 @@
 #define VAR_OUTPUT_NAME             _T("$Name$")
 #define VAR_OUTPUT_EXTENSION        _T("$Ext$")
 
-class COutputPath
+namespace util
 {
-public:
-    bool bIsEmpty;
-    bool bHaveSourceDirectory;
-    bool bHaveName;
-    bool bHaveExt;
-public:
-    COutputPath()
+    class COutputPath
     {
-    }
-    virtual ~COutputPath()
-    {
-    }
-public:
-    bool Validate(CString szOutput)
-    {
-        this->bIsEmpty = szOutput.GetLength() <= 0;
-        this->bHaveSourceDirectory = FindNoCase(szOutput, VAR_OUTPUT_SOURCE_DIRECTORY) >= 0;
-        this->bHaveName = FindNoCase(szOutput, VAR_OUTPUT_NAME) >= 0;
-        this->bHaveExt = FindNoCase(szOutput, VAR_OUTPUT_EXTENSION) >= 0;
-        if (this->bIsEmpty)
+    public:
+        bool bIsEmpty;
+        bool bHaveSourceDirectory;
+        bool bHaveName;
+        bool bHaveExt;
+    public:
+        COutputPath()
         {
-            // Only input file directory is used (name and extension are added automatically).
-            return true;
         }
-        else
+        virtual ~COutputPath()
         {
-            if ((this->bHaveSourceDirectory == true)
-                && (this->bHaveName == true) && (this->bHaveExt == true))
-            {
-                // Input source directory variable is used with name and extension variables.
-                return true;
-            }
-            else if ((this->bHaveSourceDirectory == true)
-                && (this->bHaveName == false) && (this->bHaveExt == false))
-            {
-                // Only input source directory variable is used (name and extension are added automatically).
-                return true;
-            }
-            else if ((this->bHaveSourceDirectory == false)
-                && (this->bHaveName == true) && (this->bHaveExt == true))
-            {
-                // Only use name and extension variable (full output path must be provided by user).
-                return true;
-            }
-            else if ((this->bHaveSourceDirectory == false)
-                && (this->bHaveName == false) && (this->bHaveExt == false))
-            {
-                // Full output path must be provided by user (ignore input file path and variables).
-                return true;
-            }
         }
-        return false;
-    }
-    CString CreateFilePath(CString szOutput, CString szInputFile, CString szName, CString szExt)
-    {
-        if (this->bIsEmpty
-            || ((this->bHaveSourceDirectory == false)
-                && (this->bHaveName == false) && (this->bHaveExt == false)))
+    public:
+        bool Validate(CString szOutput)
         {
-            CString szOutPath;
+            this->bIsEmpty = szOutput.GetLength() <= 0;
+            this->bHaveSourceDirectory = FindNoCase(szOutput, VAR_OUTPUT_SOURCE_DIRECTORY) >= 0;
+            this->bHaveName = FindNoCase(szOutput, VAR_OUTPUT_NAME) >= 0;
+            this->bHaveExt = FindNoCase(szOutput, VAR_OUTPUT_EXTENSION) >= 0;
             if (this->bIsEmpty)
             {
-                CString szInputPath = ::GetFilePath(szInputFile);
-                szOutPath = szInputPath;
+                // Only input file directory is used (name and extension are added automatically).
+                return true;
             }
             else
             {
-                szOutPath = CString(szOutput);
+                if ((this->bHaveSourceDirectory == true)
+                    && (this->bHaveName == true) && (this->bHaveExt == true))
+                {
+                    // Input source directory variable is used with name and extension variables.
+                    return true;
+                }
+                else if ((this->bHaveSourceDirectory == true)
+                    && (this->bHaveName == false) && (this->bHaveExt == false))
+                {
+                    // Only input source directory variable is used (name and extension are added automatically).
+                    return true;
+                }
+                else if ((this->bHaveSourceDirectory == false)
+                    && (this->bHaveName == true) && (this->bHaveExt == true))
+                {
+                    // Only use name and extension variable (full output path must be provided by user).
+                    return true;
+                }
+                else if ((this->bHaveSourceDirectory == false)
+                    && (this->bHaveName == false) && (this->bHaveExt == false))
+                {
+                    // Full output path must be provided by user (ignore input file path and variables).
+                    return true;
+                }
             }
-
-            CString szOutputFile = szName + _T(".") + CString(szExt).MakeLower();
-            if (szOutPath.GetLength() >= 1)
-            {
-                if (szOutPath[szOutPath.GetLength() - 1] == '\\' || szOutPath[szOutPath.GetLength() - 1] == '/')
-                    szOutputFile = szOutPath + szOutputFile;
-                else
-                    szOutputFile = szOutPath + _T("\\") + szOutputFile;
-            }
-            return szOutputFile;
+            return false;
         }
-        else
+        CString CreateFilePath(CString szOutput, CString szInputFile, CString szName, CString szExt)
         {
-            if ((this->bHaveSourceDirectory == true)
-                && (this->bHaveName == true) && (this->bHaveExt == true))
+            if (this->bIsEmpty
+                || ((this->bHaveSourceDirectory == false)
+                    && (this->bHaveName == false) && (this->bHaveExt == false)))
             {
-                CString szOutputFile = CString(szOutput);
-                CString szInputPath = ::GetFilePath(szInputFile);
-                szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_SOURCE_DIRECTORY, szInputPath);
-                szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_NAME, szName);
-                szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_EXTENSION, CString(szExt).MakeLower());
-                return szOutputFile;
-            }
-            else if ((this->bHaveSourceDirectory == true)
-                && (this->bHaveName == false) && (this->bHaveExt == false))
-            {
-                CString szOutPath = CString(szOutput);
-                CString szInputPath = ::GetFilePath(szInputFile);
-                szOutPath = ReplaceNoCase(szOutPath, VAR_OUTPUT_SOURCE_DIRECTORY, szInputPath);
+                CString szOutPath;
+                if (this->bIsEmpty)
+                {
+                    CString szInputPath = ::GetFilePath(szInputFile);
+                    szOutPath = szInputPath;
+                }
+                else
+                {
+                    szOutPath = CString(szOutput);
+                }
 
                 CString szOutputFile = szName + _T(".") + CString(szExt).MakeLower();
                 if (szOutPath.GetLength() >= 1)
@@ -131,27 +104,57 @@ public:
                 }
                 return szOutputFile;
             }
-            else if ((this->bHaveSourceDirectory == false) && (this->bHaveName == true) && (this->bHaveExt == true))
+            else
             {
-                CString szOutputFile = CString(szOutput);
-                szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_NAME, szName);
-                szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_EXTENSION, CString(szExt).MakeLower());
-                return szOutputFile;
+                if ((this->bHaveSourceDirectory == true)
+                    && (this->bHaveName == true) && (this->bHaveExt == true))
+                {
+                    CString szOutputFile = CString(szOutput);
+                    CString szInputPath = ::GetFilePath(szInputFile);
+                    szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_SOURCE_DIRECTORY, szInputPath);
+                    szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_NAME, szName);
+                    szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_EXTENSION, CString(szExt).MakeLower());
+                    return szOutputFile;
+                }
+                else if ((this->bHaveSourceDirectory == true)
+                    && (this->bHaveName == false) && (this->bHaveExt == false))
+                {
+                    CString szOutPath = CString(szOutput);
+                    CString szInputPath = ::GetFilePath(szInputFile);
+                    szOutPath = ReplaceNoCase(szOutPath, VAR_OUTPUT_SOURCE_DIRECTORY, szInputPath);
+
+                    CString szOutputFile = szName + _T(".") + CString(szExt).MakeLower();
+                    if (szOutPath.GetLength() >= 1)
+                    {
+                        if (szOutPath[szOutPath.GetLength() - 1] == '\\' || szOutPath[szOutPath.GetLength() - 1] == '/')
+                            szOutputFile = szOutPath + szOutputFile;
+                        else
+                            szOutputFile = szOutPath + _T("\\") + szOutputFile;
+                    }
+                    return szOutputFile;
+                }
+                else if ((this->bHaveSourceDirectory == false) && (this->bHaveName == true) && (this->bHaveExt == true))
+                {
+                    CString szOutputFile = CString(szOutput);
+                    szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_NAME, szName);
+                    szOutputFile = ReplaceNoCase(szOutputFile, VAR_OUTPUT_EXTENSION, CString(szExt).MakeLower());
+                    return szOutputFile;
+                }
             }
+            return _T("");
         }
-        return _T("");
-    }
-    bool CreateOutputPath(CString szOutputFile)
-    {
-        CString szOutputPath = ::GetFilePath(szOutputFile);
-        if (szOutputPath.GetLength() > 0)
+        bool CreateOutputPath(CString szOutputFile)
         {
-            if (!::DirectoryExists(szOutputPath))
+            CString szOutputPath = ::GetFilePath(szOutputFile);
+            if (szOutputPath.GetLength() > 0)
             {
-                if (::MakeFullPath(szOutputPath) == false)
-                    return false;
+                if (!::DirectoryExists(szOutputPath))
+                {
+                    if (::MakeFullPath(szOutputPath) == false)
+                        return false;
+                }
             }
+            return true;
         }
-        return true;
-    }
-};
+    };
+}

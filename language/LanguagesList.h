@@ -7,18 +7,21 @@
 #include "..\utilities\ListT.h"
 #include "Language.h"
 
-class CLanguagesList : public CListT<CLanguage>
+namespace lang
 {
-public:
-    int GetLanguageById(CString szLanguageId)
+    class CLanguagesList : public CListT<CLanguage>
     {
-        int nCount = this->Count();
-        for (int i = 0; i < nCount; i++)
+    public:
+        int GetLanguageById(CString szLanguageId)
         {
-            CLanguage& language = this->Get(i);
-            if (szLanguageId.CompareNoCase(language.szId) == 0)
-                return i;
+            int nCount = this->Count();
+            for (int i = 0; i < nCount; i++)
+            {
+                CLanguage& language = this->Get(i);
+                if (szLanguageId.CompareNoCase(language.szId) == 0)
+                    return i;
+            }
+            return -1;
         }
-        return -1;
-    }
-};
+    };
+}

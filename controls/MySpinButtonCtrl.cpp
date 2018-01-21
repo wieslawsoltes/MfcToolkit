@@ -4,16 +4,19 @@
 #include "StdAfx.h"
 #include "MySpinButtonCtrl.h"
 
-IMPLEMENT_DYNAMIC(CMySpinButtonCtrl, CSpinButtonCtrl)
-CMySpinButtonCtrl::CMySpinButtonCtrl()
+namespace controls
 {
+    IMPLEMENT_DYNAMIC(CMySpinButtonCtrl, CSpinButtonCtrl)
+        CMySpinButtonCtrl::CMySpinButtonCtrl()
+    {
 
+    }
+
+    CMySpinButtonCtrl::~CMySpinButtonCtrl()
+    {
+
+    }
+
+    BEGIN_MESSAGE_MAP(CMySpinButtonCtrl, CSpinButtonCtrl)
+    END_MESSAGE_MAP()
 }
-
-CMySpinButtonCtrl::~CMySpinButtonCtrl()
-{
-
-}
-
-BEGIN_MESSAGE_MAP(CMySpinButtonCtrl, CSpinButtonCtrl)
-END_MESSAGE_MAP()

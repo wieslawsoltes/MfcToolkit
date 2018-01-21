@@ -6,6 +6,9 @@
 #include <afxstr.h>
 #include "MapT.h"
 
-class CStringsMap : public CMapT<int, CString>
+namespace util
 {
-};
+    class CStringsMap : public CMapT<int, CString>
+    {
+    };
+}

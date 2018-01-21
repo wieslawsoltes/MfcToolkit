@@ -4,16 +4,19 @@
 #include "StdAfx.h"
 #include "MyStatusBarCtrl.h"
 
-IMPLEMENT_DYNAMIC(CMyStatusBarCtrl, CStatusBarCtrl)
-CMyStatusBarCtrl::CMyStatusBarCtrl()
+namespace controls
 {
+    IMPLEMENT_DYNAMIC(CMyStatusBarCtrl, CStatusBarCtrl)
+        CMyStatusBarCtrl::CMyStatusBarCtrl()
+    {
 
+    }
+
+    CMyStatusBarCtrl::~CMyStatusBarCtrl()
+    {
+
+    }
+
+    BEGIN_MESSAGE_MAP(CMyStatusBarCtrl, CStatusBarCtrl)
+    END_MESSAGE_MAP()
 }
-
-CMyStatusBarCtrl::~CMyStatusBarCtrl()
-{
-
-}
-
-BEGIN_MESSAGE_MAP(CMyStatusBarCtrl, CStatusBarCtrl)
-END_MESSAGE_MAP()

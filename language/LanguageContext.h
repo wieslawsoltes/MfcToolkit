@@ -6,49 +6,52 @@
 #include "LanguagesList.h"
 #include "Language.h"
 
-class CLanguageContext
+namespace lang
 {
-public:
-    CLanguagesList m_Languages;
-    CLanguage* pLanguage;
-public:
-    CLanguageContext() : pLanguage(nullptr)
+    class CLanguageContext
     {
-    }
-    CLanguageContext(const CLanguageContext &other)
-    {
-        Copy(other);
-    }
-    CLanguageContext& operator=(const CLanguageContext &other)
-    {
-        Copy(other);
-        return *this;
-    }
-    virtual ~CLanguageContext()
-    {
-    }
-public:
-    void Copy(const CLanguageContext &other)
-    {
-        this->m_Languages = other.m_Languages;
-        this->pLanguage = nullptr;
-    }
-public:
-    bool LookupString(const int nKey, CString& rValue)
-    {
-        if (this->pLanguage != nullptr)
+    public:
+        CLanguagesList m_Languages;
+        CLanguage* pLanguage;
+    public:
+        CLanguageContext() : pLanguage(nullptr)
         {
-            if (this->pLanguage->m_Strings.TryGet(nKey, rValue) == TRUE)
-                return true;
         }
-        return false;
-    }
-public:
-    CString GetString(int nKey, const TCHAR* szDefault)
-    {
-        CString rValue;
-        if (this->LookupString(nKey, rValue))
-            return rValue;
-        return szDefault;
-    }
-};
+        CLanguageContext(const CLanguageContext &other)
+        {
+            Copy(other);
+        }
+        CLanguageContext& operator=(const CLanguageContext &other)
+        {
+            Copy(other);
+            return *this;
+        }
+        virtual ~CLanguageContext()
+        {
+        }
+    public:
+        void Copy(const CLanguageContext &other)
+        {
+            this->m_Languages = other.m_Languages;
+            this->pLanguage = nullptr;
+        }
+    public:
+        bool LookupString(const int nKey, CString& rValue)
+        {
+            if (this->pLanguage != nullptr)
+            {
+                if (this->pLanguage->m_Strings.TryGet(nKey, rValue) == TRUE)
+                    return true;
+            }
+            return false;
+        }
+    public:
+        CString GetString(int nKey, const TCHAR* szDefault)
+        {
+            CString rValue;
+            if (this->LookupString(nKey, rValue))
+                return rValue;
+            return szDefault;
+        }
+    };
+}

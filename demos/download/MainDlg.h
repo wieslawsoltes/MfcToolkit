@@ -31,12 +31,12 @@ public:
 public:
     void Download();
 public:
-    CMyEdit m_UrlEdit;
-    CMyEdit m_PathEdit;
-    CMyProgressCtrl m_ProgressCtrl;
-    CMyEdit m_EdtStatus;
-    CMyButton m_DownloadButton;
+    controls::CMyEdit m_UrlEdit;
+    controls::CMyEdit m_PathEdit;
+    controls::CMyProgressCtrl m_ProgressCtrl;
+    controls::CMyEdit m_EdtStatus;
+    controls::CMyButton m_DownloadButton;
 public:
-    CDownload m_Download;
-    CThread m_Worker;
+    util::CDownload m_Download;
+    util::CThread m_Worker;
 };

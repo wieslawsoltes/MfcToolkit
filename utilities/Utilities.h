@@ -6,63 +6,66 @@
 #include <Windows.h>
 #include <atlstr.h>
 
-typedef BOOL(WINAPI *LPFN_GLPI)(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, PDWORD);
-
-typedef struct tagLogicalProcessorInformation
+namespace util
 {
-    DWORD logicalProcessorCount = 0;
-    DWORD numaNodeCount = 0;
-    DWORD processorCoreCount = 0;
-    DWORD processorL1CacheCount = 0;
-    DWORD processorL2CacheCount = 0;
-    DWORD processorL3CacheCount = 0;
-    DWORD processorPackageCount = 0;
-} LogicalProcessorInformation;
+    typedef BOOL(WINAPI *LPFN_GLPI)(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, PDWORD);
 
-int GetLogicalProcessorInformation(LogicalProcessorInformation* info);
+    typedef struct tagLogicalProcessorInformation
+    {
+        DWORD logicalProcessorCount = 0;
+        DWORD numaNodeCount = 0;
+        DWORD processorCoreCount = 0;
+        DWORD processorL1CacheCount = 0;
+        DWORD processorL2CacheCount = 0;
+        DWORD processorL3CacheCount = 0;
+        DWORD processorPackageCount = 0;
+    } LogicalProcessorInformation;
 
-void ShutdownWindows();
+    int GetLogicalProcessorInformation(LogicalProcessorInformation* info);
 
-void LaunchAndWait(LPCTSTR file, LPCTSTR params, BOOL bWait);
+    void ShutdownWindows();
 
-void SetComboBoxHeight(HWND hDlg, int nComboBoxID, int nSizeLimit);
+    void LaunchAndWait(LPCTSTR file, LPCTSTR params, BOOL bWait);
 
-CString GetFileName(CString szFilePath);
+    void SetComboBoxHeight(HWND hDlg, int nComboBoxID, int nSizeLimit);
 
-CString GetFilePath(CString szFilePath);
+    CString GetFileName(CString szFilePath);
 
-CString GetFileExtension(CString szFilePath);
+    CString GetFilePath(CString szFilePath);
 
-CString GetOnlyFileName(CString szFilePath);
+    CString GetFileExtension(CString szFilePath);
 
-ULONGLONG GetFileSize64(HANDLE hFile);
+    CString GetOnlyFileName(CString szFilePath);
 
-ULONGLONG GetFileSize64(CString szFileName);
+    ULONGLONG GetFileSize64(HANDLE hFile);
 
-__int64 GetFileSizeInt64(FILE *fp);
+    ULONGLONG GetFileSize64(CString szFileName);
 
-CString GetExeFilePath();
+    __int64 GetFileSizeInt64(FILE *fp);
 
-CString GetSettingsFilePath(CString szFileName, CString szConfigDirectory);
+    CString GetExeFilePath();
 
-void GetFullPathName(CString &szFilePath);
+    CString GetSettingsFilePath(CString szFileName, CString szConfigDirectory);
 
-BOOL DirectoryExists(LPCTSTR szPath);
+    void GetFullPathName(CString &szFilePath);
 
-bool MakeFullPath(CString szPath);
+    BOOL DirectoryExists(LPCTSTR szPath);
 
-bool FileExists(CString szPath);
+    bool MakeFullPath(CString szPath);
 
-CString GenerateUuidString();
+    bool FileExists(CString szPath);
 
-CString ReplaceNoCase(LPCTSTR instr, LPCTSTR oldstr, LPCTSTR newstr);
+    CString GenerateUuidString();
 
-int FindNoCase(LPCTSTR pszString, LPCTSTR pszSearch);
+    CString ReplaceNoCase(LPCTSTR instr, LPCTSTR oldstr, LPCTSTR newstr);
 
-void ConvertAnsiToUnicode(const char *szAnsi, wchar_t *szUnicode, ULONG nLength);
+    int FindNoCase(LPCTSTR pszString, LPCTSTR pszSearch);
 
-void ConvertUnicodeToAnsi(const wchar_t *szUnicode, char *szAnsi, ULONG nLength);
+    void ConvertAnsiToUnicode(const char *szAnsi, wchar_t *szUnicode, ULONG nLength);
 
-PTCHAR* MyCommandLineToArgv(PTCHAR pszCmdLine, int *pnArgc);
+    void ConvertUnicodeToAnsi(const wchar_t *szUnicode, char *szAnsi, ULONG nLength);
 
-bool Unzip2Folder(BSTR lpZipFile, BSTR lpFolder);
+    PTCHAR* MyCommandLineToArgv(PTCHAR pszCmdLine, int *pnArgc);
+
+    bool Unzip2Folder(BSTR lpZipFile, BSTR lpFolder);
+}

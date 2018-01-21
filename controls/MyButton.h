@@ -3,33 +3,36 @@
 
 #pragma once
 
-class CMyButton : public CButton
+namespace controls
 {
-public:
-    CMyButton();
-    virtual ~CMyButton();
-protected:
-    virtual void PreSubclassWindow();
-protected:
-    CFont m_BoldFont;
-    CFont m_StdFont;
-    bool bIsBold;
-public:
-    void SetBold(bool bBold = true);
-public:
-    bool GetBold();
-protected:
-    DECLARE_MESSAGE_MAP()
-protected:
-    afx_msg BOOL OnToolTipText(UINT id, NMHDR *pNMHDR, LRESULT *pResult);
-public:
-    virtual INT_PTR OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
-private:
-    CString szToolTipText;
-    bool bHaveToolTipText;
-public:
-    void SetTooltipText(CString szText);
-    CString GetTooltipText();
-    void DelTooltipText();
-    bool HaveTooltipText();
-};
+    class CMyButton : public CButton
+    {
+    public:
+        CMyButton();
+        virtual ~CMyButton();
+    protected:
+        virtual void PreSubclassWindow();
+    protected:
+        CFont m_BoldFont;
+        CFont m_StdFont;
+        bool bIsBold;
+    public:
+        void SetBold(bool bBold = true);
+    public:
+        bool GetBold();
+    protected:
+        DECLARE_MESSAGE_MAP()
+    protected:
+        afx_msg BOOL OnToolTipText(UINT id, NMHDR *pNMHDR, LRESULT *pResult);
+    public:
+        virtual INT_PTR OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
+    private:
+        CString szToolTipText;
+        bool bHaveToolTipText;
+    public:
+        void SetTooltipText(CString szText);
+        CString GetTooltipText();
+        void DelTooltipText();
+        bool HaveTooltipText();
+    };
+}

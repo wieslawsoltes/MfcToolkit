@@ -3,12 +3,15 @@
 
 #pragma once
 
-class CMySpinButtonCtrl : public CSpinButtonCtrl
+namespace controls
 {
-    DECLARE_DYNAMIC(CMySpinButtonCtrl)
-public:
-    CMySpinButtonCtrl();
-    virtual ~CMySpinButtonCtrl();
-protected:
-    DECLARE_MESSAGE_MAP()
-};
+    class CMySpinButtonCtrl : public CSpinButtonCtrl
+    {
+        DECLARE_DYNAMIC(CMySpinButtonCtrl)
+    public:
+        CMySpinButtonCtrl();
+        virtual ~CMySpinButtonCtrl();
+    protected:
+        DECLARE_MESSAGE_MAP()
+    };
+}
