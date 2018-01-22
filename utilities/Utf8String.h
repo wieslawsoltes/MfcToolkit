@@ -3,65 +3,33 @@
 
 #pragma once
 
-#include <atlstr.h>
-#include "UnicodeUtf8.h"
+#include <locale>
+#include <codecvt>
 
 namespace util
 {
     class CUtf8String
     {
     public:
-        char *m_Result;
-    public:
-        CUtf8String()
+        static const std::string ConvertToUtf8(const std::wstring& szText)
         {
-            m_Result = nullptr;
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
+            return convert.to_bytes(szText);
         }
-        CUtf8String(CString szText)
+        static const std::wstring ConvertToUnicode(const std::string& szText)
         {
-            Convert(szText);
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
+            return convert.from_bytes(szText);
         }
-        ~CUtf8String()
+        static const std::string ConvertToUtf8(const wchar_t* szText)
         {
-            Free();
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
+            return convert.to_bytes(szText);
         }
-    public:
-#ifdef _UNICODE
-        char *Convert(CString szText)
+        static const std::wstring ConvertToUnicode(const char* szText)
         {
-            if (szText.GetLength() > 0)
-            {
-                m_Result = (char *)MakeUtf8String(szText);
-            }
-            else
-            {
-                m_Result = (char *)malloc(1);
-                m_Result[0] = '\0';
-            }
-            return m_Result;
-        }
-#else
-        char *Convert(CString szText)
-        {
-            if (szText.GetLength() > 0)
-            {
-                Utf8Encode(szText, &m_Result);
-            }
-            else
-            {
-                m_Result = (char *)malloc(1);
-                m_Result[0] = '\0';
-            }
-            return m_Result;
-        }
-#endif
-        void Free()
-        {
-            if (m_Result != nullptr)
-            {
-                free(m_Result);
-                m_Result = nullptr;
-            }
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> convert;
+            return convert.from_bytes(szText);
         }
     };
 }

@@ -19,9 +19,6 @@
     <Filter Include="Header Files\Strings">
       <UniqueIdentifier>{6ce5df29-13e6-4ee8-9aa8-89e666b16fd6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Strings">
-      <UniqueIdentifier>{ccd4ec95-bbe0-4257-8f88-38bb99e1c341}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Threading">
       <UniqueIdentifier>{29b34fe7-2be7-40b8-9aea-89eea829cb89}</UniqueIdentifier>
     </Filter>
@@ -47,9 +44,6 @@
     </ClInclude>
     <ClInclude Include="MapT.h">
       <Filter>Header Files\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="UnicodeUtf8.h">
-      <Filter>Header Files\Strings</Filter>
     </ClInclude>
     <ClInclude Include="Utf8String.h">
       <Filter>Header Files\Strings</Filter>
@@ -85,9 +79,6 @@
     </ClCompile>
     <ClCompile Include="Utilities.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UnicodeUtf8.cpp">
-      <Filter>Source Files\Strings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

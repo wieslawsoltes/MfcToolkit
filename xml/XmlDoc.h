@@ -5,8 +5,8 @@
 
 #include <afxstr.h>
 #include <afxtempl.h>
+#include <string>
 #include "tinyxml2\tinyxml2.h" // https://github.com/leethomason/tinyxml2
-#include "utilities\UnicodeUtf8.h"
 #include "utilities\Utf8String.h"
 
 namespace xml
@@ -69,39 +69,22 @@ namespace xml
         const LPCTSTR m_True = _T("true");
         const LPCTSTR m_False = _T("false");
     public:
-#ifdef _UNICODE
-        CString ToCString(const char *pszUtf8)
+        const std::wstring ToCString(const char *pszUtf8)
         {
             if (pszUtf8 == nullptr)
                 return _T("");
             if (strlen(pszUtf8) == 0)
                 return _T("");
-            wchar_t *pszUnicode = util::MakeUnicodeString((unsigned char *)pszUtf8);
-            CString szBuff = pszUnicode;
-            free(pszUnicode);
-            return szBuff;
+            std::wstring szUnicode = util::CUtf8String::ConvertToUnicode(pszUtf8);
+            return szUnicode;
         }
-#else
-        CString ToCString(const char *pszUtf8)
-        {
-            if (pszUtf8 == nullptr)
-                return _T("");
-            if (strlen(pszUtf8) == 0)
-                return _T("");
-            char *pszAnsi;
-            util::Utf8Decode(pszUtf8, &pszAnsi);
-            CString szBuff = pszAnsi;
-            free(pszAnsi);
-            return szBuff;
-        }
-#endif
         bool ToBool(const char *pszUtf8)
         {
-            return ToCString(pszUtf8).CompareNoCase(m_True) == 0;
+            return _tcsicmp(ToCString(pszUtf8).c_str(), m_True) == 0;
         }
         int ToInt(const char *pszUtf8)
         {
-            return _tstoi(ToCString(pszUtf8));
+            return _tstoi(ToCString(pszUtf8).c_str());
         }
         CString ToCString(const int nValue)
         {
@@ -121,7 +104,7 @@ namespace xml
             const char *pszResult = element->Attribute(name);
             if (pszResult != nullptr)
             {
-                (*value) = ToCString(pszResult);
+                (*value) = ToCString(pszResult).c_str();
                 return true;
             }
             return false;
@@ -149,15 +132,15 @@ namespace xml
     public:
         void SetAttributeValue(XmlElement *element, const char *name, const CString& value)
         {
-            element->SetAttribute(name, util::CUtf8String(value).m_Result);
+            element->SetAttribute(name, util::CUtf8String::ConvertToUtf8(value).c_str());
         }
         void SetAttributeValue(XmlElement *element, const char *name, const int &value)
         {
-            element->SetAttribute(name, util::CUtf8String(ToCString(value)).m_Result);
+            element->SetAttribute(name, util::CUtf8String::ConvertToUtf8(ToCString(value)).c_str());
         }
         void SetAttributeValue(XmlElement *element, const char *name, const bool &value)
         {
-            element->SetAttribute(name, util::CUtf8String(ToCString(value)).m_Result);
+            element->SetAttribute(name, util::CUtf8String::ConvertToUtf8(ToCString(value)).c_str());
         }
     public:
         bool GetChildValue(const XmlElement *parent, const char *name, CString *value)
@@ -165,7 +148,7 @@ namespace xml
             auto element = parent->FirstChildElement(name);
             if (element != nullptr)
             {
-                (*value) = ToCString(element->GetText());
+                (*value) = ToCString(element->GetText()).c_str();
                 return true;
             }
             return false;
@@ -194,19 +177,19 @@ namespace xml
         void SetChildValue(XmlElement *parent, const char *name, const CString& value)
         {
             auto element = m_Document.NewElement(name);
-            element->LinkEndChild(m_Document.NewText(util::CUtf8String(value).m_Result));
+            element->LinkEndChild(m_Document.NewText(util::CUtf8String::ConvertToUtf8(value).c_str()));
             parent->LinkEndChild(element);
         }
         void SetChildValue(XmlElement *parent, const char *name, const int &value)
         {
             auto element = m_Document.NewElement(name);
-            element->LinkEndChild(m_Document.NewText(util::CUtf8String(ToCString(value)).m_Result));
+            element->LinkEndChild(m_Document.NewText(util::CUtf8String::ConvertToUtf8(ToCString(value)).c_str()));
             parent->LinkEndChild(element);
         }
         void SetChildValue(XmlElement *parent, const char *name, const bool &value)
         {
             auto element = m_Document.NewElement(name);
-            element->LinkEndChild(m_Document.NewText(util::CUtf8String(ToCString(value)).m_Result));
+            element->LinkEndChild(m_Document.NewText(util::CUtf8String::ConvertToUtf8(ToCString(value)).c_str()));
             parent->LinkEndChild(element);
         }
     public:
