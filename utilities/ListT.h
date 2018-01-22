@@ -61,6 +61,10 @@ namespace util
         {
             return m_Items[idx];
         }
+        void Insert(T item)
+        {
+            m_Items.emplace_back(item);
+        }
         void Insert(T& item)
         {
             m_Items.emplace_back(item);
