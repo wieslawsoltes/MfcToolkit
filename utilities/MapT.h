@@ -52,7 +52,7 @@ namespace util
         }
         int Count()
         {
-            return (int)m_Map.count();
+            return (int)m_Map.size();
         }
         void Set(K key, V& szValue)
         {

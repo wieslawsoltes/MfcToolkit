@@ -3,14 +3,14 @@
 
 #pragma once
 
-#include <afxtempl.h>
+#include <vector>
 
 namespace util
 {
     template <class T>
     class CListT
     {
-        CList<T, T&> m_Items;
+        std::vector<T> m_Items;
     public:
         CListT()
         {
@@ -26,69 +26,64 @@ namespace util
         }
         virtual ~CListT()
         {
-            if (m_Items.GetCount() != 0)
-                m_Items.RemoveAll();
+            if (m_Items.size() != 0)
+                m_Items.clear();
         }
     public:
         void Copy(const CListT &other)
         {
             this->RemoveAll();
-            int nItems = (int)other.m_Items.GetCount();
-            for (int i = 0; i < nItems; i++)
+            for (auto& item : other.m_Items)
             {
-                T item = other.m_Items.GetAt(other.m_Items.FindIndex(i));
-                this->Insert(item);
+                this->m_Items.emplace_back(item);
             }
         }
         void Copy(CListT& other)
         {
-            int nItems = (int)other.m_Items.GetCount();
-            for (int i = 0; i < nItems; i++)
+            for (auto& item : other.m_Items)
             {
-                T item = other.m_Items.GetAt(other.m_Items.FindIndex(i));
-                this->Insert(item);
+                other.m_Items.emplace_back(item);
             }
         }
         bool IsEmpty()
         {
-            return (m_Items.GetCount() == 0) ? true : false;
+            return m_Items.empty();
         }
         int Count()
         {
-            return (int)m_Items.GetCount();
+            return (int)m_Items.size();
         }
         void Set(T& item, int idx)
         {
-            m_Items.SetAt(m_Items.FindIndex(idx), item);
+            m_Items[idx] = item;
         }
         T& Get(int idx)
         {
-            return m_Items.GetAt(m_Items.FindIndex(idx));
+            return m_Items[idx];
         }
         void Insert(T& item)
         {
-            m_Items.AddTail(item);
+            m_Items.emplace_back(item);
         }
         void InsertBefore(T& item, int nIndex)
         {
-            POSITION pos = m_Items.FindIndex(nIndex);
-            if (pos != nullptr)
-                m_Items.InsertBefore(pos, item);
+            auto it = m_Items.begin() + nIndex;
+            m_Items.insert(it, item);
         }
         void InsertAfter(T& item, int nIndex)
         {
-            POSITION pos = m_Items.FindIndex(nIndex);
-            if (pos != nullptr)
-                m_Items.InsertAfter(pos, item);
+            auto it = m_Items.begin() + nIndex;
+            m_Items.insert(it+1, item);
         }
-        void Remove(int pstn = -1)
+        void Remove(int nIndex)
         {
-            m_Items.RemoveAt(m_Items.FindIndex(pstn));
+            auto it = m_Items.begin() + nIndex;
+            m_Items.erase(it);
         }
         void RemoveAll(void)
         {
-            if (m_Items.GetCount() != 0)
-                m_Items.RemoveAll();
+            if (m_Items.size() != 0)
+                m_Items.clear();
         }
         void Swap(int idx1, int idx2)
         {
