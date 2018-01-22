@@ -48,9 +48,6 @@
     <ClInclude Include="MapT.h">
       <Filter>Header Files\Collections</Filter>
     </ClInclude>
-    <ClInclude Include="StringsMap.h">
-      <Filter>Header Files\Collections</Filter>
-    </ClInclude>
     <ClInclude Include="UnicodeUtf8.h">
       <Filter>Header Files\Strings</Filter>
     </ClInclude>
