@@ -9,10 +9,8 @@ build:
   parallel: true
   project: MfcToolkit.sln
   verbosity: minimal
-test:
-  assemblies:
-    only:
-    - tests\MFC.Utilities.UnitTests\bin\$(configuration)\$(platform)\MFC.Utilities.UnitTests.dll
+test_script:
+- cmd: vstest.console /logger:Appveyor tests\MFC.Utilities.UnitTests\bin\%configuration%\%platform%\MFC.Utilities.UnitTests.dll
 artifacts:
   - path: controls\bin\$(configuration)\$(platform)
     name: MFC.Controls-$(platform)-$(configuration)-build$(appveyor_build_version)
