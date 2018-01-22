@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <afxtempl.h>
+#include <map>
 
 namespace util
 {
@@ -11,7 +11,7 @@ namespace util
     class CMapT
     {
     public:
-        CMap<K, K, V, V&> m_Map;
+        std::map<K, V> m_Map;
     public:
         CMapT()
         {
@@ -27,75 +27,70 @@ namespace util
         }
         virtual ~CMapT()
         {
-            if (m_Map.GetCount() != 0)
-                m_Map.RemoveAll();
+            if (m_Map.size() != 0)
+                m_Map.clear();
         }
     public:
         void Copy(const CMapT &other)
         {
             this->RemoveAll();
-            POSITION pos = other.m_Map.GetStartPosition();
-            K key;
-            while (pos != nullptr)
+            for (auto& item : other.m_Map)
             {
-                CString rValue;
-                other.m_Map.GetNextAssoc(pos, key, rValue);
-                this->Insert(key, rValue);
+                this->m_Map[item.first] = item.second;
             }
         }
         void Copy(CMapT& other)
         {
-            POSITION pos = this->m_Map.GetStartPosition();
-            K key;
-            while (pos != nullptr)
+            for (auto& item : this->m_Map)
             {
-                CString rValue;
-                this->m_Map.GetNextAssoc(pos, key, rValue);
-                other.Insert(key, rValue);
+                other.m_Map[item.first] = item.second;
             }
         }
         bool IsEmpty()
         {
-            return (m_Map.GetCount() == 0) ? true : false;
+            return m_Map.empty();
         }
         int Count()
         {
-            return (int)m_Map.GetCount();
+            return (int)m_Map.count();
         }
-        void Set(K key, CString szValue)
+        void Set(K key, V& szValue)
         {
             m_Map[key] = szValue;
         }
-        CString Get(K key)
+        V& Get(K key)
         {
             return m_Map[key];
         }
         bool TryGet(K key, V& rValue)
         {
-            if (m_Map.Lookup(key, rValue) == TRUE)
+            if (m_Map.count(key) == 1)
+            {
+                rValue = m_Map[key];
                 return true;
+            }
             return false;
         }
-        void Insert(K key, CString szValue)
+        void Insert(K key, V& szValue)
         {
             m_Map[key] = szValue;
         }
         void Remove(K key)
         {
-            m_Map.RemoveKey(key);
+            m_Map.erase(key);
         }
         void RemoveAll(void)
         {
-            if (m_Map.GetCount() != 0)
-                m_Map.RemoveAll();
+            if (m_Map.size() > 0)
+                m_Map.clear();
         }
         void Swap(K key1, K key2)
         {
             V value1;
             V value2;
-            BOOL haveValue1 = this->m_Map.Lookup(key1, value1);
-            BOOL haveValue2 = this->m_Map.Lookup(key2, value2);
-            if (haveValue1 == FALSE || haveValue2 == FALSE)
+            bool haveValue1 = this->TryGet(key1, value1);
+            bool haveValue2 = this->TryGet(key2, value2);
+            if (haveValue1 == false || haveValue2 == false)
                 return;
             this->Set(key2, value1);
             this->Set(key1, value2);
