@@ -57,15 +57,19 @@ namespace util
         {
             m_Items[idx] = item;
         }
+        void Set(T&& item, int idx)
+        {
+            m_Items[idx] = item;
+        }
         T& Get(int idx)
         {
             return m_Items[idx];
         }
-        void Insert(T item)
+        void Insert(T& item)
         {
             m_Items.emplace_back(item);
         }
-        void Insert(T& item)
+        void Insert(T&& item)
         {
             m_Items.emplace_back(item);
         }
@@ -74,10 +78,20 @@ namespace util
             auto it = m_Items.begin() + nIndex;
             m_Items.insert(it, item);
         }
+        void InsertBefore(T&& item, int nIndex)
+        {
+            auto it = m_Items.begin() + nIndex;
+            m_Items.insert(it, item);
+        }
         void InsertAfter(T& item, int nIndex)
         {
             auto it = m_Items.begin() + nIndex;
             m_Items.insert(it+1, item);
+        }
+        void InsertAfter(T&& item, int nIndex)
+        {
+            auto it = m_Items.begin() + nIndex;
+            m_Items.insert(it + 1, item);
         }
         void Remove(int nIndex)
         {

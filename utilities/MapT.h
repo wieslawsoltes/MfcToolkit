@@ -54,11 +54,11 @@ namespace util
         {
             return (int)m_Map.size();
         }
-        void Set(K key, V szValue)
+        void Set(K key, V& szValue)
         {
             m_Map[key] = szValue;
         }
-        void Set(K key, V& szValue)
+        void Set(K key, V&& szValue)
         {
             m_Map[key] = szValue;
         }
@@ -75,11 +75,11 @@ namespace util
             }
             return false;
         }
-        void Insert(K key, V szValue)
+        void Insert(K key, V& szValue)
         {
             m_Map[key] = szValue;
         }
-        void Insert(K key, V& szValue)
+        void Insert(K key, V&& szValue)
         {
             m_Map[key] = szValue;
         }
