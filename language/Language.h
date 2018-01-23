@@ -5,7 +5,7 @@
 
 #include <afxstr.h>
 #include <afxtempl.h>
-#include "..\utilities\StringsMap.h"
+#include "..\utilities\MapT.h"
 
 namespace lang
 {
