@@ -27,7 +27,7 @@ namespace util
         }
         static std::string ToUtf8(const wchar_t* szText)
         {
-            if (wcslen(szText))
+            if (wcslen(szText) == 0)
                 return std::string();
             int size_needed = WideCharToMultiByte(CP_UTF8, 0, &szText[0], (int)wcslen(szText), NULL, 0, NULL, NULL);
             std::string strTo(size_needed, 0);
