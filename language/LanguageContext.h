@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <string>
 #include "LanguagesList.h"
 #include "Language.h"
 
@@ -14,29 +15,7 @@ namespace lang
         CLanguagesList m_Languages;
         CLanguage* pLanguage;
     public:
-        CLanguageContext() : pLanguage(nullptr)
-        {
-        }
-        CLanguageContext(const CLanguageContext &other)
-        {
-            Copy(other);
-        }
-        CLanguageContext& operator=(const CLanguageContext &other)
-        {
-            Copy(other);
-            return *this;
-        }
-        virtual ~CLanguageContext()
-        {
-        }
-    public:
-        void Copy(const CLanguageContext &other)
-        {
-            this->m_Languages = other.m_Languages;
-            this->pLanguage = nullptr;
-        }
-    public:
-        bool LookupString(const int nKey, CString& rValue)
+        bool LookupString(const int nKey, std::wstring& rValue)
         {
             if (this->pLanguage != nullptr)
             {
@@ -46,9 +25,9 @@ namespace lang
             return false;
         }
     public:
-        CString GetString(int nKey, const TCHAR* szDefault)
+        std::wstring GetString(int nKey, const std::wstring& szDefault)
         {
-            CString rValue;
+            std::wstring rValue;
             if (this->LookupString(nKey, rValue))
                 return rValue;
             return szDefault;
