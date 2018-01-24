@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <afxstr.h>
+#include <string>
 #include "..\utilities\ListT.h"
 #include "Language.h"
 
