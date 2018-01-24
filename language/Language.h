@@ -3,8 +3,7 @@
 
 #pragma once
 
-#include <afxstr.h>
-#include <afxtempl.h>
+#include <string>
 #include "..\utilities\MapT.h"
 
 namespace lang
@@ -12,33 +11,9 @@ namespace lang
     class CLanguage
     {
     public:
-        CString szId;
-        CString szOriginalName;
-        CString szTranslatedName;
-        util::CMapT<int,CString> m_Strings;
-    public:
-        CLanguage()
-        {
-        }
-        CLanguage(const CLanguage &other)
-        {
-            Copy(other);
-        }
-        CLanguage& operator=(const CLanguage &other)
-        {
-            Copy(other);
-            return *this;
-        }
-        virtual ~CLanguage()
-        {
-        }
-    public:
-        void Copy(const CLanguage &other)
-        {
-            this->szId = other.szId;
-            this->szOriginalName = other.szOriginalName;
-            this->szTranslatedName = other.szTranslatedName;
-            this->m_Strings = other.m_Strings;
-        }
+        std::wstring szId;
+        std::wstring szOriginalName;
+        std::wstring szTranslatedName;
+        util::CMapT<int,std::wstring> m_Strings;
     };
 }
