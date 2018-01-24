@@ -4,8 +4,7 @@
 #pragma once
 
 #include <functional>
-#include <afxstr.h>
-#include <afxcmn.h>
+#include <string>
 #include <urlmon.h>
 #pragma comment(lib, "urlmon.lib")
 
@@ -22,7 +21,7 @@ namespace util
         }
     public:
         int m_LastPercent;
-        std::function<void(int, CString)> fStatusCallback;
+        std::function<void(int, std::wstring)> fStatusCallback;
     public:
         HRESULT STDMETHODCALLTYPE OnStartBinding(DWORD dwReserved, __RPC__in_opt IBinding *pib)
         {
@@ -85,8 +84,7 @@ namespace util
                     m_LastPercent = percent;
                     if (fStatusCallback != nullptr)
                     {
-                        CString szOutput;
-                        szOutput.Format(_T("%d%%"), percent);
+                        std::wstring szOutput = std::to_wstring(percent) + _T("%");
                         fStatusCallback(percent, szOutput);
                     }
                 }
@@ -103,8 +101,7 @@ namespace util
             {
                 if (fStatusCallback != nullptr)
                 {
-                    CString szOutput;
-                    szOutput.Format(_T("Status code : %d"), ulStatusCode);
+                    std::wstring szOutput = _T("Status code : ") + std::to_wstring(ulStatusCode);
                     fStatusCallback(-1, szOutput);
                 }
             }
@@ -157,7 +154,7 @@ namespace util
         {
         }
     public:
-        bool Download(CString szUrl, CString szPath, std::function<void(int, CString)> fStatusCallback)
+        bool Download(const std::wstring& szUrl, const std::wstring& szPath, std::function<void(int, std::wstring)> fStatusCallback)
         {
             CDownloadCallback m_Callback;
             m_Callback.fStatusCallback = fStatusCallback;
