@@ -14,6 +14,79 @@ namespace util
     {
     public:
         template<typename T>
+        static std::string ToHex(T i)
+        {
+            std::stringstream stream;
+            stream << "0x"
+                << std::setfill('0') << std::setw(sizeof(T) * 2)
+                << std::hex << i;
+            return stream.str();
+        }
+        static int ToInt(const std::string& str)
+        {
+            return std::stoi(str);
+        }
+        static std::vector<std::string> Split(const char *str, char c)
+        {
+            std::vector<std::string> result;
+            do
+            {
+                const char *begin = str;
+                while (*str != c && *str)
+                    str++;
+                result.push_back(std::string(begin, str));
+            } while (0 != *str++);
+            return result;
+        }
+        static std::string TowLower(const std::string& str)
+        {
+            std::string s = str;
+            std::transform(s.begin(), s.end(), s.begin(), ::towlower);
+            return s;
+        }
+        static std::string ToUpper(const std::string& str)
+        {
+            std::string s = str;
+            std::transform(s.begin(), s.end(), s.begin(), ::toupper);
+            return s;
+        }
+        static bool CompareNoCase(const std::string& str1, const std::string& str2)
+        {
+            std::string s1 = ToUpper(str1);
+            std::string s2 = ToUpper(str2);
+            return s1 == s2;
+        }
+        static bool ContainsNoCase(const std::string& str, const std::string& value, wchar_t token)
+        {
+            std::string v = ToUpper(value);
+            auto tokens = Split(str.c_str(), token);
+            for (auto& t : tokens)
+            {
+                if (ToUpper(t) == v)
+                    return true;
+            }
+            return false;
+        }
+        static bool ReplaceNoCase(std::string& str, const std::string& from, const std::string& to)
+        {
+            std::string s = ToUpper(str);
+            std::string f = ToUpper(from);
+            auto pos = s.find(f);
+            if (pos != std::string::npos)
+            {
+                str.replace(pos, f.length(), to);
+                return true;
+            }
+            return false;
+        }
+        static int FindNoCase(const std::string& str, const std::string& find)
+        {
+            std::string s = ToUpper(str);
+            std::string f = ToUpper(find);
+            return s.find(f);
+        }
+    public:
+        template<typename T>
         static std::wstring ToHex(T i)
         {
             std::wostringstream stream;
@@ -21,6 +94,10 @@ namespace util
                    << std::setfill('0') << std::setw(sizeof(T)*2) 
                    << std::hex << i;
           return stream.str();
+        }
+        static int ToInt(const std::wstring& str)
+        {
+            return std::stoi(str);
         }
         static std::vector<std::wstring> Split(const wchar_t *str, wchar_t c)
         {

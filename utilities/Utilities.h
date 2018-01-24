@@ -25,7 +25,7 @@ namespace util
 
     void ShutdownWindows();
 
-    void LaunchAndWait(LPCTSTR file, LPCTSTR params, BOOL bWait);
+    void LaunchAndWait(const std::wstring& file, const std::wstring& params, BOOL bWait);
 
     void SetComboBoxHeight(HWND hDlg, int nComboBoxID, int nSizeLimit);
 

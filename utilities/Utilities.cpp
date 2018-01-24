@@ -157,7 +157,7 @@ namespace util
         ::PostQuitMessage(0);
     }
 
-    void LaunchAndWait(LPCTSTR file, LPCTSTR params, BOOL bWait)
+    void LaunchAndWait(const std::wstring& file, const std::wstring& params, BOOL bWait)
     {
         SHELLEXECUTEINFO sei;
         ::ZeroMemory(&sei, sizeof(SHELLEXECUTEINFO));
@@ -165,8 +165,8 @@ namespace util
         sei.fMask = SEE_MASK_NOCLOSEPROCESS;
         // leave sei.lpVerb uninitialized for default action
         sei.nShow = SW_SHOWNORMAL;
-        sei.lpFile = file;
-        sei.lpParameters = params;
+        sei.lpFile = file.c_str();
+        sei.lpParameters = params.c_str();
         ::ShellExecuteEx(&sei);
         if (bWait == TRUE)
             ::WaitForSingleObject(sei.hProcess, INFINITE);
