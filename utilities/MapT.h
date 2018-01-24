@@ -13,39 +13,6 @@ namespace util
     public:
         std::map<K, V> m_Map;
     public:
-        CMapT()
-        {
-        }
-        CMapT(const CMapT &other)
-        {
-            Copy(other);
-        }
-        CMapT& operator=(const CMapT &other)
-        {
-            Copy(other);
-            return *this;
-        }
-        virtual ~CMapT()
-        {
-            if (m_Map.size() != 0)
-                m_Map.clear();
-        }
-    public:
-        void Copy(const CMapT &other)
-        {
-            this->RemoveAll();
-            for (auto& item : other.m_Map)
-            {
-                this->m_Map[item.first] = item.second;
-            }
-        }
-        void Copy(CMapT& other)
-        {
-            for (auto& item : this->m_Map)
-            {
-                other.m_Map[item.first] = item.second;
-            }
-        }
         bool IsEmpty()
         {
             return m_Map.empty();
