@@ -4,6 +4,7 @@
 #pragma once
 
 #include <string>
+#include <string.h>
 #include "tinyxml2\tinyxml2.h" // https://github.com/leethomason/tinyxml2
 #include "utilities\Utf8String.h"
 
@@ -77,11 +78,11 @@ namespace xml
         }
         bool ToBool(const char *pszUtf8)
         {
-            return _tcsicmp(ToString(pszUtf8).c_str(), m_True.c_str()) == 0;
+            return _wcsicmp(ToString(pszUtf8).c_str(), m_True.c_str()) == 0;
         }
         int ToInt(const char *pszUtf8)
         {
-            return _tstoi(ToString(pszUtf8).c_str());
+            return _wtoi(ToString(pszUtf8).c_str());
         }
         std::wstring ToString(const int nValue)
         {
