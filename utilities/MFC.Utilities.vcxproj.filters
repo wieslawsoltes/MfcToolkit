@@ -66,8 +66,8 @@
     <ClInclude Include="Download.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OutputPath.h">
-      <Filter>Header Files\IO</Filter>
+    <ClInclude Include="StringHelper.h">
+      <Filter>Header Files\Strings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

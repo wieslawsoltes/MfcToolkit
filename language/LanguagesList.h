@@ -4,8 +4,8 @@
 #pragma once
 
 #include <string>
-#include <string.h>
 #include "..\utilities\ListT.h"
+#include "..\utilities\StringHelper.h"
 #include "Language.h"
 
 namespace lang
@@ -13,13 +13,13 @@ namespace lang
     class CLanguagesList : public util::CListT<CLanguage>
     {
     public:
-        int GetLanguageById(CString szLanguageId)
+        int GetLanguageById(const std::wstring& szLanguageId)
         {
             int nCount = this->Count();
             for (int i = 0; i < nCount; i++)
             {
                 CLanguage& language = this->Get(i);
-                if (_wcsicmp(szLanguageId.c_str(), language.szId).c_str()) == 0)
+                if (util::StringHelper::CompareNoCase(szLanguageId, language.szId))
                     return i;
             }
             return -1;

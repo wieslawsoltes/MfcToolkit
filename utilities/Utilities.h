@@ -4,7 +4,7 @@
 #pragma once
 
 #include <Windows.h>
-#include <atlstr.h>
+#include <string>
 
 namespace util
 {
@@ -29,37 +29,33 @@ namespace util
 
     void SetComboBoxHeight(HWND hDlg, int nComboBoxID, int nSizeLimit);
 
-    CString GetFileName(CString szFilePath);
+    std::wstring GetFileName(const std::wstring& szFilePath);
 
-    CString GetFilePath(CString szFilePath);
+    std::wstring GetFilePath(const std::wstring& szFilePath);
 
-    CString GetFileExtension(CString szFilePath);
+    std::wstring GetFileExtension(const std::wstring& szFilePath);
 
-    CString GetOnlyFileName(CString szFilePath);
+    std::wstring GetOnlyFileName(const std::wstring& szFilePath);
 
     ULONGLONG GetFileSize64(HANDLE hFile);
 
-    ULONGLONG GetFileSize64(CString szFileName);
+    ULONGLONG GetFileSize64(const std::wstring& szFileName);
 
     __int64 GetFileSizeInt64(FILE *fp);
 
-    CString GetExeFilePath();
+    std::wstring GetExeFilePath();
 
-    CString GetSettingsFilePath(CString szFileName, CString szConfigDirectory);
+    std::wstring GetSettingsFilePath(const std::wstring& szFileName, const std::wstring& szConfigDirectory);
 
-    void GetFullPathName(CString &szFilePath);
+    std::wstring GetFullPathName(const std::wstring& szFilePath);
 
     BOOL DirectoryExists(LPCTSTR szPath);
 
-    bool MakeFullPath(CString szPath);
+    bool MakeFullPath(const std::wstring& szTargetPath);
 
-    bool FileExists(CString szPath);
+    bool FileExists(const std::wstring& szPath);
 
-    CString GenerateUuidString();
-
-    CString ReplaceNoCase(LPCTSTR instr, LPCTSTR oldstr, LPCTSTR newstr);
-
-    int FindNoCase(LPCTSTR pszString, LPCTSTR pszSearch);
+    std::wstring GenerateUuidString();
 
     void ConvertAnsiToUnicode(const char *szAnsi, wchar_t *szUnicode, ULONG nLength);
 

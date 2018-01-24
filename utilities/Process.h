@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <string>
+#include <tchar.h>
 #include <Windows.h>
 
 namespace util
@@ -36,13 +38,13 @@ namespace util
             this->sInfo.hStdError = hPipeStderr;
         }
     public:
-        bool Start(TCHAR *szCommandLine, bool bNoWindow)
+        bool Start(const std::wstring& szCommandLine, bool bNoWindow)
         {
             DWORD dwCreationFlags = NORMAL_PRIORITY_CLASS;
             if (bNoWindow == true)
                 dwCreationFlags |= CREATE_NO_WINDOW;
             BOOL bResult = ::CreateProcess(nullptr,
-                szCommandLine,
+                _T(szCommandLine.c_str()),
                 nullptr,
                 nullptr,
                 TRUE,

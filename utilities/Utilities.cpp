@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 #include "StdAfx.h"
+#include "StringHelper.h"
 #include "Utilities.h"
 #include <Rpc.h>
 
@@ -179,45 +180,32 @@ namespace util
             ::SendMessage(hComboxBox, CB_SETMINVISIBLE, (WPARAM)nSizeLimit, 0);
     }
 
-    UINT GetFileNameInternal(LPCTSTR lpszPathName, LPTSTR lpszTitle, UINT nMax)
+
+    std::wstring GetFileName(const std::wstring& szFilePath)
     {
-        LPTSTR lpszTemp = ::PathFindFileName(lpszPathName);
-        if (lpszTitle == nullptr)
-            return lstrlen(lpszTemp) + 1;
-        lstrcpyn(lpszTitle, lpszTemp, nMax);
-        return(0);
+        return ::PathFindFileName(szFilePath.c_str());
     }
 
-    CString GetFileName(CString szFilePath)
+    std::wstring GetFilePath(const std::wstring& szFilePath)
     {
-        CString strResult;
-        util::GetFileNameInternal(szFilePath, strResult.GetBuffer(_MAX_FNAME), _MAX_FNAME);
-        strResult.ReleaseBuffer();
-        return strResult;
+        std::wstring szFileName = util::GetFileName(szFilePath);
+        return szFilePath.substr(0, szFilePath.length() - szFileName.length());
     }
 
-    CString GetFilePath(CString szFilePath)
+    std::wstring GetFileExtension(const std::wstring& szFilePath)
     {
-        CString strResult = szFilePath;
-        CString szFileName = util::GetFileName(szFilePath);
-        int nPathLength = szFilePath.GetLength() - szFileName.GetLength();
-        strResult.Truncate(nPathLength);
-        return strResult;
-    }
-
-    CString GetFileExtension(CString szFilePath)
-    {
-        CString szExt = ::PathFindExtension(szFilePath);
-        szExt.Remove('.');
+        std::wstring szExt = ::PathFindExtension(szFilePath.c_str());
+        size_t pos = szExt.find('.');
+        if (pos != std::string::npos)
+            return szExt.substr(pos + 1, szExt.length() - 1);
         return szExt;
     }
 
-    CString GetOnlyFileName(CString szFilePath)
+    std::wstring GetOnlyFileName(const std::wstring& szFilePath)
     {
-        CString szFileName = util::GetFileName(szFilePath);
-        szFileName.TrimRight(util::GetFileExtension(szFilePath));
-        szFileName.TrimRight(_T("."));
-        return szFileName;
+        std::wstring szFileName = util::GetFileName(szFilePath);
+        std::wstring szExt = util::GetFileExtension(szFilePath);
+        return szFileName.substr(0, szFileName.length() - szExt.length());
     }
 
     ULONGLONG GetFileSize64(HANDLE hFile)
@@ -232,14 +220,14 @@ namespace util
         return liSize.QuadPart;
     }
 
-    ULONGLONG GetFileSize64(CString szFileName)
+    ULONGLONG GetFileSize64(const std::wstring& szFileName)
     {
         WIN32_FIND_DATA FindFileData;
         HANDLE hFind;
         ULARGE_INTEGER ulSize;
         ULONGLONG nFileSize;
 
-        hFind = ::FindFirstFile(szFileName, &FindFileData);
+        hFind = ::FindFirstFile(szFileName.c_str(), &FindFileData);
         if (hFind == INVALID_HANDLE_VALUE)
             return 0;
 
@@ -262,45 +250,41 @@ namespace util
         return nSize;
     }
 
-    CString GetExeFilePath()
+    std::wstring GetExeFilePath()
     {
         TCHAR szExeFilePath[MAX_PATH + 1] = _T("");
         DWORD dwRet = ::GetModuleFileName(::GetModuleHandle(nullptr), szExeFilePath, MAX_PATH);
         if (dwRet > 0)
         {
-            CString szTempBuff1;
-            CString szTempBuff2;
-            szTempBuff1.Format(_T("%s"), szExeFilePath);
-            szTempBuff2 = util::GetFileName(szTempBuff1);
-            szTempBuff1.TrimRight(szTempBuff2);
-            return szTempBuff1;
+            std::wstring szTempBuff1 = szExeFilePath;
+            std::wstring szTempBuff2 = util::GetFileName(szTempBuff1);
+            return szTempBuff1.substr(0, szTempBuff1.length() - szTempBuff2.length());
         }
         return nullptr;
     }
 
-    CString GetSettingsFilePath(CString szFileName, CString szConfigDirectory)
+    std::wstring GetSettingsFilePath(const std::wstring& szFileName, const std::wstring& szConfigDirectory)
     {
         TCHAR szPath[MAX_PATH];
-
         if (SUCCEEDED(SHGetFolderPath(nullptr,
             CSIDL_APPDATA | CSIDL_FLAG_CREATE,
             nullptr,
             0,
             szPath)))
         {
-            PathAppend(szPath, szConfigDirectory);
-            PathAppend(szPath, szFileName);
+            PathAppend(szPath, szConfigDirectory.c_str());
+            PathAppend(szPath, szFileName.c_str());
             return szPath;
         }
         return nullptr;
     }
 
-    void GetFullPathName(CString &szFilePath)
+    std::wstring GetFullPathName(const std::wstring& szFilePath)
     {
         TCHAR szFullPath[MAX_PATH + 2] = _T("");
         LPTSTR pszFilePos = nullptr;
-        ::GetFullPathName(szFilePath, MAX_PATH + 1, szFullPath, &pszFilePos);
-        szFilePath = szFullPath;
+        ::GetFullPathName(szFilePath.c_str(), MAX_PATH + 1, szFullPath, &pszFilePos);
+        return szFullPath;
     }
 
     BOOL DirectoryExists(LPCTSTR szPath)
@@ -314,28 +298,29 @@ namespace util
         return FALSE;
     }
 
-    bool MakeFullPath(CString szPath)
+    bool MakeFullPath(const std::wstring& szTargetPath)
     {
-        if (szPath[szPath.GetLength() - 1] != '\\')
+        std::wstring szPath = szTargetPath;
+        if (szPath[szPath.length() - 1] != '\\')
             szPath = szPath + _T("\\");
 
-        CString szTmpDir = szPath.Left(2);
-        _tchdir(szTmpDir);
+        std::wstring szTmpDir = szPath.substr(0, 2);
+        _tchdir(szTmpDir.c_str());
 
         int nStart = 3;
         int nEnd = 0;
         while (true)
         {
-            nEnd = szPath.Find('\\', nStart);
+            nEnd = szPath.find('\\', nStart);
             if (nEnd == -1)
                 return true;
 
-            CString szNextDir = szPath.Mid(nStart, nEnd - nStart);
-            CString szCurDir = szTmpDir + _T("\\") + szNextDir;
-            if (_tchdir(szCurDir) != 0)
+            std::wstring szNextDir = szPath.substr(nStart, nEnd - nStart);
+            std::wstring szCurDir = szTmpDir + _T("\\") + szNextDir;
+            if (_tchdir(szCurDir.c_str()) != 0)
             {
-                _tchdir(szTmpDir);
-                if (_tmkdir(szNextDir) != 0)
+                _tchdir(szTmpDir.c_str());
+                if (_tmkdir(szNextDir.c_str()) != 0)
                     return false;
             }
 
@@ -345,19 +330,19 @@ namespace util
         return false;
     }
 
-    bool FileExists(CString szPath)
+    bool FileExists(const std::wstring& szPath)
     {
         WIN32_FIND_DATA w32FileData;
         ZeroMemory(&w32FileData, sizeof(WIN32_FIND_DATA));
-        HANDLE hFind = ::FindFirstFile(szPath, &w32FileData);
+        HANDLE hFind = ::FindFirstFile(szPath.c_str(), &w32FileData);
         bool bInvalidHandle = hFind == INVALID_HANDLE_VALUE;
         ::FindClose(hFind);
         return bInvalidHandle == false;
     }
 
-    CString GenerateUuidString()
+    std::wstring GenerateUuidString()
     {
-        CString strKey;
+        std::wstring strKey;
         UUID uuid;
         if (UuidCreate(&uuid) == RPC_S_OK)
         {
@@ -365,47 +350,11 @@ namespace util
             if (UuidToString(&uuid, &szUuid) == RPC_S_OK)
             {
                 strKey = (LPTSTR)szUuid;
-                strKey.MakeUpper();
+                strKey = util::StringHelper::ToUpper(strKey);
                 RpcStringFree(&szUuid);
             }
         }
         return strKey;
-    }
-
-    CString ReplaceNoCase(LPCTSTR instr, LPCTSTR oldstr, LPCTSTR newstr)
-    {
-        CString output(instr);
-        CString inputLower(instr);
-        CString oldLower(oldstr);
-        inputLower.MakeLower();
-        oldLower.MakeLower();
-        int pos = 0;
-        for (;;)
-        {
-            pos = inputLower.Find(oldLower, pos);
-            if (pos == -1)
-                break;
-            inputLower.Delete(pos, lstrlen(oldstr));
-            inputLower.Insert(pos, newstr);
-            output.Delete(pos, lstrlen(oldstr));
-            output.Insert(pos, newstr);
-            pos += lstrlen(newstr);
-        }
-        return output;
-    }
-
-    int FindNoCase(LPCTSTR pszString, LPCTSTR pszSearch)
-    {
-        int lenString = lstrlen(pszString);
-        int lenSearch = lstrlen(pszSearch);
-        if (lenSearch == 0 || lenSearch > lenString)
-            return -1;
-        for (int i = 0; i < lenString - lenSearch + 1; ++i)
-        {
-            if (_tcsncicmp(&pszString[i], pszSearch, lenSearch) == 0)
-                return i;
-        }
-        return -1;
     }
 
     void ConvertAnsiToUnicode(const char *szAnsi, wchar_t *szUnicode, ULONG nLength)
