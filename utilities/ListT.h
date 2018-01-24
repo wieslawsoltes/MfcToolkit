@@ -10,41 +10,9 @@ namespace util
     template <class T>
     class CListT
     {
+    public:
         std::vector<T> m_Items;
     public:
-        CListT()
-        {
-        }
-        CListT(const CListT &other)
-        {
-            Copy(other);
-        }
-        CListT& operator=(const CListT &other)
-        {
-            Copy(other);
-            return *this;
-        }
-        virtual ~CListT()
-        {
-            if (m_Items.size() != 0)
-                m_Items.clear();
-        }
-    public:
-        void Copy(const CListT &other)
-        {
-            this->RemoveAll();
-            for (auto& item : other.m_Items)
-            {
-                this->m_Items.emplace_back(item);
-            }
-        }
-        void Copy(CListT& other)
-        {
-            for (auto& item : other.m_Items)
-            {
-                other.m_Items.emplace_back(item);
-            }
-        }
         bool IsEmpty()
         {
             return m_Items.empty();
