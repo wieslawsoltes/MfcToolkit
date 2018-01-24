@@ -4,6 +4,7 @@
 #pragma once
 
 #include <string>
+#include <string.h>
 #include "..\utilities\ListT.h"
 #include "Language.h"
 
@@ -18,7 +19,7 @@ namespace lang
             for (int i = 0; i < nCount; i++)
             {
                 CLanguage& language = this->Get(i);
-                if (szLanguageId.CompareNoCase(language.szId) == 0)
+                if (_wcsicmp(szLanguageId.c_str(), language.szId).c_str()) == 0)
                     return i;
             }
             return -1;
