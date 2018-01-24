@@ -231,7 +231,6 @@
     <ClInclude Include="Download.h" />
     <ClInclude Include="ListT.h" />
     <ClInclude Include="MapT.h" />
-    <ClInclude Include="OptionsParser.h" />
     <ClInclude Include="OutputPath.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Process.h" />
