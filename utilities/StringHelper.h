@@ -104,7 +104,7 @@ namespace util
         static std::wstring ToWStringHex(int i)
         {
             std::wostringstream stream;
-            stream << "0x" 
+            stream << L"0x" 
                    << std::setfill('0') << std::setw(sizeof(int)*2) 
                    << std::hex << i;
           return stream.str();
