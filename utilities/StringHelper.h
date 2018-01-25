@@ -27,9 +27,10 @@ namespace util
     public:
         static std::string ToStringHex(int i)
         {
+            const char fill = '0';
             std::ostringstream stream;
             stream << "0x"
-                << std::setfill('0') << std::setw(sizeof(int) * 2)
+                << std::setfill(fill) << std::setw(sizeof(int) * 2)
                 << std::hex << i;
             return stream.str();
         }
@@ -103,9 +104,10 @@ namespace util
     public:
         static std::wstring ToWStringHex(int i)
         {
+            const wchar_t fill = '0';
             std::wostringstream stream;
             stream << L"0x" 
-                   << std::setfill('0') << std::setw(sizeof(int)*2) 
+                   << std::setfill(fill) << std::setw(sizeof(int)*2) 
                    << std::hex << i;
           return stream.str();
         }
