@@ -14,7 +14,7 @@ namespace util
     {
     public:
         template<typename T>
-        static std::string ToHex(T i)
+        static std::string ToStringHex(T i)
         {
             std::stringstream stream;
             stream << "0x"
@@ -87,7 +87,7 @@ namespace util
         }
     public:
         template<typename T>
-        static std::wstring ToHex(T i)
+        static std::wstring ToWStringHex(T i)
         {
             std::wostringstream stream;
             stream << "0x" 

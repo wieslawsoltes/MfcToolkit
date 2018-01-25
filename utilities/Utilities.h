@@ -29,6 +29,8 @@ namespace util
 
     void SetComboBoxHeight(HWND hDlg, int nComboBoxID, int nSizeLimit);
 
+    std::wstring CombinePath(const std::wstring& szPath, const std::wstring& szFile);
+
     std::wstring GetFileName(const std::wstring& szFilePath);
 
     std::wstring GetFilePath(const std::wstring& szFilePath);

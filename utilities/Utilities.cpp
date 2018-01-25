@@ -180,6 +180,19 @@ namespace util
             ::SendMessage(hComboxBox, CB_SETMINVISIBLE, (WPARAM)nSizeLimit, 0);
     }
 
+    std::wstring CombinePath(const std::wstring& szPath, const std::wstring& szFile)
+    {
+        std::wstring szOutputFile = szFile;
+        if (szPath.length() >= 1)
+        {
+            auto cLast = szPath[szPath.length() - 1];
+            if ((cLast == '\\') || (cLast == '/'))
+                szOutputFile = szPath + szOutputFile;
+            else
+                szOutputFile = szPath + L"\\") + szOutputFile;
+        }
+        return szOutputFile;
+    }
 
     std::wstring GetFileName(const std::wstring& szFilePath)
     {
