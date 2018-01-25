@@ -13,6 +13,17 @@ namespace util
     class StringHelper
     {
     public:
+        static std::wstring Convert(const std::string& str)
+        {
+            std::wstring w(str.begin(), str.end());
+            return w;
+        }
+        static std::string Convert(const std::wstring& str)
+        {
+            std::string s(str.begin(), str.end());
+            return s;
+        }
+    public:
         template<typename T>
         static std::string ToStringHex(T i)
         {
