@@ -44,7 +44,7 @@ namespace util
             if (bNoWindow == true)
                 dwCreationFlags |= CREATE_NO_WINDOW;
             BOOL bResult = ::CreateProcess(nullptr,
-                _T(szCommandLine.c_str()),
+                szCommandLine.c_str(),
                 nullptr,
                 nullptr,
                 TRUE,
