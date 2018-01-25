@@ -24,12 +24,11 @@ namespace util
             return s;
         }
     public:
-        template<typename T>
-        static std::string ToStringHex(T i)
+        static std::string ToStringHex(int i)
         {
             std::stringstream stream;
             stream << "0x"
-                << std::setfill('0') << std::setw(sizeof(T) * 2)
+                << std::setfill('0') << std::setw(sizeof(int) * 2)
                 << std::hex << i;
             return stream.str();
         }
@@ -101,12 +100,11 @@ namespace util
             return s.find(f);
         }
     public:
-        template<typename T>
-        static std::wstring ToWStringHex(T i)
+        static std::wstring ToWStringHex(int i)
         {
             std::wostringstream stream;
             stream << "0x" 
-                   << std::setfill('0') << std::setw(sizeof(T)*2) 
+                   << std::setfill('0') << std::setw(sizeof(int)*2) 
                    << std::hex << i;
           return stream.str();
         }
