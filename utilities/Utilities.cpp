@@ -300,12 +300,12 @@ namespace util
         return szFullPath;
     }
 
-    BOOL DirectoryExists(LPCTSTR szPath)
+    BOOL DirectoryExists(const std::wstring& szPath)
     {
-        if (_taccess_s(szPath, 0) == 0)
+        if (_taccess_s(szPath.c_str(), 0) == 0)
         {
             struct _stat status;
-            _tstat(szPath, &status);
+            _tstat(szPath.c_str(), &status);
             return (status.st_mode & S_IFDIR) != 0;
         }
         return FALSE;

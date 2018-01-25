@@ -51,7 +51,7 @@ namespace util
 
     std::wstring GetFullPathName(const std::wstring& szFilePath);
 
-    BOOL DirectoryExists(LPCTSTR szPath);
+    BOOL DirectoryExists(const std::wstring& szPath);
 
     bool MakeFullPath(const std::wstring& szTargetPath);
 
