@@ -4,6 +4,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include <tchar.h>
 #include <Windows.h>
 
@@ -40,11 +41,14 @@ namespace util
     public:
         bool Start(const std::wstring& szCommandLine, bool bNoWindow)
         {
+            std::vector<wchar_t> convert(szCommandLine.begin(), szCommandLine.end());
+            convert.push_back(0);
+            LPTSTR lpCommandLine = convert.data();
             DWORD dwCreationFlags = NORMAL_PRIORITY_CLASS;
             if (bNoWindow == true)
                 dwCreationFlags |= CREATE_NO_WINDOW;
             BOOL bResult = ::CreateProcess(nullptr,
-                szCommandLine.c_str(),
+                lpCommandLine,
                 nullptr,
                 nullptr,
                 TRUE,
