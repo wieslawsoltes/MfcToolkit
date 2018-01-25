@@ -5,6 +5,7 @@
 #include "MainApp.h"
 #include "MainDlg.h"
 #include "afxdialogex.h"
+#include <string>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -85,10 +86,12 @@ void CMainDlg::Download()
     CString szPath;
     m_UrlEdit.GetWindowText(szUrl);
     m_PathEdit.GetWindowText(szPath);
-    m_Download.Download(szUrl, szPath, 
-        [this](int nProgress, CString szStatus)
+    m_Download.Download(
+        std::wstring(CT2CW(szUrl)), 
+        std::wstring(CT2CW(szPath)),
+        [this](int nProgress, std::wstring szStatus)
         {
             this->m_ProgressCtrl.SetPos(nProgress);
-            m_EdtStatus.SetWindowText(szStatus);
+            m_EdtStatus.SetWindowText(szStatus.c_str());
         });
 }

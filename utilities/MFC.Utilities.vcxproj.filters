@@ -28,6 +28,9 @@
     <Filter Include="Header Files\IO">
       <UniqueIdentifier>{e957f4ae-f360-4fb1-ac06-249a04ae6b38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Language">
+      <UniqueIdentifier>{a6859b19-b54e-4767-8482-e1c8a0e43d7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -69,12 +72,21 @@
     <ClInclude Include="StringHelper.h">
       <Filter>Header Files\Strings</Filter>
     </ClInclude>
+    <ClInclude Include="Language.h">
+      <Filter>Header Files\Language</Filter>
+    </ClInclude>
+    <ClInclude Include="LanguageContext.h">
+      <Filter>Header Files\Language</Filter>
+    </ClInclude>
+    <ClInclude Include="LanguageHelper.h">
+      <Filter>Header Files\Language</Filter>
+    </ClInclude>
+    <ClInclude Include="LanguagesList.h">
+      <Filter>Header Files\Language</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
