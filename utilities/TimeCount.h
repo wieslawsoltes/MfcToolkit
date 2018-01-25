@@ -3,113 +3,66 @@
 
 #pragma once
 
-#include <Windows.h>
-#include <atlstr.h>
+#include <string>
+#include <chrono>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <tuple>
 
 namespace util
 {
     class CTimeCount
     {
     private:
-        LARGE_INTEGER f[3];
+        std::chrono::milliseconds ms;
+        std::chrono::time_point<std::chrono::steady_clock> start;
+        std::chrono::time_point<std::chrono::steady_clock> end;
+    private:
+        template <typename Container, typename Fun>
+        static void TupleForEach(const Container& c, Fun fun)
+        {
+            for (auto& e : c)
+                fun(std::get<0>(e), std::get<1>(e), std::get<2>(e));
+        }
     public:
-        CTimeCount()
+        static std::string ToString(std::chrono::milliseconds time)
         {
-        };
-        virtual ~CTimeCount()
+            using T = std::tuple<std::chrono::milliseconds, int, const char *>;
+            constexpr T formats[] = 
+            {
+                T { std::chrono::hours(1),        2, ""  },
+                T { std::chrono::minutes(1),      2, ":" },
+                T { std::chrono::seconds(1),      2, ":" },
+                T { std::chrono::milliseconds(1), 3, "." }
+            };
+            std::ostringstream o;
+            TupleForEach(formats, [&time, &o](auto denominator, auto width, auto separator) 
+            {
+                o << separator << std::setw(width) << std::setfill('0') << (time / denominator);
+                time = time % denominator;
+            });
+            return o.str();
+        }
+    public:
+        static std::wstring Format(std::chrono::milliseconds ms)
         {
-        };
+            std::string s = ToString(ms);
+            std::wstring w(s.begin(), s.end());
+            return w;
+        }
     public:
         void Start()
         {
-            ZeroMemory(this->f, (3 * sizeof(LARGE_INTEGER)));
-            ::QueryPerformanceFrequency(&this->f[0]);
-            ::QueryPerformanceCounter(&this->f[1]);
+            start = std::chrono::steady_clock::now();
         }
         void Stop()
         {
-            ::QueryPerformanceCounter(&this->f[2]);
+            end = std::chrono::steady_clock::now();
         }
-        double ElapsedTime()
+        std::chrono::milliseconds ElapsedTime()
         {
-            return (double)((this->f[2].QuadPart - this->f[1].QuadPart) / (double)this->f[0].QuadPart);
-        }
-    public:
-        CString Format(double fTime, int nFormat)
-        {
-            CString szTime = _T("");
-            DWORD dwTime[5] = { 0, 0, 0, 0, 0 }; // DD HH MM SS MS
-
-            dwTime[0] = (DWORD)fTime / (24 * 60 * 60); // DD -> [days]
-            dwTime[1] = ((DWORD)fTime - (dwTime[0] * (24 * 60 * 60))) / (60 * 60); // HH -> [h]
-            dwTime[2] = ((DWORD)fTime - ((dwTime[0] * (24 * 60 * 60)) + (dwTime[1] * (60 * 60)))) / 60; // MM -> [m]
-            dwTime[3] = ((DWORD)fTime - ((dwTime[0] * (24 * 60 * 60)) + (dwTime[1] * (60 * 60)) + (dwTime[2] * 60))); // SS -> [s]
-            dwTime[4] = (DWORD)(((double)fTime - (DWORD)fTime) * (double) 1000.1); // MS -> [ms]
-
-            if (nFormat == 0)
-            {
-                // display simple time
-                szTime.Format(_T("%0.3f"), fTime);
-            }
-            else if (nFormat == 1)
-            {
-                // exclude days if not used
-                if (dwTime[0] != 0)
-                {
-                    szTime.Format(_T("(%02ld:%02ld:%02ld:%02ld.%03ld"),
-                        dwTime[0], dwTime[1], dwTime[2], dwTime[3], dwTime[4]);
-                }
-                else
-                {
-                    szTime.Format(_T("%02ld:%02ld:%02ld.%03ld"),
-                        dwTime[1], dwTime[2], dwTime[3], dwTime[4]);
-                }
-            }
-            else if (nFormat == 2)
-            {
-                // exclude unused values from time display
-                if (dwTime[0] != 0)
-                {
-                    szTime.Format(_T("(%02ld:%02ld:%02ld:%02ld.%03ld"),
-                        dwTime[0], dwTime[1], dwTime[2], dwTime[3], dwTime[4]);
-                }
-                else if ((dwTime[0] == 0) && (dwTime[1] != 0))
-                {
-                    szTime.Format(_T("%02ld:%02ld:%02ld.%03ld"),
-                        dwTime[1], dwTime[2], dwTime[3], dwTime[4]);
-                }
-                else if ((dwTime[0] == 0) && (dwTime[1] == 0) && (dwTime[2] != 0))
-                {
-                    szTime.Format(_T("%02ld:%02ld.%03ld"),
-                        dwTime[2], dwTime[3], dwTime[4]);
-                }
-                else if ((dwTime[0] == 0) && (dwTime[1] == 0) && (dwTime[2] == 0) && (dwTime[3] != 0))
-                {
-                    szTime.Format(_T("%02ld.%03ld"),
-                        dwTime[3], dwTime[4]);
-                }
-                else
-                {
-                    szTime.Format(_T("%03ld"),
-                        dwTime[4]);
-                }
-            }
-            else if (nFormat == 3)
-            {
-                // exclude days if not used and don't show milliseconds
-                if (dwTime[0] != 0)
-                {
-                    szTime.Format(_T("(%02ld:%02ld:%02ld:%02ld"),
-                        dwTime[0], dwTime[1], dwTime[2], dwTime[3]);
-                }
-                else
-                {
-                    szTime.Format(_T("%02ld:%02ld:%02ld"),
-                        dwTime[1], dwTime[2], dwTime[3]);
-                }
-            }
-
-            return szTime;
+            return std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         }
     };
 }
