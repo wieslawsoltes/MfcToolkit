@@ -22,6 +22,10 @@ namespace util
                 << std::hex << i;
             return stream.str();
         }
+        static int ToIntFromHex(const std::string& str)
+        {
+            return std::stoi(str, nullptr, 16);
+        }
         static int ToInt(const std::string& str)
         {
             return std::stoi(str);
@@ -94,6 +98,10 @@ namespace util
                    << std::setfill('0') << std::setw(sizeof(T)*2) 
                    << std::hex << i;
           return stream.str();
+        }
+        static int ToIntFromHex(const std::wstring& str)
+        {
+            return std::stoi(str, nullptr, 16);
         }
         static int ToInt(const std::wstring& str)
         {
