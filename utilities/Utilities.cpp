@@ -189,7 +189,7 @@ namespace util
             if ((cLast == '\\') || (cLast == '/'))
                 szOutputFile = szPath + szOutputFile;
             else
-                szOutputFile = szPath + L"\\") + szOutputFile;
+                szOutputFile = szPath + L"\\" + szOutputFile;
         }
         return szOutputFile;
     }
@@ -315,7 +315,7 @@ namespace util
     {
         std::wstring szPath = szTargetPath;
         if (szPath[szPath.length() - 1] != '\\')
-            szPath = szPath + _T("\\");
+            szPath = szPath + L"\\";
 
         std::wstring szTmpDir = szPath.substr(0, 2);
         _tchdir(szTmpDir.c_str());
@@ -329,7 +329,7 @@ namespace util
                 return true;
 
             std::wstring szNextDir = szPath.substr(nStart, nEnd - nStart);
-            std::wstring szCurDir = szTmpDir + _T("\\") + szNextDir;
+            std::wstring szCurDir = szTmpDir + L"\\" + szNextDir;
             if (_tchdir(szCurDir.c_str()) != 0)
             {
                 _tchdir(szTmpDir.c_str());
@@ -337,7 +337,7 @@ namespace util
                     return false;
             }
 
-            szTmpDir += _T("\\") + szNextDir;
+            szTmpDir += L"\\" + szNextDir;
             nStart = nEnd + 1;
         }
         return false;
