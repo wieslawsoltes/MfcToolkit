@@ -29,7 +29,7 @@ namespace util
             DWORD processorL3CacheCount = 0;
             DWORD processorPackageCount = 0;
         } LogicalProcessorInformation;
-        DWORD CountSetBits(ULONG_PTR bitMask)
+        static DWORD CountSetBits(ULONG_PTR bitMask)
         {
             DWORD LSHIFT = sizeof(ULONG_PTR) * 8 - 1;
             DWORD bitSetCount = 0;
@@ -44,7 +44,7 @@ namespace util
 
             return bitSetCount;
         }
-        int GetLogicalProcessorInformation(LogicalProcessorInformation* info)
+        static int GetLogicalProcessorInformation(LogicalProcessorInformation* info)
         {
             LPFN_GLPI glpi;
             BOOL done = FALSE;
@@ -157,7 +157,7 @@ namespace util
             return (0);
         }
     public:
-        void ShutdownWindows()
+        static void ShutdownWindows()
         {
             HANDLE m_hToken;
             if (::OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &m_hToken))
@@ -176,7 +176,7 @@ namespace util
             ::ExitWindowsEx(EWX_SHUTDOWN | EWX_POWEROFF | EWX_FORCEIFHUNG, 0);
             ::PostQuitMessage(0);
         }
-        void LaunchAndWait(const std::wstring& file, const std::wstring& params, BOOL bWait)
+        static void LaunchAndWait(const std::wstring& file, const std::wstring& params, BOOL bWait)
         {
             SHELLEXECUTEINFO sei;
             ::ZeroMemory(&sei, sizeof(SHELLEXECUTEINFO));
@@ -192,14 +192,14 @@ namespace util
             ::CloseHandle(sei.hProcess);
         }
     public:
-        void SetComboBoxHeight(HWND hDlg, int nComboBoxID, int nSizeLimit)
+        static void SetComboBoxHeight(HWND hDlg, int nComboBoxID, int nSizeLimit)
         {
             HWND hComboxBox = ::GetDlgItem(hDlg, nComboBoxID);
             if (hComboxBox != nullptr)
                 ::SendMessage(hComboxBox, CB_SETMINVISIBLE, (WPARAM)nSizeLimit, 0);
         }
     public:
-        std::wstring CombinePath(const std::wstring& szPath, const std::wstring& szFile)
+        static std::wstring CombinePath(const std::wstring& szPath, const std::wstring& szFile)
         {
             std::wstring szOutputFile = szFile;
             if (szPath.length() >= 1)
@@ -212,16 +212,16 @@ namespace util
             }
             return szOutputFile;
         }
-        std::wstring GetFileName(const std::wstring& szFilePath)
+        static std::wstring GetFileName(const std::wstring& szFilePath)
         {
             return ::PathFindFileName(szFilePath.c_str());
         }
-        std::wstring GetFilePath(const std::wstring& szFilePath)
+        static std::wstring GetFilePath(const std::wstring& szFilePath)
         {
             std::wstring szFileName = GetFileName(szFilePath);
             return szFilePath.substr(0, szFilePath.length() - szFileName.length());
         }
-        std::wstring GetFileExtension(const std::wstring& szFilePath)
+        static std::wstring GetFileExtension(const std::wstring& szFilePath)
         {
             std::wstring szExt = ::PathFindExtension(szFilePath.c_str());
             size_t pos = szExt.find('.');
@@ -229,13 +229,13 @@ namespace util
                 return szExt.substr(pos + 1, szExt.length() - 1);
             return szExt;
         }
-        std::wstring GetOnlyFileName(const std::wstring& szFilePath)
+        static std::wstring GetOnlyFileName(const std::wstring& szFilePath)
         {
             std::wstring szFileName = GetFileName(szFilePath);
             std::wstring szExt = GetFileExtension(szFilePath);
             return szFileName.substr(0, szFileName.length() - szExt.length());
         }
-        ULONGLONG GetFileSize64(HANDLE hFile)
+        static ULONGLONG GetFileSize64(HANDLE hFile)
         {
             ULARGE_INTEGER liSize;
             liSize.LowPart = ::GetFileSize(hFile, &liSize.HighPart);
@@ -246,7 +246,7 @@ namespace util
             }
             return liSize.QuadPart;
         }
-        ULONGLONG GetFileSize64(const std::wstring& szFileName)
+        static ULONGLONG GetFileSize64(const std::wstring& szFileName)
         {
             WIN32_FIND_DATA FindFileData;
             HANDLE hFind;
@@ -265,7 +265,7 @@ namespace util
 
             return nFileSize;
         }
-        __int64 GetFileSizeInt64(FILE *fp)
+        static __int64 GetFileSizeInt64(FILE *fp)
         {
             __int64 nCurPos, nSize;
             nCurPos = _ftelli64(fp);
@@ -274,7 +274,7 @@ namespace util
             _fseeki64(fp, nCurPos, SEEK_SET);
             return nSize;
         }
-        std::wstring GetExeFilePath()
+        static std::wstring GetExeFilePath()
         {
             TCHAR szExeFilePath[MAX_PATH + 1] = _T("");
             DWORD dwRet = ::GetModuleFileName(::GetModuleHandle(nullptr), szExeFilePath, MAX_PATH);
@@ -286,7 +286,7 @@ namespace util
             }
             return nullptr;
         }
-        std::wstring GetSettingsFilePath(const std::wstring& szFileName, const std::wstring& szConfigDirectory)
+        static std::wstring GetSettingsFilePath(const std::wstring& szFileName, const std::wstring& szConfigDirectory)
         {
             TCHAR szPath[MAX_PATH];
             if (SUCCEEDED(SHGetFolderPath(nullptr,
@@ -301,14 +301,14 @@ namespace util
             }
             return nullptr;
         }
-        std::wstring GetFullPathName(const std::wstring& szFilePath)
+        static std::wstring GetFullPathName(const std::wstring& szFilePath)
         {
             TCHAR szFullPath[MAX_PATH + 2] = _T("");
             LPTSTR pszFilePos = nullptr;
             ::GetFullPathName(szFilePath.c_str(), MAX_PATH + 1, szFullPath, &pszFilePos);
             return szFullPath;
         }
-        bool FileExists(const std::wstring& szPath)
+        static bool FileExists(const std::wstring& szPath)
         {
             WIN32_FIND_DATA w32FileData;
             ZeroMemory(&w32FileData, sizeof(WIN32_FIND_DATA));
@@ -318,7 +318,7 @@ namespace util
             return bInvalidHandle == false;
         }
     public:
-        BOOL DirectoryExists(const std::wstring& szPath)
+        static BOOL DirectoryExists(const std::wstring& szPath)
         {
             if (_taccess_s(szPath.c_str(), 0) == 0)
             {
@@ -328,7 +328,7 @@ namespace util
             }
             return FALSE;
         }
-        bool MakeFullPath(const std::wstring& szTargetPath)
+        static bool MakeFullPath(const std::wstring& szTargetPath)
         {
             std::wstring szPath = szTargetPath;
             if (szPath[szPath.length() - 1] != '\\')
@@ -360,7 +360,7 @@ namespace util
             return false;
         }
     public:
-        std::wstring GenerateUuidString()
+        static std::wstring GenerateUuidString()
         {
             std::wstring strKey;
             UUID uuid;
@@ -377,18 +377,18 @@ namespace util
             return strKey;
         }
     public:
-        void ConvertAnsiToUnicode(const char *szAnsi, wchar_t *szUnicode, ULONG nLength)
+        static void ConvertAnsiToUnicode(const char *szAnsi, wchar_t *szUnicode, ULONG nLength)
         {
             // use always + 1 to null-terminate string
             _mbstowcsz(szUnicode, szAnsi, nLength + 1);
         }
-        void ConvertUnicodeToAnsi(const wchar_t *szUnicode, char *szAnsi, ULONG nLength)
+        static void ConvertUnicodeToAnsi(const wchar_t *szUnicode, char *szAnsi, ULONG nLength)
         {
             // use always + 1 to null-terminate string
             _wcstombsz(szAnsi, szUnicode, nLength + 1);
         }
     public:
-        PTCHAR* MyCommandLineToArgv(PTCHAR pszCmdLine, int *pnArgc)
+        static PTCHAR* MyCommandLineToArgv(PTCHAR pszCmdLine, int *pnArgc)
         {
             BOOLEAN bHaveQuotationMark, bHaveText, bHaveSpace;
             ULONG nLength, nArgc, nI, nJ;
@@ -472,7 +472,7 @@ namespace util
             return pszArgv;
         }
     public:
-        bool Unzip2Folder(BSTR lpZipFile, BSTR lpFolder)
+        static bool Unzip2Folder(BSTR lpZipFile, BSTR lpFolder)
         {
             IShellDispatch *pISD;
             Folder *pZippedFile = 0L;
