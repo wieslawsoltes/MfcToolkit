@@ -162,7 +162,7 @@ namespace util
             IBindStatusCallback* pBindStatusCallback = nullptr;
             m_Callback.QueryInterface(IID_IBindStatusCallback, reinterpret_cast<void**>(&pBindStatusCallback));
 
-            HRESULT m_Result = URLDownloadToFile(nullptr, CT2W(szUrl), CT2W(szPath), 0, pBindStatusCallback);
+            HRESULT m_Result = URLDownloadToFile(nullptr, CT2W(szUrl.c_str()), CT2W(szPath.c_str()), 0, pBindStatusCallback);
             if (SUCCEEDED(m_Result))
             {
                 return true;
