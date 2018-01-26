@@ -4,6 +4,8 @@
 #pragma once
 
 #include <map>
+#include <utility>
+#include <initializer_list>
 
 namespace util
 {
@@ -12,6 +14,22 @@ namespace util
     {
     public:
         std::map<K, V> m_Map;
+    public:
+        CMapT() { }
+        CMapT(std::initializer_list<std::pair<const K, V>> m) : m_Map(m) { }
+        CMapT(const CMapT &other) : m_Map(other.m_Map) { }
+        CMapT(CMapT&& other) : m_Map(std::move(other.m_Map)) { }
+        CMapT& operator=(const CMapT& other)
+        {
+            m_Map = other.m_Map;
+            return *this;
+        }
+        CMapT& operator=(CMapT&& other)
+        {
+            m_Map = std::move(other.m_Map);
+            return *this;
+        }
+        ~CMapT() { }
     public:
         bool IsEmpty()
         {

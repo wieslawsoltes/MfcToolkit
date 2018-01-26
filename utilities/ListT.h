@@ -4,6 +4,8 @@
 #pragma once
 
 #include <vector>
+#include <utility>
+#include <initializer_list>
 
 namespace util
 {
@@ -12,6 +14,22 @@ namespace util
     {
     public:
         std::vector<T> m_Items;
+    public:
+        CListT() { }
+        CListT(std::initializer_list<T> l) : m_Items(l) { }
+        CListT(const CListT &other) : m_Items(other.m_Items) { }
+        CListT(CListT&& other) : m_Items(std::move(other.m_Items)) { }
+        CListT& operator=(const CListT& other)
+        {
+            m_Items = other.m_Items;
+            return *this;
+        }
+        CListT& operator=(CListT&& other)
+        {
+            m_Items = std::move(other.m_Items);
+            return *this;
+        }
+        ~CListT() { }
     public:
         bool IsEmpty()
         {
