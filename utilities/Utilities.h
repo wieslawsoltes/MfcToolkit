@@ -233,7 +233,7 @@ namespace util
         {
             std::wstring szFileName = GetFileName(szFilePath);
             std::wstring szExt = GetFileExtension(szFilePath);
-            return szFileName.substr(0, szFileName.length() - szExt.length());
+            return szFileName.substr(0, szFileName.length() - szExt.length() - 1);
         }
         static ULONGLONG GetFileSize64(HANDLE hFile)
         {
