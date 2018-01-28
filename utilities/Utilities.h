@@ -360,6 +360,72 @@ namespace util
             return false;
         }
     public:
+        static bool FindFiles(const std::wstring path, std::vector<std::wstring>& files, const bool bRecurse = false)
+        {
+            try
+            {
+                WIN32_FIND_DATA w32FileData;
+                HANDLE hSearch = nullptr;
+                BOOL fFinished = FALSE;
+                TCHAR cTempBuf[(MAX_PATH * 2) + 1];
+
+                ZeroMemory(&w32FileData, sizeof(WIN32_FIND_DATA));
+                ZeroMemory(cTempBuf, MAX_PATH * 2);
+
+                std::wstring szFile = path;
+                size_t nLength = szFile.length();
+                if (nLength > 0)
+                {
+                    wchar_t last = szFile[nLength - 1];
+                    if ((last == '\\') || (last == '/'))
+                        szFile.pop_back();
+                }
+                wsprintf(cTempBuf, _T("%s\\*.*\0"), szFile.c_str());
+
+                hSearch = FindFirstFile(cTempBuf, &w32FileData);
+                if (hSearch == INVALID_HANDLE_VALUE)
+                    return false;
+
+                while (fFinished == FALSE)
+                {
+                    if (w32FileData.cFileName[0] != '.' &&
+                        !(w32FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)
+                    {
+                        std::wstring szPath = szFile + L"\\" + w32FileData.cFileName;
+                        files.push_back(szPath);
+                    }
+
+                    if (w32FileData.cFileName[0] != '.' &&
+                        w32FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+                    {
+                        wsprintf(cTempBuf, _T("%s\\%s\0"), szFile, w32FileData.cFileName);
+                        if (bRecurse == true)
+                        {
+                            bool bResult = FindFiles(cTempBuf, files, true);
+                            if (bResult == false)
+                                return false;
+                        }
+                    }
+
+                    if (FindNextFile(hSearch, &w32FileData) == FALSE)
+                    {
+                        if (GetLastError() == ERROR_NO_MORE_FILES)
+                            fFinished = TRUE;
+                        else
+                            return false;
+                    }
+                }
+
+                if (FindClose(hSearch) == FALSE)
+                    return false;
+            }
+            catch (...)
+            {
+                return false;
+            }
+            return true;
+        }
+    public:
         static std::wstring GenerateUuidString()
         {
             std::wstring strKey;
