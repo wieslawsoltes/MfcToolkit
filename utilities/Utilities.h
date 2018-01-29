@@ -398,7 +398,7 @@ namespace util
                     if (w32FileData.cFileName[0] != '.' &&
                         w32FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
                     {
-                        wsprintf(cTempBuf, _T("%s\\%s\0"), szFile, w32FileData.cFileName);
+                        wsprintf(cTempBuf, _T("%s\\%s\\*.*\0"), szFile.c_str(), w32FileData.cFileName);
                         if (bRecurse == true)
                         {
                             bool bResult = FindFiles(cTempBuf, files, true);
