@@ -7,6 +7,7 @@
 #include <Windows.h>
 #include <Rpc.h>
 #include <CommCtrl.h>
+#include <ShellAPI.h>
 #include <Shlwapi.h>
 #include <ShlObj.h>
 #include <string>
