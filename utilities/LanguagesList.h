@@ -4,8 +4,8 @@
 #pragma once
 
 #include <string>
-#include "..\utilities\ListT.h"
-#include "..\utilities\StringHelper.h"
+#include "ListT.h"
+#include "StringHelper.h"
 #include "Language.h"
 
 namespace lang
