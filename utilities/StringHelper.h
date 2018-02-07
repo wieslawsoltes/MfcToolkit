@@ -1,4 +1,4 @@
-﻿// Copyright (c) Wiesław Šoltés. All rights reserved.
+// Copyright (c) Wiesław Šoltés. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 #pragma once
@@ -102,6 +102,15 @@ namespace util
             std::string s = ToUpper(str);
             std::string f = ToUpper(find);
             return s.find(f);
+        }
+        static inline void Replace(std::string& str, const std::string& from, const std::string& to)
+        {
+            size_t pos = 0;
+            while ((pos = str.find(from, pos)) != std::string::npos)
+            {
+                str.replace(pos, from.length(), to);
+                pos += to.length();
+            }
         }
         static inline void TrimLeft(std::string &s)
         {
@@ -213,6 +222,15 @@ namespace util
             std::wstring s = ToUpper(str);
             std::wstring f = ToUpper(find);
             return s.find(f);
+        }
+        static inline void Replace(std::wstring& str, const std::wstring& from, const std::wstring& to)
+        {
+            size_t pos = 0;
+            while ((pos = str.find(from, pos)) != std::wstring::npos)
+            {
+                str.replace(pos, from.length(), to);
+                pos += to.length();
+            }
         }
         static inline void TrimLeft(std::wstring &s)
         {
