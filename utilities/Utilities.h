@@ -3,9 +3,11 @@
 
 #pragma once
 
-#include <Rpc.h>
+#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#include <Rpc.h>
 #include <CommCtrl.h>
+#include <ShellAPI.h>
 #include <Shlwapi.h>
 #include <ShlObj.h>
 #include <string>
@@ -367,10 +369,8 @@ namespace util
                 WIN32_FIND_DATA w32FileData;
                 HANDLE hSearch = nullptr;
                 BOOL fFinished = FALSE;
-                TCHAR cTempBuf[(MAX_PATH * 2) + 1];
 
                 ZeroMemory(&w32FileData, sizeof(WIN32_FIND_DATA));
-                ZeroMemory(cTempBuf, MAX_PATH * 2);
 
                 std::wstring szFile = path;
                 size_t nLength = szFile.length();
@@ -380,9 +380,9 @@ namespace util
                     if ((last == '\\') || (last == '/'))
                         szFile.pop_back();
                 }
-                wsprintf(cTempBuf, _T("%s\\*.*\0"), szFile.c_str());
 
-                hSearch = FindFirstFile(cTempBuf, &w32FileData);
+                std::wstring cTempBuf = szFile + L"\\*.*";
+                hSearch = FindFirstFile(cTempBuf.c_str(), &w32FileData);
                 if (hSearch == INVALID_HANDLE_VALUE)
                     return false;
 
@@ -398,10 +398,10 @@ namespace util
                     if (w32FileData.cFileName[0] != '.' &&
                         w32FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
                     {
-                        wsprintf(cTempBuf, _T("%s\\%s\0"), szFile, w32FileData.cFileName);
                         if (bRecurse == true)
                         {
-                            bool bResult = FindFiles(cTempBuf, files, true);
+                            std::wstring cTempBuf = szFile + L"\\" + w32FileData.cFileName;
+                            bool bResult = FindFiles(cTempBuf, files, bRecurse);
                             if (bResult == false)
                                 return false;
                         }

@@ -14,8 +14,6 @@ test_script:
 artifacts:
   - path: controls\bin\$(configuration)\$(platform)
     name: MFC.Controls-$(platform)-$(configuration)-build$(appveyor_build_version)
-  - path: language\bin\$(configuration)\$(platform)
-    name: MFC.Language-$(platform)-$(configuration)-build$(appveyor_build_version)
   - path: lua\bin\$(configuration)\$(platform)
     name: Lua-$(platform)-$(configuration)-build$(appveyor_build_version)
   - path: tinyxml2\bin\$(configuration)\$(platform)

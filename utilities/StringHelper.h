@@ -74,7 +74,7 @@ namespace util
             std::string s2 = ToUpper(str2);
             return s1 == s2;
         }
-        static inline bool ContainsNoCase(const std::string& str, const std::string& value, wchar_t token)
+        static inline bool ContainsNoCase(const std::string& str, const std::string& value, char token)
         {
             std::string v = ToUpper(value);
             auto tokens = Split(str.c_str(), token);
