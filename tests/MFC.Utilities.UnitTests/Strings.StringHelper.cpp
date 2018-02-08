@@ -13,13 +13,13 @@ namespace MFCUtilitiesUnitTests
         {
             std::string str = "Test string!";
             std::wstring wstr = util::StringHelper::Convert(str);
-            Assert::AreEqual(L"Test string.", wstr.c_str());
+            Assert::AreEqual(L"Test string!", wstr.c_str());
         }
         TEST_METHOD(StringHelper_Convert_To_string)
         {
             std::wstring wstr = L"Test string!";
             std::string str = util::StringHelper::Convert(wstr);
-            Assert::AreEqual("Test string.", str.c_str());
+            Assert::AreEqual("Test string!", str.c_str());
         }
     public:
         TEST_METHOD(StringHelper_ToStringHex_string)
