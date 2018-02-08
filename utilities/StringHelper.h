@@ -59,13 +59,15 @@ namespace util
         static inline std::string TowLower(const std::string& str)
         {
             std::string s = str;
-            std::transform(s.begin(), s.end(), s.begin(), ::towlower);
+            std::transform(s.begin(), s.end(), s.begin(), 
+                [](unsigned char c){ return std::tolower(c); });
             return s;
         }
         static inline std::string ToUpper(const std::string& str)
         {
             std::string s = str;
-            std::transform(s.begin(), s.end(), s.begin(), ::toupper);
+            std::transform(s.begin(), s.end(), s.begin(), 
+                [](unsigned char c){ return std::toupper(c); });
             return s;
         }
         static inline bool CompareNoCase(const std::string& str1, const std::string& str2)
