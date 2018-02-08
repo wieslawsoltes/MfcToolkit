@@ -11,14 +11,14 @@ namespace MFCUtilitiesUnitTests
     public:
         TEST_METHOD(StringHelper_Convert_To_wstring)
         {
-            std::string str = "Test string.";
+            std::string str = "Test string!";
             std::wstring wstr = util::StringHelper::Convert(str);
             Assert::AreEqual(L"Test string.", wstr.c_str());
         }
         TEST_METHOD(StringHelper_Convert_To_string)
         {
-            std::string wstr = L"Test string.";
-            std::wstring str = util::StringHelper::Convert(wstr);
+            std::wstring wstr = L"Test string!";
+            std::string str = util::StringHelper::Convert(wstr);
             Assert::AreEqual("Test string.", str.c_str());
         }
     public:
