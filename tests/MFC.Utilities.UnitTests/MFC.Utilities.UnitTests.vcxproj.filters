@@ -32,5 +32,8 @@
     <ClCompile Include="Collections.CMapT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Strings.StringHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
