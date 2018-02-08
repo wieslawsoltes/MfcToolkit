@@ -97,7 +97,7 @@ namespace util
             }
             return false;
         }
-        static inline int FindNoCase(const std::string& str, const std::string& find)
+        static inline size_t FindNoCase(const std::string& str, const std::string& find)
         {
             std::string s = ToUpper(str);
             std::string f = ToUpper(find);
@@ -217,7 +217,7 @@ namespace util
             }
             return false;
         }
-        static inline int FindNoCase(const std::wstring& str, const std::wstring& find)
+        static inline size_t FindNoCase(const std::wstring& str, const std::wstring& find)
         {
             std::wstring s = ToUpper(str);
             std::wstring f = ToUpper(find);
