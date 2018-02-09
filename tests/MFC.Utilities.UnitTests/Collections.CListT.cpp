@@ -5,7 +5,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace MFCUtilitiesUnitTests
-{		
+{
     TEST_CLASS(CListT_Tests)
     {
     public:
