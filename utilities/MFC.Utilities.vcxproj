@@ -243,6 +243,7 @@
     <ClInclude Include="Thread.h" />
     <ClInclude Include="TimeCount.h" />
     <ClInclude Include="Utf8String.h" />
+    <ClInclude Include="ArgvParser.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
