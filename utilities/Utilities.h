@@ -362,6 +362,43 @@ namespace util
             return false;
         }
     public:
+        static std::vector<std::wstring> FindFiles(const std::wstring& pattern)
+        {
+            std::vector<std::wstring> files;
+            try
+            {
+                WIN32_FIND_DATA w32FileData;
+                ZeroMemory(&w32FileData, sizeof(WIN32_FIND_DATA));
+                HANDLE hSearch = FindFirstFile(pattern.c_str(), &w32FileData);
+                if (hSearch == INVALID_HANDLE_VALUE)
+                    return files;
+
+                BOOL fFinished = FALSE;
+                while (fFinished == FALSE)
+                {
+                    if (w32FileData.cFileName[0] != '.' && !(w32FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)
+                    {
+                        std::wstring szFileName = w32FileData.cFileName;
+                        std::wstring szFilePath = util::Utilities::GetFilePath(pattern) + szFileName;
+                        files.push_back(szFilePath);
+                    }
+                    if (FindNextFile(hSearch, &w32FileData) == FALSE)
+                    {
+                        if (GetLastError() == ERROR_NO_MORE_FILES)
+                            fFinished = TRUE;
+                        else
+                            return files;
+                    }
+                }
+                if (FindClose(hSearch) == FALSE)
+                    return files;
+            }
+            catch (...)
+            {
+                return files;
+            }
+            return files;
+        }
         static bool FindFiles(const std::wstring path, std::vector<std::wstring>& files, const bool bRecurse = false)
         {
             try
