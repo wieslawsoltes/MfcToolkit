@@ -11,14 +11,3 @@ build:
   verbosity: minimal
 test_script:
 - cmd: vstest.console /logger:Appveyor tests\MFC.Utilities.UnitTests\bin\%configuration%\%platform%\MFC.Utilities.UnitTests.dll
-artifacts:
-  - path: controls\bin\$(configuration)\$(platform)
-    name: MFC.Controls-$(platform)-$(configuration)-build$(appveyor_build_version)
-  - path: lua\bin\$(configuration)\$(platform)
-    name: Lua-$(platform)-$(configuration)-build$(appveyor_build_version)
-  - path: tinyxml2\bin\$(configuration)\$(platform)
-    name: TinyXml2-$(platform)-$(configuration)-build$(appveyor_build_version)
-  - path: utilities\bin\$(configuration)\$(platform)
-    name: MFC.Utilities-$(platform)-$(configuration)-build$(appveyor_build_version)
-  - path: xml\bin\$(configuration)\$(platform)
-    name: MFC.Xml-$(platform)-$(configuration)-build$(appveyor_build_version)
