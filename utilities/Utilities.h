@@ -443,17 +443,6 @@ namespace util
             return strKey;
         }
     public:
-        static void ConvertAnsiToUnicode(const char *szAnsi, wchar_t *szUnicode, ULONG nLength)
-        {
-            // use always + 1 to null-terminate string
-            _mbstowcsz(szUnicode, szAnsi, nLength + 1);
-        }
-        static void ConvertUnicodeToAnsi(const wchar_t *szUnicode, char *szAnsi, ULONG nLength)
-        {
-            // use always + 1 to null-terminate string
-            _wcstombsz(szAnsi, szUnicode, nLength + 1);
-        }
-    public:
         static bool Unzip2Folder(BSTR lpZipFile, BSTR lpFolder)
         {
             IShellDispatch *pISD;
