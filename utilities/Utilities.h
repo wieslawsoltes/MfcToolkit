@@ -320,7 +320,7 @@ namespace util
             return bInvalidHandle == false;
         }
     public:
-        static BOOL DirectoryExists(const std::wstring& szPath)
+        static bool DirectoryExists(const std::wstring& szPath)
         {
             if (_taccess_s(szPath.c_str(), 0) == 0)
             {
@@ -328,7 +328,7 @@ namespace util
                 _tstat(szPath.c_str(), &status);
                 return (status.st_mode & S_IFDIR) != 0;
             }
-            return FALSE;
+            return false;
         }
         static bool MakeFullPath(const std::wstring& szTargetPath)
         {
