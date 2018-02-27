@@ -13,13 +13,14 @@ namespace lang
     {
     public:
         CLanguagesList m_Languages;
-        CLanguage* pLanguage;
+        int nLangId;
     public:
         bool LookupString(const int nKey, std::wstring& rValue)
         {
-            if (this->pLanguage != nullptr)
+            if (this->nLangId >= 0 && this->nLangId < this->m_Languages.Count())
             {
-                if (this->pLanguage->m_Strings.TryGet(nKey, rValue) == true)
+                auto& language = this->m_Languages.Get(this->nLangId);
+                if (language.m_Strings.TryGet(nKey, rValue) == true)
                     return true;
             }
             return false;
