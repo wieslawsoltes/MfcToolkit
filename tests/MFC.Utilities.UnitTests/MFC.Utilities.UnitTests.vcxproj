@@ -174,9 +174,22 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ArgvParserTests.cpp" />
+    <ClCompile Include="CDownloadTests.cpp" />
+    <ClCompile Include="CLanguageTests.cpp" />
+    <ClCompile Include="CLanguageContextTests.cpp" />
+    <ClCompile Include="CLanguageHelperTests.cpp" />
+    <ClCompile Include="CLanguagesListTests.cpp" />
     <ClCompile Include="CMapTTests.cpp" />
     <ClCompile Include="CListTTests.cpp" />
+    <ClCompile Include="CPipeTests.cpp" />
+    <ClCompile Include="CProcessTests.cpp" />
+    <ClCompile Include="CSynchronizeTests.cpp" />
+    <ClCompile Include="CThreadTests.cpp" />
+    <ClCompile Include="CTimeCountTests.cpp" />
+    <ClCompile Include="CUtf8StringTests.cpp" />
     <ClCompile Include="StringHelperTests.cpp" />
+    <ClCompile Include="UtilitiesTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\utilities\MFC.Utilities.vcxproj">

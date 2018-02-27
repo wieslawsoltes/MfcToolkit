@@ -14,6 +14,7 @@ namespace MFCUtilitiesUnitTests
             util::CMapT<int, std::string> m;
             Assert::IsTrue(m.IsEmpty());
         }
+
         TEST_METHOD(CMapT_IsEmpty_Returns_False)
         {
             util::CMapT<int, std::string> m;

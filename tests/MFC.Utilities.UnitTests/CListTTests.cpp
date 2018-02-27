@@ -14,6 +14,7 @@ namespace MFCUtilitiesUnitTests
             util::CListT<std::string> l;
             Assert::IsTrue(l.IsEmpty());
         }
+
         TEST_METHOD(CListT_IsEmpty_Returns_False)
         {
             util::CListT<std::string> l;

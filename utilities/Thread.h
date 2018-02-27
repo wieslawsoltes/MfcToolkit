@@ -28,13 +28,6 @@ namespace util
         HANDLE hThread = nullptr;
         Params params;
     public:
-        CThread()
-        {
-        }
-        virtual ~CThread()
-        {
-        }
-    public:
         bool Start(std::function<void()> fEntry, bool bSuspended = false)
         {
             return this->Start(

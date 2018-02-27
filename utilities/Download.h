@@ -147,13 +147,6 @@ namespace util
     class CDownload
     {
     public:
-        CDownload()
-        {
-        }
-        virtual ~CDownload()
-        {
-        }
-    public:
         bool Download(const std::wstring& szUrl, const std::wstring& szPath, std::function<void(int, std::wstring)> fStatusCallback)
         {
             CDownloadCallback m_Callback;
