@@ -15,6 +15,9 @@
 #include <cstringt.h>
 #include "StringHelper.h"
 
+#pragma comment(lib, "Rpcrt4.lib")
+#pragma comment(lib, "Shlwapi.lib")
+
 namespace util
 {
     class Utilities
