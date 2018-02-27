@@ -11,7 +11,10 @@ namespace MFCUtilitiesUnitTests
     public:
         TEST_METHOD(Utilities_Constructor)
         {
+            #pragma warning(push)
+            #pragma warning(disable:4101)
             util::Utilities utilities;
+            #pragma warning(pop)
         }
     };
 }

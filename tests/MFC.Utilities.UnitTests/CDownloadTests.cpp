@@ -16,7 +16,10 @@ namespace MFCUtilitiesUnitTests
     public:
         TEST_METHOD(CDownload_Constructor)
         {
+            #pragma warning(push)
+            #pragma warning(disable:4101)
             util::CDownload download;
+            #pragma warning(pop)
         }
     };
 }
