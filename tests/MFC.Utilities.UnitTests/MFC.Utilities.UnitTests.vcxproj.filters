@@ -26,13 +26,13 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collections.CListT.cpp">
+    <ClCompile Include="CListTTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collections.CMapT.cpp">
+    <ClCompile Include="CMapTTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Strings.StringHelper.cpp">
+    <ClCompile Include="StringHelperTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

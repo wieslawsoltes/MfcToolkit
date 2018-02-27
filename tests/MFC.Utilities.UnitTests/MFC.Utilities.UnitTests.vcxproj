@@ -174,9 +174,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Collections.CMapT.cpp" />
-    <ClCompile Include="Collections.CListT.cpp" />
-    <ClCompile Include="Strings.StringHelper.cpp" />
+    <ClCompile Include="CMapTTests.cpp" />
+    <ClCompile Include="CListTTests.cpp" />
+    <ClCompile Include="StringHelperTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\utilities\MFC.Utilities.vcxproj">
