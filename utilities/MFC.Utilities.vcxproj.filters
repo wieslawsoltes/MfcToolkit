@@ -13,24 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Collections">
-      <UniqueIdentifier>{81cdde86-bd86-4a99-a272-bb47e0a54ba7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Strings">
-      <UniqueIdentifier>{6ce5df29-13e6-4ee8-9aa8-89e666b16fd6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Threading">
-      <UniqueIdentifier>{29b34fe7-2be7-40b8-9aea-89eea829cb89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Timer">
-      <UniqueIdentifier>{59cfc2b7-8548-4ef3-8d82-567be29956e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\IO">
-      <UniqueIdentifier>{e957f4ae-f360-4fb1-ac06-249a04ae6b38}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Language">
-      <UniqueIdentifier>{a6859b19-b54e-4767-8482-e1c8a0e43d7a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -46,46 +28,46 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ListT.h">
-      <Filter>Header Files\Collections</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MapT.h">
-      <Filter>Header Files\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="Utf8String.h">
-      <Filter>Header Files\Strings</Filter>
-    </ClInclude>
-    <ClInclude Include="Pipe.h">
-      <Filter>Header Files\Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="Process.h">
-      <Filter>Header Files\Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="Thread.h">
-      <Filter>Header Files\Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="Synchronize.h">
-      <Filter>Header Files\Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="TimeCount.h">
-      <Filter>Header Files\Timer</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Download.h">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="StringHelper.h">
-      <Filter>Header Files\Strings</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Language.h">
-      <Filter>Header Files\Language</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LanguageContext.h">
-      <Filter>Header Files\Language</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LanguageHelper.h">
-      <Filter>Header Files\Language</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LanguagesList.h">
-      <Filter>Header Files\Language</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StringHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utf8String.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Process.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Synchronize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeCount.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
