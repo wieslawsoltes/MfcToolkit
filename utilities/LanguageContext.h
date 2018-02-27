@@ -19,7 +19,7 @@ namespace lang
         {
             if (this->pLanguage != nullptr)
             {
-                if (this->pLanguage->m_Strings.TryGet(nKey, rValue) == TRUE)
+                if (this->pLanguage->m_Strings.TryGet(nKey, rValue) == true)
                     return true;
             }
             return false;

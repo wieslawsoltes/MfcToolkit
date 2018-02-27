@@ -11,7 +11,7 @@ namespace MFCUtilitiesUnitTests
     public:
         TEST_METHOD(CLanguagesList_Constructor)
         {
-            util::CLanguagesList languages;
+            lang::CLanguagesList languages;
         }
     };
 }

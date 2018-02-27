@@ -11,7 +11,7 @@ namespace MFCUtilitiesUnitTests
     public:
         TEST_METHOD(CLanguageContext_Constructor)
         {
-            util::CLanguageContext context;
+            lang::CLanguageContext context;
         }
     };
 }

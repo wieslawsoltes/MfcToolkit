@@ -5,7 +5,9 @@
 
 #include <functional>
 #include <string>
+#include <tchar.h>
 #include <urlmon.h>
+
 #pragma comment(lib, "urlmon.lib")
 
 namespace util

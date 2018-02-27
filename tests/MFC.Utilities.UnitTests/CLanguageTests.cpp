@@ -11,7 +11,7 @@ namespace MFCUtilitiesUnitTests
     public:
         TEST_METHOD(CLanguage_Constructor)
         {
-            util::CLanguage language;
+            lang::CLanguage language;
         }
     };
 }
