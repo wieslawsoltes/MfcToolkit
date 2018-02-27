@@ -6,7 +6,8 @@
 #include <functional>
 #include <string>
 #include <tchar.h>
-#include <AtlConv.h>
+#include <atlstr.h>
+#include <atlconv.h>
 #include <urlmon.h>
 
 #pragma comment(lib, "urlmon.lib")
