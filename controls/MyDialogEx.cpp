@@ -12,13 +12,13 @@ namespace controls
     }
 
     CMyDialogEx::CMyDialogEx(UINT nIDTemplate, CWnd *pParentWnd)
-        : CDialogEx(nIDTemplate, pParentWnd)
+        : CDialog(nIDTemplate, pParentWnd)
     {
         InitVars();
     }
 
     CMyDialogEx::CMyDialogEx(LPCTSTR lpszTemplateName, CWnd *pParentWnd)
-        : CDialogEx(lpszTemplateName, pParentWnd)
+        : CDialog(lpszTemplateName, pParentWnd)
     {
         InitVars();
     }
@@ -27,7 +27,7 @@ namespace controls
     {
     }
 
-    BEGIN_MESSAGE_MAP(CMyDialogEx, CDialogEx)
+    BEGIN_MESSAGE_MAP(CMyDialogEx, CDialog)
         ON_WM_GETMINMAXINFO()
         ON_WM_SIZE()
     END_MESSAGE_MAP()
@@ -42,7 +42,7 @@ namespace controls
 
     BOOL CMyDialogEx::OnInitDialog()
     {
-        CDialogEx::OnInitDialog();
+        CDialog::OnInitDialog();
 
         CRect rc;
         GetWindowRect(&rc);

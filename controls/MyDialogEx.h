@@ -3,11 +3,9 @@
 
 #pragma once
 
-#include <afxdialogex.h>
-
 namespace controls
 {
-    class CMyDialogEx : public CDialogEx
+    class CMyDialogEx : public CDialog
     {
     private:
         BOOL m_bUseMaxTrack, m_bUseMinTrack, m_bUseMaxRect;
