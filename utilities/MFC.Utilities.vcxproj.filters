@@ -27,12 +27,6 @@
     <ClInclude Include="Utilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ListT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MapT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Download.h">
       <Filter>Header Files</Filter>
     </ClInclude>

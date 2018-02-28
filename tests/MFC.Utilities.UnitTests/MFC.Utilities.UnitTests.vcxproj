@@ -184,8 +184,6 @@
     </ClCompile>
     <ClCompile Include="ArgvParserTests.cpp" />
     <ClCompile Include="DownloadTests.cpp" />
-    <ClCompile Include="MapTTests.cpp" />
-    <ClCompile Include="ListTTests.cpp" />
     <ClCompile Include="PipeTests.cpp" />
     <ClCompile Include="ProcessTests.cpp" />
     <ClCompile Include="SynchronizeTests.cpp" />
