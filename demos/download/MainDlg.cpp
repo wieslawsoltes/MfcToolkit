@@ -89,9 +89,10 @@ void CMainDlg::Download()
     m_Download.Download(
         std::wstring(CT2CW(szUrl)), 
         std::wstring(CT2CW(szPath)),
-        [this](int nProgress, std::wstring szStatus)
+        [this](int nProgress, std::wstring szStatus) -> bool
         {
             this->m_ProgressCtrl.SetPos(nProgress);
             m_EdtStatus.SetWindowText(szStatus.c_str());
+            return false; // Do not abort.
         });
 }

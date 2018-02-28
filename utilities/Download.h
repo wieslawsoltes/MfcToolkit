@@ -25,7 +25,7 @@ namespace util
         }
     public:
         int m_LastPercent;
-        std::function<void(int, std::wstring)> fStatusCallback;
+        std::function<bool(int, std::wstring)> fStatusCallback;
     public:
         HRESULT STDMETHODCALLTYPE OnStartBinding(DWORD dwReserved, __RPC__in_opt IBinding *pib)
         {
@@ -46,37 +46,43 @@ namespace util
             case BINDSTATUS_FINDINGRESOURCE:
                 if (fStatusCallback != nullptr)
                 {
-                    fStatusCallback(-1, _T("Finding resource..."));
+                    if (fStatusCallback(-1, _T("Finding resource...")) == true)
+                        return E_ABORT;
                 }
                 break;
             case BINDSTATUS_CONNECTING:
                 if (fStatusCallback != nullptr)
                 {
-                    fStatusCallback(-1, _T("Connecting..."));
+                    if (fStatusCallback(-1, _T("Connecting...")) == true)
+                        return E_ABORT;
                 }
                 break;
             case BINDSTATUS_SENDINGREQUEST:
                 if (fStatusCallback != nullptr)
                 {
-                    fStatusCallback(-1, _T("Sending request..."));
+                    if (fStatusCallback(-1, _T("Sending request...")) == true)
+                        return E_ABORT;
                 }
                 break;
             case BINDSTATUS_MIMETYPEAVAILABLE:
                 if (fStatusCallback != nullptr)
                 {
-                    fStatusCallback(-1, _T("Mime type available"));
+                    if (fStatusCallback(-1, _T("Mime type available")) == true)
+                        return E_ABORT;
                 }
                 break;
             case BINDSTATUS_CACHEFILENAMEAVAILABLE:
                 if (fStatusCallback != nullptr)
                 {
-                    fStatusCallback(-1, _T("Cache filename available"));
+                    if (fStatusCallback(-1, _T("Cache filename available")) == true)
+                        return E_ABORT;
                 }
                 break;
             case BINDSTATUS_BEGINDOWNLOADDATA:
                 if (fStatusCallback != nullptr)
                 {
-                    fStatusCallback(-1, _T("Begin download"));
+                    if (fStatusCallback(-1, _T("Begin download")) == true)
+                        return E_ABORT;
                 }
                 break;
             case BINDSTATUS_DOWNLOADINGDATA:
@@ -89,14 +95,16 @@ namespace util
                     if (fStatusCallback != nullptr)
                     {
                         std::wstring szOutput = std::to_wstring(percent) + _T("%");
-                        fStatusCallback(percent, szOutput);
+                        if (fStatusCallback(percent, szOutput) == true)
+                            return E_ABORT;
                     }
                 }
                 if (ulStatusCode == BINDSTATUS_ENDDOWNLOADDATA)
                 {
                     if (fStatusCallback != nullptr)
                     {
-                        fStatusCallback(100, _T("End download"));
+                        if (fStatusCallback(100, _T("End download")) == true)
+                            return E_ABORT;
                     }
                 }
             }
@@ -106,7 +114,8 @@ namespace util
                 if (fStatusCallback != nullptr)
                 {
                     std::wstring szOutput = _T("Status code : ") + std::to_wstring(ulStatusCode);
-                    fStatusCallback(-1, szOutput);
+                    if (fStatusCallback(-1, szOutput) == true)
+                        return E_ABORT;
                 }
             }
             break;
@@ -151,7 +160,7 @@ namespace util
     class CDownload
     {
     public:
-        bool Download(const std::wstring& szUrl, const std::wstring& szPath, std::function<void(int, std::wstring)> fStatusCallback)
+        bool Download(const std::wstring& szUrl, const std::wstring& szPath, std::function<bool(int, std::wstring)> fStatusCallback)
         {
             CDownloadCallback m_Callback;
             m_Callback.fStatusCallback = fStatusCallback;
