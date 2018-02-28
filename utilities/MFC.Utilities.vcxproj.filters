@@ -36,18 +36,6 @@
     <ClInclude Include="Download.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Language.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LanguageContext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LanguageHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LanguagesList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StringHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>

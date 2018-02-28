@@ -184,10 +184,6 @@
     </ClCompile>
     <ClCompile Include="ArgvParserTests.cpp" />
     <ClCompile Include="DownloadTests.cpp" />
-    <ClCompile Include="LanguageTests.cpp" />
-    <ClCompile Include="LanguageContextTests.cpp" />
-    <ClCompile Include="LanguageHelperTests.cpp" />
-    <ClCompile Include="LanguagesListTests.cpp" />
     <ClCompile Include="MapTTests.cpp" />
     <ClCompile Include="ListTTests.cpp" />
     <ClCompile Include="PipeTests.cpp" />

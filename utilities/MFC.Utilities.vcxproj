@@ -224,10 +224,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Download.h" />
-    <ClInclude Include="Language.h" />
-    <ClInclude Include="LanguageContext.h" />
-    <ClInclude Include="LanguageHelper.h" />
-    <ClInclude Include="LanguagesList.h" />
     <ClInclude Include="ListT.h" />
     <ClInclude Include="MapT.h" />
     <ClInclude Include="Pipe.h" />
