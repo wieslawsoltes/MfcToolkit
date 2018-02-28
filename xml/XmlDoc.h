@@ -76,15 +76,23 @@ namespace xml
                 return std::wstring();
             return util::CUtf8String::ToUnicode(pszUtf8);
         }
-        bool ToBool(const char *pszUtf8)
-        {
-            return _wcsicmp(ToString(pszUtf8).c_str(), m_True.c_str()) == 0;
-        }
         int ToInt(const char *pszUtf8)
         {
             return _wtoi(ToString(pszUtf8).c_str());
         }
+        unsigned __int64 ToUInt64(const char *pszUtf8)
+        {
+           return _wcstoui64(ToString(pszUtf8).c_str(), nullptr, 10);
+        }
+        bool ToBool(const char *pszUtf8)
+        {
+            return _wcsicmp(ToString(pszUtf8).c_str(), m_True.c_str()) == 0;
+        }
         std::wstring ToString(const int nValue)
+        {
+            return std::to_wstring(nValue);
+        }
+        std::wstring ToString(const unsigned __int64 nValue)
         {
             return std::to_wstring(nValue);
         }
@@ -113,6 +121,16 @@ namespace xml
             }
             return false;
         }
+        bool GetAttributeValue(const XmlElement *element, const char *name, unsigned __int64 *value)
+        {
+            const char *pszResult = element->Attribute(name);
+            if (pszResult != nullptr)
+            {
+                (*value) = ToUInt64(pszResult);
+                return true;
+            }
+            return false;
+        }
         bool GetAttributeValue(const XmlElement *element, const char *name, bool *value)
         {
             const char *pszResult = element->Attribute(name);
@@ -129,6 +147,10 @@ namespace xml
             element->SetAttribute(name, util::CUtf8String::ToUtf8(value).c_str());
         }
         void SetAttributeValue(XmlElement *element, const char *name, const int &value)
+        {
+            element->SetAttribute(name, util::CUtf8String::ToUtf8(ToString(value)).c_str());
+        }
+        void SetAttributeValue(XmlElement *element, const char *name, const unsigned __int64 &value)
         {
             element->SetAttribute(name, util::CUtf8String::ToUtf8(ToString(value)).c_str());
         }
@@ -157,6 +179,16 @@ namespace xml
             }
             return false;
         }
+        bool GetChildValue(const XmlElement *parent, const char *name, unsigned __int64 *value)
+        {
+            auto element = parent->FirstChildElement(name);
+            if (element != nullptr)
+            {
+                (*value) = ToUInt64(element->GetText());
+                return true;
+            }
+            return false;
+        }
         bool GetChildValue(const XmlElement *parent, const char *name, bool *value)
         {
             auto element = parent->FirstChildElement(name);
@@ -175,6 +207,12 @@ namespace xml
             parent->LinkEndChild(element);
         }
         void SetChildValue(XmlElement *parent, const char *name, const int &value)
+        {
+            auto element = m_Document.NewElement(name);
+            element->LinkEndChild(m_Document.NewText(util::CUtf8String::ToUtf8(ToString(value)).c_str()));
+            parent->LinkEndChild(element);
+        }
+        void SetChildValue(XmlElement *parent, const char *name, const unsigned __int64 &value)
         {
             auto element = m_Document.NewElement(name);
             element->LinkEndChild(m_Document.NewText(util::CUtf8String::ToUtf8(ToString(value)).c_str()));
