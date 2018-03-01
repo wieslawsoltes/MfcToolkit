@@ -87,17 +87,20 @@ namespace util
             }
             return false;
         }
-        static inline bool ReplaceNoCase(std::string& str, const std::string& from, const std::string& to)
+        static inline int ReplaceNoCase(std::string& str, const std::string& from, const std::string& to)
         {
+            int result = 0;
             std::string s = ToUpper(str);
             std::string f = ToUpper(from);
-            auto pos = s.find(f);
-            if (pos != std::string::npos)
+            size_t pos = 0;
+            while ((pos = s.find(f, pos)) != std::string::npos)
             {
                 str.replace(pos, f.length(), to);
-                return true;
+                s.replace(pos, f.length(), to);
+                pos += to.length();
+                result++;
             }
-            return false;
+            return result;
         }
         static inline size_t FindNoCase(const std::string& str, const std::string& find)
         {
@@ -207,17 +210,20 @@ namespace util
             }
             return false;
         }
-        static inline bool ReplaceNoCase(std::wstring& str, const std::wstring& from, const std::wstring& to)
+        static inline int ReplaceNoCase(std::wstring& str, const std::wstring& from, const std::wstring& to)
         {
+            int result = 0;
             std::wstring s = ToUpper(str);
             std::wstring f = ToUpper(from);
-            auto pos = s.find(f);
-            if (pos != std::string::npos)
+            size_t pos = 0;
+            while ((pos = s.find(f, pos)) != std::wstring::npos)
             {
                 str.replace(pos, f.length(), to);
-                return true;
+                s.replace(pos, f.length(), to);
+                pos += to.length();
+                result++;
             }
-            return false;
+            return result;
         }
         static inline size_t FindNoCase(const std::wstring& str, const std::wstring& find)
         {

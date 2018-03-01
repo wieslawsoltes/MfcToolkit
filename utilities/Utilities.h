@@ -327,7 +327,7 @@ namespace util
         {
             if (_taccess_s(szPath.c_str(), 0) == 0)
             {
-                struct _stat status;
+                static struct _stat status;
                 _tstat(szPath.c_str(), &status);
                 return (status.st_mode & S_IFDIR) != 0;
             }
