@@ -17,6 +17,8 @@
 
 #pragma comment(lib, "Rpcrt4.lib")
 #pragma comment(lib, "Shlwapi.lib")
+#pragma comment(lib, "Shell32.lib")
+
 
 namespace util
 {
@@ -329,33 +331,9 @@ namespace util
         }
         static bool MakeFullPath(const std::wstring& szTargetPath)
         {
-            std::wstring szPath = szTargetPath;
-            if (szPath[szPath.length() - 1] != '\\')
-                szPath = szPath + L"\\";
-
-            std::wstring szTmpDir = szPath.substr(0, 2);
-            _tchdir(szTmpDir.c_str());
-
-            int nStart = 3;
-            int nEnd = 0;
-            while (true)
-            {
-                nEnd = szPath.find('\\', nStart);
-                if (nEnd == -1)
-                    return true;
-
-                std::wstring szNextDir = szPath.substr(nStart, nEnd - nStart);
-                std::wstring szCurDir = szTmpDir + L"\\" + szNextDir;
-                if (_tchdir(szCurDir.c_str()) != 0)
-                {
-                    _tchdir(szTmpDir.c_str());
-                    if (_tmkdir(szNextDir.c_str()) != 0)
-                        return false;
-                }
-
-                szTmpDir += L"\\" + szNextDir;
-                nStart = nEnd + 1;
-            }
+            int nResult = SHCreateDirectoryEx(NULL, szTargetPath.c_str(), NULL);
+            if (nResult == ERROR_SUCCESS || nResult == ERROR_FILE_EXISTS || nResult == ERROR_ALREADY_EXISTS)
+                return true;
             return false;
         }
     public:
