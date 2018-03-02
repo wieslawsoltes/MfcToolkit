@@ -1,4 +1,4 @@
-﻿// Copyright (c) Wiesław Šoltés. All rights reserved.
+// Copyright (c) Wiesław Šoltés. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 #pragma once
@@ -12,6 +12,7 @@
 #include <ShlObj.h>
 #include <string>
 #include <tchar.h>
+#include <stdlib.h>
 #include <cstringt.h>
 #include "StringHelper.h"
 
@@ -440,7 +441,9 @@ namespace util
         }
         static bool MakeFullPath(const std::wstring& szTargetPath)
         {
-            int nResult = SHCreateDirectoryEx(NULL, szTargetPath.c_str(), NULL);
+            wchar_t szFulltTargetPath[_MAX_PATH];
+            _wfullpath(szFulltTargetPath, szTargetPath.c_str(), _MAX_PATH);
+            int nResult = SHCreateDirectoryEx(NULL, szFulltTargetPath, NULL);
             if (nResult == ERROR_SUCCESS || nResult == ERROR_FILE_EXISTS || nResult == ERROR_ALREADY_EXISTS)
                 return true;
             return false;
