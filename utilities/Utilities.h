@@ -414,19 +414,19 @@ namespace util
             ::FindClose(hFind);
             return bInvalidHandle == false;
         }
-        bool PathFileExists(const std::wstring& szFilePath)
+        static bool PathFileExists(const std::wstring& szFilePath)
         {
             return ::PathFileExists(szFilePath.c_str()) == TRUE;
         }
-        void DeleteFile(const std::wstring& szFilePath)
+        static void DeleteFile(const std::wstring& szFilePath)
         {
             ::DeleteFile(szFilePath.c_str());
         }
-        bool CreateDirectory(const std::wstring& szPath)
+        static bool CreateDirectory(const std::wstring& szPath)
         {
             ::CreateDirectory(szPath.c_str(), nullptr);
         }
-        void SetCurrentDirectory(const std::wstring& szPath)
+        static void SetCurrentDirectory(const std::wstring& szPath)
         {
             ::SetCurrentDirectory(szPath.c_str());
         }
