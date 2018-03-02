@@ -424,7 +424,11 @@ namespace util
         }
         static bool CreateDirectory(const std::wstring& szPath)
         {
-            ::CreateDirectory(szPath.c_str(), nullptr);
+            if (::CreateDirectory(szPath.c_str(), nullptr) == TRUE)
+                return true;
+            if (::GetLastError() == ERROR_ALREADY_EXISTS)
+                return true;
+            return false;
         }
         static void SetCurrentDirectory(const std::wstring& szPath)
         {
