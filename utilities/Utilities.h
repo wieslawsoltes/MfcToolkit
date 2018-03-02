@@ -24,6 +24,12 @@ namespace util
     class Utilities
     {
     public:
+        static void SetComboBoxHeight(HWND hDlg, int nComboBoxID, int nSizeLimit)
+        {
+            HWND hComboxBox = ::GetDlgItem(hDlg, nComboBoxID);
+            if (hComboxBox != nullptr)
+                ::SendMessage(hComboxBox, CB_SETMINVISIBLE, (WPARAM)nSizeLimit, 0);
+        }
         typedef BOOL(WINAPI *LPFN_GLPI)(PSYSTEM_LOGICAL_PROCESSOR_INFORMATION, PDWORD);
         typedef struct tagLogicalProcessorInformation
         {
@@ -162,7 +168,6 @@ namespace util
             free(buffer);
             return (0);
         }
-    public:
         static void ShutdownWindows()
         {
             HANDLE m_hToken;
@@ -197,12 +202,98 @@ namespace util
                 ::WaitForSingleObject(sei.hProcess, INFINITE);
             ::CloseHandle(sei.hProcess);
         }
-    public:
-        static void SetComboBoxHeight(HWND hDlg, int nComboBoxID, int nSizeLimit)
+        static std::wstring GenerateUuidString()
         {
-            HWND hComboxBox = ::GetDlgItem(hDlg, nComboBoxID);
-            if (hComboxBox != nullptr)
-                ::SendMessage(hComboxBox, CB_SETMINVISIBLE, (WPARAM)nSizeLimit, 0);
+            std::wstring strKey;
+            UUID uuid;
+            if (UuidCreate(&uuid) == RPC_S_OK)
+            {
+                RPC_WSTR szUuid;
+                if (UuidToString(&uuid, &szUuid) == RPC_S_OK)
+                {
+                    strKey = (LPTSTR)szUuid;
+                    strKey = StringHelper::ToUpper(strKey);
+                    RpcStringFree(&szUuid);
+                }
+            }
+            return strKey;
+        }
+        static bool Unzip2Folder(BSTR lpZipFile, BSTR lpFolder)
+        {
+            IShellDispatch *pISD;
+            Folder *pZippedFile = 0L;
+            Folder *pDestination = 0L;
+            long FilesCount = 0;
+            IDispatch* pItem = 0L;
+            FolderItems *pFilesInside = 0L;
+            VARIANT Options, OutFolder, InZipFile, Item;
+            CoInitialize(nullptr);
+
+            __try
+            {
+                if (CoCreateInstance(CLSID_Shell, nullptr, CLSCTX_INPROC_SERVER, IID_IShellDispatch, (void **)&pISD) != S_OK)
+                    return false;
+
+                InZipFile.vt = VT_BSTR;
+                InZipFile.bstrVal = lpZipFile;
+                pISD->NameSpace(InZipFile, &pZippedFile);
+                if (!pZippedFile)
+                {
+                    pISD->Release();
+                    return false;
+                }
+
+                OutFolder.vt = VT_BSTR;
+                OutFolder.bstrVal = lpFolder;
+                pISD->NameSpace(OutFolder, &pDestination);
+                if (!pDestination)
+                {
+                    pZippedFile->Release();
+                    pISD->Release();
+                    return false;
+                }
+
+                pZippedFile->Items(&pFilesInside);
+                if (!pFilesInside)
+                {
+                    pDestination->Release();
+                    pZippedFile->Release();
+                    pISD->Release();
+                    return false;
+                }
+
+                pFilesInside->get_Count(&FilesCount);
+                if (FilesCount < 1)
+                {
+                    pFilesInside->Release();
+                    pDestination->Release();
+                    pZippedFile->Release();
+                    pISD->Release();
+                    return true;
+                }
+
+                pFilesInside->QueryInterface(IID_IDispatch, (void**)&pItem);
+
+                Item.vt = VT_DISPATCH;
+                Item.pdispVal = pItem;
+
+                Options.vt = VT_I4;
+                Options.lVal = 1024 | 512 | 16 | 4;
+
+                bool retval = pDestination->CopyHere(Item, Options) == S_OK;
+
+                pItem->Release(); pItem = 0L;
+                pFilesInside->Release(); pFilesInside = 0L;
+                pDestination->Release(); pDestination = 0L;
+                pZippedFile->Release(); pZippedFile = 0L;
+                pISD->Release(); pISD = 0L;
+
+                return retval;
+            }
+            __finally
+            {
+                CoUninitialize();
+            }
         }
     public:
         static std::wstring CombinePath(const std::wstring& szPath, const std::wstring& szFile)
@@ -323,7 +414,22 @@ namespace util
             ::FindClose(hFind);
             return bInvalidHandle == false;
         }
-    public:
+        bool PathFileExists(const std::wstring& szFilePath)
+        {
+            return ::PathFileExists(szFilePath.c_str()) == TRUE;
+        }
+        void DeleteFile(const std::wstring& szFilePath)
+        {
+            ::DeleteFile(szFilePath.c_str());
+        }
+        bool CreateDirectory(const std::wstring& szPath)
+        {
+            ::CreateDirectory(szPath.c_str(), nullptr);
+        }
+        void SetCurrentDirectory(const std::wstring& szPath)
+        {
+            ::SetCurrentDirectory(szPath.c_str());
+        }
         static bool DirectoryExists(const std::wstring& szPath)
         {
             return ::PathIsDirectory(szPath.c_str()) == TRUE;
@@ -335,7 +441,6 @@ namespace util
                 return true;
             return false;
         }
-    public:
         static std::vector<std::wstring> FindFiles(const std::wstring& pattern)
         {
             std::vector<std::wstring> files;
@@ -435,101 +540,6 @@ namespace util
                 return false;
             }
             return true;
-        }
-    public:
-        static std::wstring GenerateUuidString()
-        {
-            std::wstring strKey;
-            UUID uuid;
-            if (UuidCreate(&uuid) == RPC_S_OK)
-            {
-                RPC_WSTR szUuid;
-                if (UuidToString(&uuid, &szUuid) == RPC_S_OK)
-                {
-                    strKey = (LPTSTR)szUuid;
-                    strKey = StringHelper::ToUpper(strKey);
-                    RpcStringFree(&szUuid);
-                }
-            }
-            return strKey;
-        }
-    public:
-        static bool Unzip2Folder(BSTR lpZipFile, BSTR lpFolder)
-        {
-            IShellDispatch *pISD;
-            Folder *pZippedFile = 0L;
-            Folder *pDestination = 0L;
-            long FilesCount = 0;
-            IDispatch* pItem = 0L;
-            FolderItems *pFilesInside = 0L;
-            VARIANT Options, OutFolder, InZipFile, Item;
-            CoInitialize(nullptr);
-
-            __try
-            {
-                if (CoCreateInstance(CLSID_Shell, nullptr, CLSCTX_INPROC_SERVER, IID_IShellDispatch, (void **)&pISD) != S_OK)
-                    return false;
-
-                InZipFile.vt = VT_BSTR;
-                InZipFile.bstrVal = lpZipFile;
-                pISD->NameSpace(InZipFile, &pZippedFile);
-                if (!pZippedFile)
-                {
-                    pISD->Release();
-                    return false;
-                }
-
-                OutFolder.vt = VT_BSTR;
-                OutFolder.bstrVal = lpFolder;
-                pISD->NameSpace(OutFolder, &pDestination);
-                if (!pDestination)
-                {
-                    pZippedFile->Release();
-                    pISD->Release();
-                    return false;
-                }
-
-                pZippedFile->Items(&pFilesInside);
-                if (!pFilesInside)
-                {
-                    pDestination->Release();
-                    pZippedFile->Release();
-                    pISD->Release();
-                    return false;
-                }
-
-                pFilesInside->get_Count(&FilesCount);
-                if (FilesCount < 1)
-                {
-                    pFilesInside->Release();
-                    pDestination->Release();
-                    pZippedFile->Release();
-                    pISD->Release();
-                    return true;
-                }
-
-                pFilesInside->QueryInterface(IID_IDispatch, (void**)&pItem);
-
-                Item.vt = VT_DISPATCH;
-                Item.pdispVal = pItem;
-
-                Options.vt = VT_I4;
-                Options.lVal = 1024 | 512 | 16 | 4;
-
-                bool retval = pDestination->CopyHere(Item, Options) == S_OK;
-
-                pItem->Release(); pItem = 0L;
-                pFilesInside->Release(); pFilesInside = 0L;
-                pDestination->Release(); pDestination = 0L;
-                pZippedFile->Release(); pZippedFile = 0L;
-                pISD->Release(); pISD = 0L;
-
-                return retval;
-            }
-            __finally
-            {
-                CoUninitialize();
-            }
         }
     };
 }
