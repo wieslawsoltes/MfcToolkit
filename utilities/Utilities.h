@@ -431,6 +431,12 @@ namespace util
                 return true;
             return false;
         }
+        static std::wstring GetCurrentDirectory()
+        {
+            wchar_t szCurrentDirectory[_MAX_PATH];
+            ::GetCurrentDirectory(_MAX_PATH, szCurrentDirectory);
+            return szCurrentDirectory;
+        }
         static void SetCurrentDirectory(const std::wstring& szPath)
         {
             ::SetCurrentDirectory(szPath.c_str());
