@@ -19,7 +19,6 @@
 #pragma comment(lib, "Shlwapi.lib")
 #pragma comment(lib, "Shell32.lib")
 
-
 namespace util
 {
     class Utilities
