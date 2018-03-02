@@ -417,7 +417,7 @@ namespace util
         }
         static bool PathFileExists(const std::wstring& szFilePath)
         {
-            return ::PathFileExists(szFilePath.c_str()) == TRUE;
+            return ::PathFileExists(szFilePath.c_str()) != FALSE;
         }
         static void DeleteFile(const std::wstring& szFilePath)
         {
@@ -425,7 +425,7 @@ namespace util
         }
         static bool CreateDirectory(const std::wstring& szPath)
         {
-            if (::CreateDirectory(szPath.c_str(), nullptr) == TRUE)
+            if (::CreateDirectory(szPath.c_str(), nullptr) != FALSE)
                 return true;
             if (::GetLastError() == ERROR_ALREADY_EXISTS)
                 return true;
@@ -437,7 +437,9 @@ namespace util
         }
         static bool DirectoryExists(const std::wstring& szPath)
         {
-            return ::PathIsDirectory(szPath.c_str()) == TRUE;
+            wchar_t szFulltPath[_MAX_PATH];
+            _wfullpath(szFulltPath, szPath.c_str(), _MAX_PATH);
+            return ::PathIsDirectory(szFulltPath) != FALSE;
         }
         static bool MakeFullPath(const std::wstring& szTargetPath)
         {
