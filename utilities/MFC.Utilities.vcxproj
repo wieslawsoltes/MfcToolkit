@@ -227,6 +227,7 @@
     <ClInclude Include="Download.h" />
     <ClInclude Include="FileLog.h" />
     <ClInclude Include="Log.h" />
+    <ClInclude Include="MemoryLog.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="StdAfx.h" />
