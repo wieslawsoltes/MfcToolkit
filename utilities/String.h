@@ -96,7 +96,7 @@ namespace util::string
 
     static inline int ReplaceNoCase(std::string& str, const std::string& from, const std::string& to)
     {
-        int result = 0;
+        int count = 0;
         std::string s = ToUpper(str);
         std::string f = ToUpper(from);
         size_t pos = 0;
@@ -105,9 +105,9 @@ namespace util::string
             str.replace(pos, f.length(), to);
             s.replace(pos, f.length(), to);
             pos += to.length();
-            result++;
+            count++;
         }
-        return result;
+        return count;
     }
 
     static inline size_t FindNoCase(const std::string& str, const std::string& find)
@@ -117,14 +117,17 @@ namespace util::string
         return s.find(f);
     }
 
-    static inline void Replace(std::string& str, const std::string& from, const std::string& to)
+    static inline int Replace(std::string& str, const std::string& from, const std::string& to)
     {
+        int count = 0;
         size_t pos = 0;
         while ((pos = str.find(from, pos)) != std::string::npos)
         {
             str.replace(pos, from.length(), to);
             pos += to.length();
+            count++;
         }
+        return count;
     }
 
     static inline void TrimLeft(std::string &s)
@@ -235,7 +238,7 @@ namespace util::string
 
     static inline int ReplaceNoCase(std::wstring& str, const std::wstring& from, const std::wstring& to)
     {
-        int result = 0;
+        int count = 0;
         std::wstring s = ToUpper(str);
         std::wstring f = ToUpper(from);
         size_t pos = 0;
@@ -244,9 +247,9 @@ namespace util::string
             str.replace(pos, f.length(), to);
             s.replace(pos, f.length(), to);
             pos += to.length();
-            result++;
+            count++;
         }
-        return result;
+        return count;
     }
 
     static inline size_t FindNoCase(const std::wstring& str, const std::wstring& find)
@@ -256,14 +259,17 @@ namespace util::string
         return s.find(f);
     }
 
-    static inline void Replace(std::wstring& str, const std::wstring& from, const std::wstring& to)
+    static inline int Replace(std::wstring& str, const std::wstring& from, const std::wstring& to)
     {
+        int count = 0;
         size_t pos = 0;
         while ((pos = str.find(from, pos)) != std::wstring::npos)
         {
             str.replace(pos, from.length(), to);
             pos += to.length();
+            count++;
         }
+        return count;
     }
 
     static inline void TrimLeft(std::wstring &s)
