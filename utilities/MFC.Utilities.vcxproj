@@ -222,7 +222,7 @@
     <ClInclude Include="MemoryLog.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Process.h" />
-    <ClInclude Include="StringHelper.h" />
+    <ClInclude Include="String.h" />
     <ClInclude Include="Synchronize.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Thread.h" />

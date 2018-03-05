@@ -14,7 +14,7 @@
 #include <tchar.h>
 #include <stdlib.h>
 #include <cstringt.h>
-#include "StringHelper.h"
+#include "String.h"
 
 #pragma comment(lib, "Rpcrt4.lib")
 #pragma comment(lib, "Shlwapi.lib")
@@ -213,7 +213,7 @@ namespace util
                 if (UuidToString(&uuid, &szUuid) == RPC_S_OK)
                 {
                     strKey = (LPTSTR)szUuid;
-                    strKey = StringHelper::ToUpper(strKey);
+                    strKey = util::string::ToUpper(strKey);
                     RpcStringFree(&szUuid);
                 }
             }

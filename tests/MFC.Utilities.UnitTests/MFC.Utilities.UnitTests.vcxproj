@@ -198,7 +198,7 @@
     <ClCompile Include="ThreadTests.cpp" />
     <ClCompile Include="TimeCountTests.cpp" />
     <ClCompile Include="Utf8StringTests.cpp" />
-    <ClCompile Include="StringHelperTests.cpp" />
+    <ClCompile Include="StringTests.cpp" />
     <ClCompile Include="UtilitiesTests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

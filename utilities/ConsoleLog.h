@@ -5,7 +5,7 @@
 #include <memory>
 #include <cstdio>
 #include "Log.h"
-#include "utilities\StringHelper.h"
+#include "utilities\String.h"
 
 namespace util
 {
@@ -34,7 +34,7 @@ namespace util
                 std::wstring szData = szMessage;
                 if (bNewLine)
                     szData += L"\n";
-                std::string szAnsi = util::StringHelper::Convert(szData);
+                std::string szAnsi = util::string::Convert(szData);
                 std::fwrite(szAnsi.data(), sizeof(char), szAnsi.size(), stderr);
                 std::fflush(stderr);
             }
