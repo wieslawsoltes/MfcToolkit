@@ -9,6 +9,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <utility>
 #include <iomanip>
 
 namespace util
@@ -19,12 +20,12 @@ namespace util
         static inline std::wstring Convert(const std::string& str)
         {
             std::wstring w(str.begin(), str.end());
-            return w;
+            return std::move(w);
         }
         static inline std::string Convert(const std::wstring& str)
         {
             std::string s(str.begin(), str.end());
-            return s;
+            return std::move(s);
         }
     public:
         static inline std::string ToStringHex(int i)
@@ -34,15 +35,15 @@ namespace util
             stream << "0x"
                 << std::setfill(fill) << std::setw(sizeof(int) * 2)
                 << std::hex << i;
-            return stream.str();
+            return std::move(stream.str());
         }
         static inline int ToIntFromHex(const std::string& str)
         {
-            return std::stoi(str, nullptr, 16);
+            return std::move(std::stoi(str, nullptr, 16));
         }
         static inline int ToInt(const std::string& str)
         {
-            return std::stoi(str);
+            return std::move(std::stoi(str));
         }
         static inline std::vector<std::string> Split(const char *str, char c)
         {
@@ -54,21 +55,21 @@ namespace util
                     str++;
                 result.push_back(std::string(begin, str));
             } while (0 != *str++);
-            return result;
+            return std::move(result);
         }
         static inline std::string TowLower(const std::string& str)
         {
             std::string s = str;
             std::transform(s.begin(), s.end(), s.begin(), 
                 [](unsigned char c){ return std::tolower(c); });
-            return s;
+            return std::move(s);
         }
         static inline std::string ToUpper(const std::string& str)
         {
             std::string s = str;
             std::transform(s.begin(), s.end(), s.begin(), 
                 [](unsigned char c){ return std::toupper(c); });
-            return s;
+            return std::move(s);
         }
         static inline bool CompareNoCase(const std::string& str1, const std::string& str2)
         {
@@ -159,15 +160,15 @@ namespace util
             stream << L"0x" 
                    << std::setfill(fill) << std::setw(sizeof(int)*2) 
                    << std::hex << i;
-          return stream.str();
+          return std::move(stream.str());
         }
         static inline int ToIntFromHex(const std::wstring& str)
         {
-            return std::stoi(str, nullptr, 16);
+            return std::move(std::stoi(str, nullptr, 16));
         }
         static inline int ToInt(const std::wstring& str)
         {
-            return std::stoi(str);
+            return std::move(std::stoi(str));
         }
         static inline std::vector<std::wstring> Split(const wchar_t *str, wchar_t c)
         {
@@ -179,19 +180,19 @@ namespace util
                     str++;
                 result.push_back(std::wstring(begin, str));
             } while (0 != *str++);
-            return result;
+            return std::move(result);
         }
         static inline std::wstring TowLower(const std::wstring& str)
         {
             std::wstring s = str;
             std::transform(s.begin(), s.end(), s.begin(), ::towlower);
-            return s;
+            return std::move(s);
         }
         static inline std::wstring ToUpper(const std::wstring& str)
         {
             std::wstring s = str;
             std::transform(s.begin(), s.end(), s.begin(), ::toupper);
-            return s;
+            return std::move(s);
         }
         static inline bool CompareNoCase(const std::wstring& str1, const std::wstring& str2)
         {
