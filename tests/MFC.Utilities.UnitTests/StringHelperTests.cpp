@@ -46,5 +46,16 @@ namespace MFCUtilitiesUnitTests
             int n2 = util::StringHelper::ToInt(str2);
             Assert::AreEqual(-5, n2);
         }
+
+        TEST_METHOD(StringHelper_Split)
+        {
+            std::string str = "Test string to split";
+            auto result = util::StringHelper::Split(str.c_str(), ' ');
+            Assert::AreEqual(size_t(4), result.size());
+            Assert::AreEqual("Test", result[0].c_str());
+            Assert::AreEqual("string", result[1].c_str());
+            Assert::AreEqual("to", result[2].c_str());
+            Assert::AreEqual("split", result[3].c_str());
+        }
     };
 }
