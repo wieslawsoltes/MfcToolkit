@@ -22,7 +22,7 @@ namespace MFCUtilitiesUnitTests
             std::string str = util::StringHelper::Convert(wstr);
             Assert::AreEqual("Test string!", str.c_str());
         }
-
+    public:
         TEST_METHOD(StringHelper_ToStringHex_string)
         {
             std::string str = util::StringHelper::ToStringHex(0x00310010);
