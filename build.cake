@@ -28,8 +28,8 @@ var solution = "./MfcToolkit.sln";
 Task("Clean")
     .Does(() =>
 {
-    CleanDirectories("./**/bin");
-    CleanDirectories("./**/obj");
+    CleanDirectories("./**/bin/**");
+    CleanDirectories("./**/obj/**");
 });
 
 Task("Build")
