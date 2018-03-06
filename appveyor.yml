@@ -1,13 +1,7 @@
 version: '{build}'
 image: Visual Studio 2017
-platform:
-  - Win32
-  - x64
-configuration:
-  - Release
-build:
-  parallel: true
-  project: MfcToolkit.sln
-  verbosity: minimal
-test_script:
-- cmd: vstest.console /logger:Appveyor tests\MFC.Utilities.UnitTests\bin\%configuration%\%platform%\MFC.Utilities.UnitTests.dll
+before_build:
+- git submodule update --init
+build_script:
+- ps: .\build.ps1 -Target "Default"
+test: off
