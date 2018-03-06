@@ -16,7 +16,7 @@ namespace util
         HANDLE hRead;
         HANDLE hWrite;
     public:
-        CPipe(bool bInherit)
+        CPipe(bool bInherit = true)
         {
             ZeroMemory(&this->secattr, sizeof(this->secattr));
             this->secattr.nLength = sizeof(this->secattr);
