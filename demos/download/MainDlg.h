@@ -3,14 +3,6 @@
 
 #pragma once
 
-#include "afxcmn.h"
-#include "afxwin.h"
-#include "..\..\controls\MyButton.h"
-#include "..\..\controls\MyEdit.h"
-#include "..\..\controls\MyProgressCtrl.h"
-#include "..\..\utilities\Download.h"
-#include "..\..\utilities\Thread.h"
-
 class CMainDlg : public CDialog
 {
 public:

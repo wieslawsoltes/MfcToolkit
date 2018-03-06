@@ -4,12 +4,6 @@
 #include "stdafx.h"
 #include "MainApp.h"
 #include "MainDlg.h"
-#include "afxdialogex.h"
-#include <string>
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
 
 CMainDlg::CMainDlg(CWnd* pParent /*=nullptr*/)
     : CDialog(IDD_MFCAPPLICATION1_DIALOG, pParent)
