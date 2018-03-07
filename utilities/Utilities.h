@@ -285,7 +285,7 @@ namespace util
         }
     }
 
-    static inline std::wstring FsGenerateUuidString()
+    static inline std::wstring GenerateUuidString()
     {
         std::wstring strKey;
         UUID uuid;
@@ -302,7 +302,7 @@ namespace util
         return strKey;
     }
 
-    static inline std::wstring FsCombinePath(const std::wstring& szPath, const std::wstring& szFile)
+    static inline std::wstring CombinePath(const std::wstring& szPath, const std::wstring& szFile)
     {
         std::wstring szOutputFile = szFile;
         if (szPath.length() >= 1)
@@ -316,14 +316,14 @@ namespace util
         return szOutputFile;
     }
 
-    static inline std::wstring FsGetFileName(const std::wstring& szFilePath)
+    static inline std::wstring GetFileName(const std::wstring& szFilePath)
     {
         return ::PathFindFileName(szFilePath.c_str());
     }
 
-    static inline std::wstring FsGetFilePath(const std::wstring& szFilePath)
+    static inline std::wstring GetFilePath(const std::wstring& szFilePath)
     {
-        std::wstring szFileName = FsGetFileName(szFilePath);
+        std::wstring szFileName = GetFileName(szFilePath);
         return szFilePath.substr(0, szFilePath.length() - szFileName.length());
     }
 
@@ -336,14 +336,14 @@ namespace util
         return szExt;
     }
 
-    static inline std::wstring FsGetOnlyFileName(const std::wstring& szFilePath)
+    static inline std::wstring GetOnlyFileName(const std::wstring& szFilePath)
     {
-        std::wstring szFileName = FsGetFileName(szFilePath);
+        std::wstring szFileName = GetFileName(szFilePath);
         std::wstring szExt = FsGetFileExtension(szFilePath);
         return szFileName.substr(0, szFileName.length() - szExt.length() - 1);
     }
 
-    static inline ULONGLONG FsGetFileSize64(HANDLE hFile)
+    static inline ULONGLONG GetFileSize64(HANDLE hFile)
     {
         ULARGE_INTEGER liSize;
         liSize.LowPart = ::GetFileSize(hFile, &liSize.HighPart);
@@ -355,7 +355,7 @@ namespace util
         return liSize.QuadPart;
     }
 
-    static inline ULONGLONG FsGetFileSize64(const std::wstring& szFileName)
+    static inline ULONGLONG GetFileSize64(const std::wstring& szFileName)
     {
         WIN32_FIND_DATA FindFileData;
         HANDLE hFind;
@@ -375,7 +375,7 @@ namespace util
         return nFileSize;
     }
 
-    static inline __int64 FsGetFileSizeInt64(FILE *fp)
+    static inline __int64 GetFileSizeInt64(FILE *fp)
     {
         __int64 nCurPos, nSize;
         nCurPos = _ftelli64(fp);
@@ -385,20 +385,20 @@ namespace util
         return nSize;
     }
 
-    static inline std::wstring FsGetExeFilePath()
+    static inline std::wstring GetExeFilePath()
     {
         TCHAR szExeFilePath[MAX_PATH + 1] = _T("");
         DWORD dwRet = ::GetModuleFileName(::GetModuleHandle(nullptr), szExeFilePath, MAX_PATH);
         if (dwRet > 0)
         {
             std::wstring szTempBuff1 = szExeFilePath;
-            std::wstring szTempBuff2 = FsGetFileName(szTempBuff1);
+            std::wstring szTempBuff2 = GetFileName(szTempBuff1);
             return szTempBuff1.substr(0, szTempBuff1.length() - szTempBuff2.length());
         }
         return nullptr;
     }
 
-    static inline std::wstring FsGetSettingsFilePath(const std::wstring& szFileName, const std::wstring& szConfigDirectory)
+    static inline std::wstring GetSettingsFilePath(const std::wstring& szFileName, const std::wstring& szConfigDirectory)
     {
         TCHAR szPath[MAX_PATH];
         if (SUCCEEDED(SHGetFolderPath(nullptr,
@@ -414,7 +414,7 @@ namespace util
         return nullptr;
     }
 
-    static inline std::wstring FsGetFullPathName(const std::wstring& szFilePath)
+    static inline std::wstring GetFullPathName_(const std::wstring& szFilePath)
     {
         TCHAR szFullPath[MAX_PATH + 2] = _T("");
         LPTSTR pszFilePos = nullptr;
@@ -422,7 +422,7 @@ namespace util
         return szFullPath;
     }
 
-    static inline bool FsFileExists(const std::wstring& szPath)
+    static inline bool FileExists(const std::wstring& szPath)
     {
         WIN32_FIND_DATA w32FileData;
         ZeroMemory(&w32FileData, sizeof(WIN32_FIND_DATA));
@@ -432,17 +432,17 @@ namespace util
         return bInvalidHandle == false;
     }
 
-    static inline bool FsPathFileExists(const std::wstring& szFilePath)
+    static inline bool PathFileExists_(const std::wstring& szFilePath)
     {
         return ::PathFileExists(szFilePath.c_str()) != FALSE;
     }
 
-    static inline void FsDeleteFile(const std::wstring& szFilePath)
+    static inline void DeleteFile_(const std::wstring& szFilePath)
     {
         ::DeleteFile(szFilePath.c_str());
     }
 
-    static inline bool FsCreateDirectory(const std::wstring& szPath)
+    static inline bool CreateDirectory_(const std::wstring& szPath)
     {
         if (::CreateDirectory(szPath.c_str(), nullptr) != FALSE)
             return true;
@@ -451,26 +451,26 @@ namespace util
         return false;
     }
 
-    static inline std::wstring FsGetCurrentDirectory()
+    static inline std::wstring GetCurrentDirectory_()
     {
         wchar_t szCurrentDirectory[_MAX_PATH];
         ::GetCurrentDirectory(_MAX_PATH, szCurrentDirectory);
         return szCurrentDirectory;
     }
 
-    static inline void FsSetCurrentDirectory(const std::wstring& szPath)
+    static inline void SetCurrentDirectory_(const std::wstring& szPath)
     {
         ::SetCurrentDirectory(szPath.c_str());
     }
 
-    static inline bool FsDirectoryExists(const std::wstring& szPath)
+    static inline bool DirectoryExists(const std::wstring& szPath)
     {
         wchar_t szFulltPath[_MAX_PATH];
         _wfullpath(szFulltPath, szPath.c_str(), _MAX_PATH);
         return ::PathIsDirectory(szFulltPath) != FALSE;
     }
 
-    static inline bool FsMakeFullPath(const std::wstring& szTargetPath)
+    static inline bool MakeFullPath(const std::wstring& szTargetPath)
     {
         wchar_t szFulltTargetPath[_MAX_PATH];
         _wfullpath(szFulltTargetPath, szTargetPath.c_str(), _MAX_PATH);
@@ -480,7 +480,7 @@ namespace util
         return false;
     }
 
-    static inline std::vector<std::wstring> FsFindFiles(const std::wstring& pattern)
+    static inline std::vector<std::wstring> FindFiles(const std::wstring& pattern)
     {
         std::vector<std::wstring> files;
         try
@@ -497,7 +497,7 @@ namespace util
                 if (w32FileData.cFileName[0] != '.' && !(w32FileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)
                 {
                     std::wstring szFileName = w32FileData.cFileName;
-                    std::wstring szFilePath = FsGetFilePath(pattern) + szFileName;
+                    std::wstring szFilePath = GetFilePath(pattern) + szFileName;
                     files.push_back(szFilePath);
                 }
                 if (FindNextFile(hSearch, &w32FileData) == FALSE)
@@ -518,7 +518,7 @@ namespace util
         return files;
     }
 
-    static inline bool FsFindFiles(const std::wstring path, std::vector<std::wstring>& files, const bool bRecurse = false)
+    static inline bool FindFiles(const std::wstring path, std::vector<std::wstring>& files, const bool bRecurse = false)
     {
         try
         {
@@ -557,7 +557,7 @@ namespace util
                     if (bRecurse == true)
                     {
                         std::wstring cTempBuf = szFile + L"\\" + w32FileData.cFileName;
-                        bool bResult = FsFindFiles(cTempBuf, files, bRecurse);
+                        bool bResult = FindFiles(cTempBuf, files, bRecurse);
                         if (bResult == false)
                             return false;
                     }
