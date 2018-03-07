@@ -16,7 +16,7 @@ namespace util
         virtual std::wstring CombinePath(const std::wstring& szPath, const std::wstring& szFile) = 0;
         virtual std::wstring GetFileName(const std::wstring& szFilePath) = 0;
         virtual std::wstring GetFilePath(const std::wstring& szFilePath) = 0;
-        virtual std::wstring FsGetFileExtension(const std::wstring& szFilePath) = 0;
+        virtual std::wstring GetFileExtension(const std::wstring& szFilePath) = 0;
         virtual std::wstring GetOnlyFileName(const std::wstring& szFilePath) = 0;
         virtual __int64 GetFileSize64(void* hFile) = 0;
         virtual __int64 GetFileSize64(const std::wstring& szFileName) = 0;

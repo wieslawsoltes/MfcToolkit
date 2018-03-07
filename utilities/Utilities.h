@@ -327,7 +327,7 @@ namespace util
         return szFilePath.substr(0, szFilePath.length() - szFileName.length());
     }
 
-    static inline std::wstring FsGetFileExtension(const std::wstring& szFilePath)
+    static inline std::wstring GetFileExtension(const std::wstring& szFilePath)
     {
         std::wstring szExt = ::PathFindExtension(szFilePath.c_str());
         size_t pos = szExt.find('.');
@@ -339,7 +339,7 @@ namespace util
     static inline std::wstring GetOnlyFileName(const std::wstring& szFilePath)
     {
         std::wstring szFileName = GetFileName(szFilePath);
-        std::wstring szExt = FsGetFileExtension(szFilePath);
+        std::wstring szExt = GetFileExtension(szFilePath);
         return szFileName.substr(0, szFileName.length() - szExt.length() - 1);
     }
 
