@@ -16,9 +16,9 @@ var target = Argument("target", "Default");
 // SETTINGS
 ///////////////////////////////////////////////////////////////////////////////
 
-var platforms = new [] { "Win32", "x64" }.ToList();
-var configurations = new [] { "Release" }.ToList();
-var tests = new [] { "MFC.Utilities.UnitTests" }.ToList();
+var platforms = new string[] { "Win32", "x64" }.ToList();
+var configurations = new string[] { "Release" }.ToList();
+var tests = new string[] { "MFC.Utilities.UnitTests" }.ToList();
 var solution = "./MfcToolkit.sln";
 var artifactsDir = (DirectoryPath)Directory("./artifacts");
 
