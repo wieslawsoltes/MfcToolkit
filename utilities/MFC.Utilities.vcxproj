@@ -218,6 +218,7 @@
     <ClInclude Include="ConsoleLog.h" />
     <ClInclude Include="Download.h" />
     <ClInclude Include="FileLog.h" />
+    <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="MemoryLog.h" />
     <ClInclude Include="Pipe.h" />
