@@ -110,6 +110,14 @@ namespace util
             }
         }
 
+        if (buffer == nullptr)
+        {
+#ifdef _DEBUG
+            _tprintf(_T("\nError: Buffer in null.\n"));
+#endif
+            return (4);
+        }
+
         ptr = buffer;
 
         while (byteOffset + sizeof(SYSTEM_LOGICAL_PROCESSOR_INFORMATION) <= returnLength)
@@ -187,7 +195,10 @@ namespace util
             }
             ::CloseHandle(m_hToken);
         }
-        ::ExitWindowsEx(EWX_SHUTDOWN | EWX_POWEROFF | EWX_FORCEIFHUNG, 0);
+        #pragma warning(push)
+        #pragma warning(disable:28159)
+        ::InitiateSystemShutdownEx(nullptr, nullptr, 0, FALSE, FALSE, SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER | SHTDN_REASON_FLAG_PLANNED);
+        #pragma warning(pop)
         ::PostQuitMessage(0);
     }
 
@@ -216,7 +227,9 @@ namespace util
         IDispatch* pItem = 0L;
         FolderItems *pFilesInside = 0L;
         VARIANT Options, OutFolder, InZipFile, Item;
-        CoInitialize(nullptr);
+
+        if (CoInitialize(nullptr) != S_OK)
+            return false;
 
         __try
         {
@@ -395,7 +408,7 @@ namespace util
             std::wstring szTempBuff2 = GetFileName(szTempBuff1);
             return szTempBuff1.substr(0, szTempBuff1.length() - szTempBuff2.length());
         }
-        return nullptr;
+        return std::wstring();
     }
 
     static inline std::wstring GetSettingsFilePath(const std::wstring& szFileName, const std::wstring& szConfigDirectory)
@@ -411,7 +424,7 @@ namespace util
             PathAppend(szPath, szFileName.c_str());
             return szPath;
         }
-        return nullptr;
+        return std::wstring();
     }
 
     static inline std::wstring GetFullPathName_(const std::wstring& szFilePath)
@@ -466,14 +479,18 @@ namespace util
     static inline bool DirectoryExists(const std::wstring& szPath)
     {
         wchar_t szFulltPath[_MAX_PATH];
-        _wfullpath(szFulltPath, szPath.c_str(), _MAX_PATH);
+        wchar_t *absPath = _wfullpath(szFulltPath, szPath.c_str(), _MAX_PATH);
+        if (absPath == nullptr)
+            return false;
         return ::PathIsDirectory(szFulltPath) != FALSE;
     }
 
     static inline bool MakeFullPath(const std::wstring& szTargetPath)
     {
         wchar_t szFulltTargetPath[_MAX_PATH];
-        _wfullpath(szFulltTargetPath, szTargetPath.c_str(), _MAX_PATH);
+        wchar_t *absPath = _wfullpath(szFulltTargetPath, szTargetPath.c_str(), _MAX_PATH);
+        if (absPath == nullptr)
+            return false;
         int nResult = SHCreateDirectoryEx(NULL, szFulltTargetPath, NULL);
         if (nResult == ERROR_SUCCESS || nResult == ERROR_FILE_EXISTS || nResult == ERROR_ALREADY_EXISTS)
             return true;

@@ -145,6 +145,7 @@ namespace util
                 *ppvObject = reinterpret_cast<void*>(this);
                 return S_OK;
             }
+            *ppvObject = 0;
             return E_NOINTERFACE;
         }
         ULONG STDMETHODCALLTYPE AddRef(void)
