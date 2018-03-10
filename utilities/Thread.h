@@ -99,7 +99,10 @@ namespace util
         }
         bool Terminate(int code = 0)
         {
+            #pragma warning(push)
+            #pragma warning(disable:6258)
             return ::TerminateThread(hThread, (DWORD)code) == TRUE;
+            #pragma warning(pop)
         }
         bool Close()
         {
