@@ -234,7 +234,10 @@ namespace util
         __try
         {
             if (CoCreateInstance(CLSID_Shell, nullptr, CLSCTX_INPROC_SERVER, IID_IShellDispatch, (void **)&pISD) != S_OK)
+            {
                 return false;
+                __leave;
+            }
 
             InZipFile.vt = VT_BSTR;
             InZipFile.bstrVal = lpZipFile;
@@ -243,6 +246,7 @@ namespace util
             {
                 pISD->Release();
                 return false;
+                __leave;
             }
 
             OutFolder.vt = VT_BSTR;
@@ -253,6 +257,7 @@ namespace util
                 pZippedFile->Release();
                 pISD->Release();
                 return false;
+                __leave;
             }
 
             pZippedFile->Items(&pFilesInside);
@@ -262,6 +267,7 @@ namespace util
                 pZippedFile->Release();
                 pISD->Release();
                 return false;
+                __leave;
             }
 
             pFilesInside->get_Count(&FilesCount);
@@ -272,6 +278,7 @@ namespace util
                 pZippedFile->Release();
                 pISD->Release();
                 return true;
+                __leave;
             }
 
             pFilesInside->QueryInterface(IID_IDispatch, (void**)&pItem);
@@ -291,6 +298,7 @@ namespace util
             pISD->Release(); pISD = 0L;
 
             return retval;
+            __leave;
         }
         __finally
         {
