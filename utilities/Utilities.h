@@ -231,11 +231,13 @@ namespace util
         if (CoInitialize(nullptr) != S_OK)
             return false;
 
+        bool bResult = false;
+
         __try
         {
             if (CoCreateInstance(CLSID_Shell, nullptr, CLSCTX_INPROC_SERVER, IID_IShellDispatch, (void **)&pISD) != S_OK)
             {
-                return false;
+                bResult = false;
                 __leave;
             }
 
@@ -245,7 +247,7 @@ namespace util
             if (!pZippedFile)
             {
                 pISD->Release();
-                return false;
+                bResult = false;
                 __leave;
             }
 
@@ -256,7 +258,7 @@ namespace util
             {
                 pZippedFile->Release();
                 pISD->Release();
-                return false;
+                bResult = false;
                 __leave;
             }
 
@@ -266,7 +268,7 @@ namespace util
                 pDestination->Release();
                 pZippedFile->Release();
                 pISD->Release();
-                return false;
+                bResult = false;
                 __leave;
             }
 
@@ -277,7 +279,7 @@ namespace util
                 pDestination->Release();
                 pZippedFile->Release();
                 pISD->Release();
-                return true;
+                bResult = true;
                 __leave;
             }
 
@@ -297,13 +299,13 @@ namespace util
             pZippedFile->Release(); pZippedFile = 0L;
             pISD->Release(); pISD = 0L;
 
-            return retval;
-            __leave;
+            bResult = retval;
         }
         __finally
         {
             CoUninitialize();
         }
+        return bResult;
     }
 
     static inline std::wstring GenerateUuidString()

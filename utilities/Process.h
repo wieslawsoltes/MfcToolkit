@@ -49,6 +49,8 @@ namespace util
             DWORD dwCreationFlags = NORMAL_PRIORITY_CLASS;
             if (bNoWindow == true)
                 dwCreationFlags |= CREATE_NO_WINDOW;
+            #pragma warning(push)
+            #pragma warning(disable:6335)
             BOOL bResult = ::CreateProcess(nullptr,
                 lpCommandLine,
                 nullptr,
@@ -59,6 +61,7 @@ namespace util
                 nullptr,
                 &this->sInfo,
                 &this->pInfo);
+            #pragma warning(pop)
             return bResult == TRUE;
         }
         bool Wait()
