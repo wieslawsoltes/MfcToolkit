@@ -24,7 +24,6 @@ namespace controls
     protected:
         virtual INT_PTR OnToolHitTest(CPoint point, TOOLINFO *pTI) const;
     private:
-        CMyListCtrl & operator=(const CMyListCtrl &x);
         CMyListCtrl(const CMyListCtrl &x);
     public:
         bool bUseTooltipsList; // use only for LVS_REPORT style
