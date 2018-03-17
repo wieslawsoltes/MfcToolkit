@@ -7,14 +7,12 @@
 namespace controls
 {
     IMPLEMENT_DYNAMIC(CMySpinButtonCtrl, CSpinButtonCtrl)
-        CMySpinButtonCtrl::CMySpinButtonCtrl()
+    CMySpinButtonCtrl::CMySpinButtonCtrl()
     {
-
     }
 
     CMySpinButtonCtrl::~CMySpinButtonCtrl()
     {
-
     }
 
     BEGIN_MESSAGE_MAP(CMySpinButtonCtrl, CSpinButtonCtrl)

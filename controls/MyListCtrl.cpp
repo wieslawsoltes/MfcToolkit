@@ -11,8 +11,7 @@ namespace controls
     IMPLEMENT_DYNAMIC(CMyListCtrl, CListCtrl)
     CMyListCtrl::CMyListCtrl()
     {
-        bUseTooltipsList = false;
-
+        this->bUseTooltipsList = false;
         this->szToolTipText = _T("");
         this->bHaveToolTipText = false;
     }

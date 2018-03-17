@@ -7,8 +7,7 @@
 namespace controls
 {
     IMPLEMENT_DYNAMIC(CMyEdit, CEdit)
-
-        CMyEdit::CMyEdit()
+    CMyEdit::CMyEdit()
     {
         this->szToolTipText = _T("");
         this->bHaveToolTipText = false;
@@ -16,7 +15,6 @@ namespace controls
 
     CMyEdit::~CMyEdit()
     {
-
     }
 
     void CMyEdit::PreSubclassWindow()

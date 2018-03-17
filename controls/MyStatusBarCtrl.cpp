@@ -7,14 +7,12 @@
 namespace controls
 {
     IMPLEMENT_DYNAMIC(CMyStatusBarCtrl, CStatusBarCtrl)
-        CMyStatusBarCtrl::CMyStatusBarCtrl()
+    CMyStatusBarCtrl::CMyStatusBarCtrl()
     {
-
     }
 
     CMyStatusBarCtrl::~CMyStatusBarCtrl()
     {
-
     }
 
     BEGIN_MESSAGE_MAP(CMyStatusBarCtrl, CStatusBarCtrl)

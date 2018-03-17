@@ -14,13 +14,11 @@ namespace controls
 
     CMySliderCtrl::~CMySliderCtrl()
     {
-
     }
 
     void CMySliderCtrl::PreSubclassWindow()
     {
         CSliderCtrl::PreSubclassWindow();
-
         EnableToolTips(TRUE);
     }
 

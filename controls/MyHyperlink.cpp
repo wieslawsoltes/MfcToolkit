@@ -7,8 +7,7 @@
 namespace controls
 {
     IMPLEMENT_DYNAMIC(CMyHyperlink, CStatic)
-
-        CMyHyperlink::CMyHyperlink()
+    CMyHyperlink::CMyHyperlink()
     {
         m_hCursor = nullptr;
         m_bVisited = false;
@@ -17,7 +16,6 @@ namespace controls
 
     CMyHyperlink::~CMyHyperlink()
     {
-
     }
 
     BEGIN_MESSAGE_MAP(CMyHyperlink, CMyStatic)

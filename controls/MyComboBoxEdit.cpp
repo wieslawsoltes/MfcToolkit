@@ -7,8 +7,7 @@
 namespace controls
 {
     IMPLEMENT_DYNAMIC(CMyComboBoxEdit, CEdit)
-
-        CMyComboBoxEdit::CMyComboBoxEdit()
+    CMyComboBoxEdit::CMyComboBoxEdit()
     {
         this->szToolTipText = _T("");
         this->bHaveToolTipText = false;
@@ -16,7 +15,6 @@ namespace controls
 
     CMyComboBoxEdit::~CMyComboBoxEdit()
     {
-
     }
 
     void CMyComboBoxEdit::PreSubclassWindow()
