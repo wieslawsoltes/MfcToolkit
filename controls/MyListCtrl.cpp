@@ -9,8 +9,7 @@
 namespace controls
 {
     IMPLEMENT_DYNAMIC(CMyListCtrl, CListCtrl)
-
-        CMyListCtrl::CMyListCtrl()
+    CMyListCtrl::CMyListCtrl()
     {
         bUseTooltipsList = false;
 
@@ -32,10 +31,22 @@ namespace controls
 
     BEGIN_MESSAGE_MAP(CMyListCtrl, CListCtrl)
         ON_WM_CREATE()
+        ON_WM_HSCROLL()
+        ON_WM_VSCROLL()
         ON_NOTIFY_REFLECT(LVN_ENDLABELEDIT, OnLvnEndlabeledit)
         ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipText)
         ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipText)
     END_MESSAGE_MAP()
+
+    void CMyListCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+    {
+        CListCtrl::OnHScroll(nSBCode, nPos, pScrollBar);
+    }
+
+    void CMyListCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+    {
+        CListCtrl::OnVScroll(nSBCode, nPos, pScrollBar);
+    }
 
     void CMyListCtrl::OnLvnEndlabeledit(NMHDR *pNMHDR, LRESULT *pResult)
     {
