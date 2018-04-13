@@ -9,13 +9,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lua", "lua\Lua.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TinyXml2", "tinyxml2\TinyXml2.vcxproj", "{284538AC-D315-437E-AD31-D40934A43236}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFC.Utilities", "utilities\MFC.Utilities.vcxproj", "{4B291D95-C2CA-49E3-9EB5-B9F855D32AA0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utilities", "utilities\Utilities.vcxproj", "{4B291D95-C2CA-49E3-9EB5-B9F855D32AA0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3340709D-0389-4D49-9960-4281CB30F1E4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1AFC0698-4B84-4FBF-BD1B-5FBDC820BC63}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFC.Utilities.UnitTests", "tests\MFC.Utilities.UnitTests\MFC.Utilities.UnitTests.vcxproj", "{F0AEC0E3-3D42-4289-A361-F2AF2A1076EA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utilities.UnitTests", "tests\Utilities.UnitTests\Utilities.UnitTests.vcxproj", "{F0AEC0E3-3D42-4289-A361-F2AF2A1076EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

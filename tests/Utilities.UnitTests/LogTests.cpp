@@ -4,7 +4,7 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace MFCUtilitiesUnitTests
+namespace UtilitiesUnitTests
 {
     class TestLog : public util::ILog
     {
