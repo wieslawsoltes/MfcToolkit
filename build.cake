@@ -67,7 +67,7 @@ var runTestAction = new Action<string,string,string> ((test, configuration, plat
         ToolPath = Context.Tools.Resolve("vstest.console.exe"),
         PlatformArchitecture = (platform == "Win32" || platform == "x86") ? VSTestPlatform.x86 : VSTestPlatform.x64,
         InIsolation = (platform == "Win32" || platform == "x86") ? false : true,
-        Logger = VSTestLogger.Trx });
+        Logger = "trx" });
 });
 
 ///////////////////////////////////////////////////////////////////////////////
