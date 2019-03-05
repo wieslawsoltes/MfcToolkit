@@ -1,4 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
+// TOOLS
+///////////////////////////////////////////////////////////////////////////////
+
+#tool "nuget:?package=Microsoft.TestPlatform&version=15.9.0"
+
+///////////////////////////////////////////////////////////////////////////////
 // USINGS
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -58,9 +64,10 @@ var runTestAction = new Action<string,string,string> ((test, configuration, plat
     Information("Test: {0}, {1} / {2}", test, configuration, platform);
     var pattern = "./tests/" + test + "/bin/" + configuration + "/" + platform + "/" + test + ".dll";
     VSTest(pattern, new VSTestSettings() {
+        ToolPath = Context.Tools.Resolve("vstest.console.exe"),
         PlatformArchitecture = (platform == "Win32" || platform == "x86") ? VSTestPlatform.x86 : VSTestPlatform.x64,
         InIsolation = (platform == "Win32" || platform == "x86") ? false : true,
-        Logger = "AppVeyor" });
+        Logger = VSTestLogger.Trx });
 });
 
 ///////////////////////////////////////////////////////////////////////////////
