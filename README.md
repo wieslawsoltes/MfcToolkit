@@ -1,6 +1,6 @@
 ﻿# MfcToolkit
 
-[![Build status](https://dev.azure.com/wieslawsoltes/GitHub/_apis/build/status/Old/MfcToolkit)](https://dev.azure.com/wieslawsoltes/GitHub/_build/latest?definitionId=-1)
+[![Build status](https://dev.azure.com/wieslawsoltes/GitHub/_apis/build/status/Old/MfcToolkit)](https://dev.azure.com/wieslawsoltes/GitHub/_build/latest?definitionId=69)
 
 ## License
 
